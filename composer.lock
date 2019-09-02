@@ -12,19 +12,16 @@
             "source": {
                 "type": "git",
                 "url": "git@github.com:newsworthy39/moonly-network-php-api",
-                "reference": "06ebb820cb14151cf1dbc3124a0486da6faf203d"
-            },
-            "require": {
-                "predis/predis": "^1.1"
+                "reference": "7e403f7a11637b5a020aa56af1119911e1858704"
             },
             "require-dev": {
                 "phpunit/phpunit": "^8.3"
             },
-            "type": "project",
+            "type": "library",
             "autoload": {
-                "files": [
-                    "config.php"
-                ]
+                "psr-4": {
+                    "newsworthy39\\": "src/"
+                }
             },
             "license": [
                 "MIT"
@@ -35,8 +32,8 @@
                     "email": "newsworthy39@github.com"
                 }
             ],
-            "description": "A Moonly php api",
-            "time": "2019-09-02T17:42:15+00:00"
+            "description": "A Moonly php backend library ",
+            "time": "2019-09-02T18:11:20+00:00"
         },
         {
             "name": "predis/predis",

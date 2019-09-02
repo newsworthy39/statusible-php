@@ -1,5 +1,7 @@
-<?php
+<?php declare(strict_types = 1);
 require __DIR__ . '/vendor/autoload.php';
+
+use \newsworthy39\Backend;
 
 if(strlen(strstr($_SERVER['HTTP_USER_AGENT'],"GitHub-Hookshot")) > 0 ){
 
@@ -11,9 +13,12 @@ if(strlen(strstr($_SERVER['HTTP_USER_AGENT'],"GitHub-Hookshot")) > 0 ){
 
         $client = new Predis\Client($conn);
 
+        $backend = new Backend();
+
         // when dealing with queues and hook-shots, we fetch our secret based on the queue-id:
         list($omit, $omit2, $queue_id, $remainder) = explode('/',$_SERVER['REQUEST_URI']);
-        $secret = $app->secrets($queue_id);
+        $secret = $backend->secrets($queue_id);
+
         if ($secret != false) {
                 $post_data = file_get_contents('php://input');
                 $signature = sprintf("sha1=%s", hash_hmac('sha1', $post_data, $secret));
