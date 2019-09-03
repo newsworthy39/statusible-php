@@ -4,13 +4,15 @@ class Config {
 
 	function redis() : array {
 		// Parameters passed using a named array:
-	 	return array(
+	 	$config = array(
 		       'scheme' => 'tcp',
 		       'host'   => 'redis',
-		       'port'   => 6379,
-		       'password'   => 'redis',
-	       );
+			   'port'   => 6379,
+			   'persistent' => false,		       
+		   );
+		return $config;
 	}
+
 
 	function githubaccesstoken() {
 		return "eae69c067063f5eb3de450739a38eca6ee6cc74c";

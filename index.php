@@ -4,7 +4,7 @@ require __DIR__ . '/vendor/autoload.php';
 
 use \newsworthy39\Backend;
 
-if(strlen(strstr($_SERVER['HTTP_USER_AGENT'],"GitHub-Hookshot")) > 0 ){
+if(false != strstr($_SERVER['HTTP_USER_AGENT'],"GitHub-Hookshot")) {
 
         // get container
         $app = new Config();
