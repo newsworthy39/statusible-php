@@ -15,8 +15,8 @@ RUN apt-get update \
  && DEBIAN_FRONTEND=noninteractive apt-get install -y --no-install-recommends \
       php${PHP_VERSION}-fpm php${PHP_VERSION}-cli php${PHP_VERSION}-gd \
       php${PHP_VERSION}-pgsql php${PHP_VERSION}-mysql php${PHP_VERSION}-xml \
-      php${PHP_VERSION}-mbstring composer php${PHP_VERSION}-zip git unzip docker.io \
-      && mkdir -p /run/php/ \
+      php${PHP_VERSION}-mbstring composer php${PHP_VERSION}-zip php${PHP_VERSION}-curl \
+      git unzip docker.io && mkdir -p /run/php/ \
       && sed -i 's/^listen = .*/listen = 0.0.0.0:9000/' /etc/php/${PHP_VERSION}/fpm/pool.d/www.conf \
       && sed -i 's/^;clear_env = .*/clear_env=no/' /etc/php/${PHP_VERSION}/fpm/pool.d/www.conf \
       && rm -rf /var/lib/apt/lists/*
