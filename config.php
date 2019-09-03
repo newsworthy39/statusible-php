@@ -11,5 +11,9 @@ class Config {
 		       'password'   => 'redis',
 	       );
 	}
+
+	function githubaccesstoken() {
+		return "eae69c067063f5eb3de450739a38eca6ee6cc74c";
+	}
 }
 
