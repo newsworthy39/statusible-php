@@ -2,6 +2,8 @@
 
 require __DIR__ . '/vendor/autoload.php';
 
+use boxeye\Config;
+
 function rrmdir($path) {
      // Open the source directory to read in files
         $i = new DirectoryIterator($path);

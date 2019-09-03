@@ -1,7 +1,8 @@
 FROM ubuntu:19.04 
 
+COPY worker.php /var/www/html/worker.php
 COPY index.php /var/www/html/index.php
-COPY config.php /var/www/html/config.php
+COPY src/ /var/www/html/src/
 COPY composer.json /var/www/html/composer.json
 
 LABEL maintainer="newsworthy39@github.com"

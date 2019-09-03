@@ -12,12 +12,12 @@
             "source": {
                 "type": "git",
                 "url": "git@github.com:newsworthy39/moonly-network-php-api.git",
-                "reference": "baa944c9000b6ba159c8bb89e9d1cd6d6931db8f"
+                "reference": "df568e489cf9827ffecf38fa034c4e74657af78c"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/newsworthy39/moonly-network-php-api/zipball/baa944c9000b6ba159c8bb89e9d1cd6d6931db8f",
-                "reference": "baa944c9000b6ba159c8bb89e9d1cd6d6931db8f",
+                "url": "https://api.github.com/repos/newsworthy39/moonly-network-php-api/zipball/df568e489cf9827ffecf38fa034c4e74657af78c",
+                "reference": "df568e489cf9827ffecf38fa034c4e74657af78c",
                 "shasum": ""
             },
             "require-dev": {
@@ -43,7 +43,7 @@
                 "source": "https://github.com/newsworthy39/moonly-network-php-api/tree/master",
                 "issues": "https://github.com/newsworthy39/moonly-network-php-api/issues"
             },
-            "time": "2019-09-02T18:17:20+00:00"
+            "time": "2019-09-03T11:09:05+00:00"
         },
         {
             "name": "predis/predis",

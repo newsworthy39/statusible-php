@@ -1,4 +1,7 @@
-<?php
+<?php 
+declare(strict_types=1);
+
+namespace boxeye;
 
 class Config {
 
@@ -12,7 +15,6 @@ class Config {
 		   );
 		return $config;
 	}
-
 
 	function githubaccesstoken() {
 		return "eae69c067063f5eb3de450739a38eca6ee6cc74c";
