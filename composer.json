@@ -19,8 +19,8 @@
     ],
     "repositories":[
         {
-            "type": "git",
-            "url": "git@github.com:newsworthy39/moonly-network-php-api"
+            "type": "vcs",
+            "url": "https://github.com/newsworthy39/moonly-network-php-api"
         }
     ],
    

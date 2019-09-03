@@ -4,15 +4,21 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "d90d54c56cd268694699a7b195ebcdaa",
+    "content-hash": "ebf3aa9d4e8e517c16d1d17d21011c83",
     "packages": [
         {
             "name": "newsworthy39/moonly-network-php-api",
             "version": "dev-master",
             "source": {
                 "type": "git",
-                "url": "git@github.com:newsworthy39/moonly-network-php-api",
-                "reference": "7e403f7a11637b5a020aa56af1119911e1858704"
+                "url": "git@github.com:newsworthy39/moonly-network-php-api.git",
+                "reference": "baa944c9000b6ba159c8bb89e9d1cd6d6931db8f"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/newsworthy39/moonly-network-php-api/zipball/baa944c9000b6ba159c8bb89e9d1cd6d6931db8f",
+                "reference": "baa944c9000b6ba159c8bb89e9d1cd6d6931db8f",
+                "shasum": ""
             },
             "require-dev": {
                 "phpunit/phpunit": "^8.3"
@@ -33,7 +39,11 @@
                 }
             ],
             "description": "A Moonly php backend library ",
-            "time": "2019-09-02T18:11:20+00:00"
+            "support": {
+                "source": "https://github.com/newsworthy39/moonly-network-php-api/tree/master",
+                "issues": "https://github.com/newsworthy39/moonly-network-php-api/issues"
+            },
+            "time": "2019-09-02T18:17:20+00:00"
         },
         {
             "name": "predis/predis",
