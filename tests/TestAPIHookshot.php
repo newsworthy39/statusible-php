@@ -12,7 +12,7 @@ final class TestAPIHookshot extends TestCase
         $backend = new Backend();
 
         // when dealing with queues and hook-shots, we fetch our secret based on the queue-id:
-        list($omit, $omit2, $queue_id, $remainder) = explode('/',"/queue/86234877/");
+        list($omit, $omit2, $queue_id) = explode('/',"/queue/86234877");
 
         $secret = $backend->secrets($queue_id);
 

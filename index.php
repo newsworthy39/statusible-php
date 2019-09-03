@@ -17,7 +17,7 @@ if(false != strstr($_SERVER['HTTP_USER_AGENT'],"GitHub-Hookshot")) {
         $backend = new Backend();
 
         // when dealing with queues and hook-shots, we fetch our secret based on the queue-id:
-        list($omit, $omit2, $queue_id, $remainder) = explode('/',$_SERVER['REQUEST_URI']);
+        list($omit, $omit2, $queue_id) = explode('/',$_SERVER['REQUEST_URI']);
         $secret = $backend->secrets($queue_id);
 
         if ($secret != false) {
