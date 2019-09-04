@@ -1,9 +1,10 @@
 FROM ubuntu:19.04 
 
-COPY worker.php /var/www/html/worker.php
-COPY index.php /var/www/html/index.php
-COPY src/ /var/www/html/src/
-COPY composer.json /var/www/html/composer.json
+WORKDIR /var/www/html/
+COPY worker.php worker.php
+COPY index.php index.php
+COPY src/ src/
+COPY composer.json composer.json
 
 LABEL maintainer="newsworthy39@github.com"
 
@@ -21,7 +22,6 @@ RUN apt-get update \
       && sed -i 's/^;clear_env = .*/clear_env=no/' /etc/php/${PHP_VERSION}/fpm/pool.d/www.conf \
       && rm -rf /var/lib/apt/lists/*
 
-WORKDIR /var/www/html/
 
 RUN composer install --no-dev
 
