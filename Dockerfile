@@ -1,6 +1,7 @@
 FROM ubuntu:19.04 
 
 WORKDIR /var/www/html/
+COPY deploy.php deploy.php
 COPY worker.php worker.php
 COPY index.php index.php
 COPY src/ src/
