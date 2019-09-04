@@ -1,12 +1,12 @@
 {
   "commits": [
     {
-      "id": "8b3ee36801c6d4bf139c76baa2a629e4c3ec0049",
-      "tree_id": "8df1548b04b6cafae631d07beacbdde67893c445",
+      "id": "901462278d5969d5115e1d00e517e7b2c93a7d0b",
+      "tree_id": "7f3d7ebe6cb5873cf627f342a9318b26f8299c9d",
       "distinct": true,
-      "message": "Updated docker files",
-      "timestamp": "2019-09-03T13:07:59+02:00",
-      "url": "https://github.com/newsworthy39/moonly-network-nginx-moonshot/commit/8b3ee36801c6d4bf139c76baa2a629e4c3ec0049",
+      "message": "Rename boxeye to serverstate",
+      "timestamp": "2019-09-04T16:52:24+02:00",
+      "url": "https://github.com/newsworthy39/moonly-network-nginx-moonshot/commit/901462278d5969d5115e1d00e517e7b2c93a7d0b",
       "author": {
         "name": "newsworthy39",
         "email": "newsworthy39@github.com"
@@ -22,43 +22,17 @@
 
       ],
       "modified": [
-        "Dockerfile",
-        "vhost.conf"
-      ]
-    },
-    {
-      "id": "9fc5025260163412c482cabff8d03f22b0c2b0ab",
-      "tree_id": "b6e135b4e216dc0d7940be22efdb20f810c26225",
-      "distinct": true,
-      "message": "Added logging for docker",
-      "timestamp": "2019-09-03T13:17:15+02:00",
-      "url": "https://github.com/newsworthy39/moonly-network-nginx-moonshot/commit/9fc5025260163412c482cabff8d03f22b0c2b0ab",
-      "author": {
-        "name": "newsworthy39",
-        "email": "newsworthy39@github.com"
-      },
-      "committer": {
-        "name": "newsworthy39",
-        "email": "newsworthy39@github.com"
-      },
-      "added": [
-
-      ],
-      "removed": [
-
-      ],
-      "modified": [
-        "vhost.conf"
+        "Dockerfile"
       ]
     }
   ],
   "head_commit": {
-    "id": "9fc5025260163412c482cabff8d03f22b0c2b0ab",
-    "tree_id": "b6e135b4e216dc0d7940be22efdb20f810c26225",
+    "id": "901462278d5969d5115e1d00e517e7b2c93a7d0b",
+    "tree_id": "7f3d7ebe6cb5873cf627f342a9318b26f8299c9d",
     "distinct": true,
-    "message": "Added logging for docker",
-    "timestamp": "2019-09-03T13:17:15+02:00",
-    "url": "https://github.com/newsworthy39/moonly-network-nginx-moonshot/commit/9fc5025260163412c482cabff8d03f22b0c2b0ab",
+    "message": "Rename boxeye to serverstate",
+    "timestamp": "2019-09-04T16:52:24+02:00",
+    "url": "https://github.com/newsworthy39/moonly-network-nginx-moonshot/commit/901462278d5969d5115e1d00e517e7b2c93a7d0b",
     "author": {
       "name": "newsworthy39",
       "email": "newsworthy39@github.com"
@@ -74,17 +48,17 @@
 
     ],
     "modified": [
-      "vhost.conf"
+      "Dockerfile"
     ]
   },
   "ref": "refs/heads/master",
-  "before": "e3e27bab872efbfea6ce4417d4b32c37a9af9475",
-  "after": "9fc5025260163412c482cabff8d03f22b0c2b0ab",
+  "before": "9fc5025260163412c482cabff8d03f22b0c2b0ab",
+  "after": "901462278d5969d5115e1d00e517e7b2c93a7d0b",
   "created": false,
   "deleted": false,
   "forced": false,
   "base_ref": null,
-  "compare": "https://github.com/newsworthy39/moonly-network-nginx-moonshot/compare/e3e27bab872e...9fc502526016",
+  "compare": "https://github.com/newsworthy39/moonly-network-nginx-moonshot/compare/9fc502526016...901462278d59",
   "repository": {
     "id": 205427539,
     "node_id": "MDEwOlJlcG9zaXRvcnkyMDU0Mjc1Mzk=",
@@ -154,8 +128,8 @@
     "releases_url": "https://api.github.com/repos/newsworthy39/moonly-network-nginx-moonshot/releases{/id}",
     "deployments_url": "https://api.github.com/repos/newsworthy39/moonly-network-nginx-moonshot/deployments",
     "created_at": 1567185899,
-    "updated_at": "2019-09-01T11:02:26Z",
-    "pushed_at": 1567607556,
+    "updated_at": "2019-09-04T14:32:38Z",
+    "pushed_at": 1567608754,
     "git_url": "git://github.com/newsworthy39/moonly-network-nginx-moonshot.git",
     "ssh_url": "git@github.com:newsworthy39/moonly-network-nginx-moonshot.git",
     "clone_url": "https://github.com/newsworthy39/moonly-network-nginx-moonshot.git",
