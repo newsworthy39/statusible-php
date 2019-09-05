@@ -4,24 +4,33 @@ require __DIR__ . '/vendor/autoload.php';
 
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
+use League\Route\Router;
+use League\Plates\Engine;
 
 $request = Zend\Diactoros\ServerRequestFactory::fromGlobals(
     $_SERVER, $_GET, $_POST, $_COOKIE, $_FILES
 );
 
-$router = new League\Route\Router;
+
+$container = new League\Container\Container;
+$container->add(League\Plates\Engine::class)->addArgument('templates/');
+$container->add(League\Route\Router::class);
+$router = $container->get(League\Route\Router::class);
 
 // map a route
 $router->map('GET', '/queue/{id}', function (ServerRequestInterface $request) : ResponseInterface {
     $response = new Zend\Diactoros\Response;
-    $response->getBody()->write('<h1>Hello, World!</h1>');
+    $response->getBody()->write('<h1>Hello, api!</h1>');
     return $response;
 });
 
 // map a route
-$router->map('GET', '/', function (ServerRequestInterface $request) : ResponseInterface {
+$router->map('GET', '/', function (ServerRequestInterface $request) use ($container) : ResponseInterface {
+
+        // Render a template
+        $templates = $container->get(League\Plates\Engine::class);
         $response = new Zend\Diactoros\Response;
-        $response->getBody()->write('<h1>Hello, World!</h1>');
+        $response->getBody()->write($templates->render('front', ['name' => $_SERVER['HTTP_X_FORWARDED_FOR']]));
         return $response;
     });
 

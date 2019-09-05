@@ -26,4 +26,7 @@ RUN apt-get update \
 
 RUN composer install --no-dev
 
+# Remove the auth again.
+ENV COMPOSER_AUTH=""
+
 CMD ["/usr/sbin/php-fpm7.2", "-F"]
