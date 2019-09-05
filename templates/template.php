@@ -1,6 +1,6 @@
 <html>
 <head>
-    <title>statusible.com | <?=$this->e($title)?></title>
+    <title><?=$this->variables('site_title')?> | <?=$this->e($title)?></title>
 </head>
 <body>
 
