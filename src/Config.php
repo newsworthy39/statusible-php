@@ -1,7 +1,7 @@
 <?php 
 declare(strict_types=1);
 
-namespace boxeye;
+namespace newsworthy39;
 
 class Config {
 
@@ -28,6 +28,14 @@ class Config {
 		);
 		
 		return $secrets[$queue_id];
+	}
+
+	function variables($key) {
+		$config = array(
+			'site_title' => 'statusible.com'
+		);
+
+		return $config[$key];
 	}
 }
 
