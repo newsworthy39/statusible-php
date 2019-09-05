@@ -11,11 +11,17 @@ $request = Zend\Diactoros\ServerRequestFactory::fromGlobals(
     $_SERVER, $_GET, $_POST, $_COOKIE, $_FILES
 );
 
-
-$container = new League\Container\Container;
+$container = (new League\Container\Container)->defaultToShared();
 $container->add(League\Plates\Engine::class)->addArgument('templates/');
 $container->add(League\Route\Router::class);
+$container->add(newsworthy39\Config::class);
+
 $router = $container->get(League\Route\Router::class);
+$templates = $container->get(League\Plates\Engine::class);
+$templates->registerFunction('variables', function($string) use ($container) {
+    $config = $container->get(newsworthy39\Config::class);
+    return $config->variables($string);
+});
 
 // map a route
 $router->map('GET', '/queue/{id}', function (ServerRequestInterface $request) : ResponseInterface {
@@ -40,4 +46,3 @@ $response = $router->dispatch($request);
 (new Zend\HttpHandlerRunner\Emitter\SapiEmitter)->emit($response);
 
 ?>
-
