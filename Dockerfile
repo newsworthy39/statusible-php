@@ -6,6 +6,7 @@ COPY worker.php worker.php
 COPY index.php index.php
 COPY templates/ templates/
 COPY src/ src/
+COPY assets/ assets/
 COPY composer.json composer.json
 
 LABEL maintainer="newsworthy39@github.com"
