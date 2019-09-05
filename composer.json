@@ -3,7 +3,6 @@
     "type": "project",
     "require": {
         "predis/predis": "^1.1",
-        "newsworthy39/moonly-network-php-api": "master",
         "league/route": "^4.3",
         "league/container": "^3.3",
         "zendframework/zend-diactoros": "^2.1",
@@ -27,13 +26,8 @@
             "email": "newsworthy39@github.com"
         }
     ],
-    "repositories":[
-        {
-            "type": "vcs",
-            "url": "https://github.com/newsworthy39/moonly-network-php-api"
-        }
-    ],
    
-    "minimum-stability": "dev",
+   
+    "minimum-stability": "stable",
     "prefer-stable": true
 }
