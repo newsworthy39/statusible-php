@@ -27,7 +27,6 @@ class BuildWorkerHandler
 
     public function handleBuildWorkerCommand(BuildWorkerCommand $command)
     {
-
         $app = new Config();
 
         // This is technically, a github-downloader-archive-downloader.
@@ -42,11 +41,8 @@ class BuildWorkerHandler
 
         // initialize curl, set auth tokens, and download zip-ball.	
         $cl = curl_init($archive_url);
-        curl_setopt($cl, CURLOPT_HTTPHEADER, array("Authorization: $token"));
         curl_setopt($cl, CURLOPT_RETURNTRANSFER, 1);
         curl_setopt($cl, CURLOPT_FOLLOWLOCATION, 1);
-        curl_setopt($cl, CURLOPT_USERAGENT, 'User-Agent: curl/7.64.0');
-
         // Set HTTP Header for POST request
         curl_setopt($cl, CURLOPT_HTTPHEADER, array(
             "Authorization: token $token",
@@ -77,7 +73,7 @@ class BuildWorkerHandler
 
         // containers, relying on this, should be built now.
         // prepare some github-to-bash variables, to make it easier to read.
-        $fullname = $payload->repository->full_name;
+        $fullname = $command->full_name;
         $folder = sprintf("%s/%s-%s", $workdir, str_replace('/', '-', $fullname), $id);
         $imagename = sprintf("%s:%s", $fullname, $id);
         $containername = explode('/', $fullname)[1];

@@ -6,6 +6,7 @@ class BuildWorkerCommand {
 
     public $id;
     public $archive_url;
+    public $full_name;
 
 }
 
