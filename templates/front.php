@@ -1,14 +1,14 @@
-<?php $this->layout('template', ['title' => 'sign-in']) ?>
+<?php $this->layout('template', ['title' => 'sign-in or sign-up']) ?>
 
 <div class="d-flex flex-column flex-md-row align-items-center p-3 px-md-4 mb-3 bg-white border-bottom shadow-sm">
-  <h5 class="my-0 mr-md-auto font-weight-normal"><?=$this->variables('site_title')?></h5>
+<h5 class="my-0 mr-md-auto font-weight-normal"><a href="/"><?= $this->variables('site_title') ?></a></h5>
   <nav class="my-2 my-md-0 mr-md-3">
     <a class="p-2 text-dark" href="#">Features</a>
     <a class="p-2 text-dark" href="#">Enterprise</a>
     <a class="p-2 text-dark" href="#">Support</a>
     <a class="p-2 text-dark" href="#">Pricing</a>
   </nav>
-  <a class="btn btn-outline-primary" href="#">Sign up</a>
+  <a class="btn btn-outline-primary" href="/signup">Sign up</a>
 </div>
 
 <div class="pricing-header px-3 py-3 pt-md-5 pb-md-4 mx-auto text-center">
@@ -32,7 +32,7 @@
           <li>Email support</li>
           <li>Help center access</li>
         </ul>
-        <button type="button" class="btn btn-lg btn-block btn-outline-primary">Sign up for free</button>
+        <button type="button" class="btn btn-lg btn-block btn-outline-primary"><a href="/signup">Sign up for free</a></button>
       </div>
     </div>
     <div class="card mb-4 shadow-sm">
@@ -51,7 +51,7 @@
           <li>Priority email support</li>
           <li>Help center access</li>
         </ul>
-        <button type="button" class="btn btn-lg btn-block btn-primary">Get started</button>
+        <button type="button" class="btn btn-lg btn-block btn-outline-primary"><a href="/signup">Get started</a></button>
       </div>
     </div>
     <div class="card mb-4 shadow-sm">
@@ -69,7 +69,7 @@
           <li>Phone and email support</li>
           <li>Help center access</li>
         </ul>
-        <button type="button" class="btn btn-lg btn-block btn-primary">Contact us</button>
+        <button type="button" class="btn btn-lg btn-block btn-outline-primary"><a href="/signup" class="">Contact us</a></button>
       </div>
     </div>
   </div>
