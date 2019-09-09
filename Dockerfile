@@ -1,12 +1,7 @@
 FROM ubuntu:19.04 
 
 WORKDIR /var/www/html/
-COPY deploy.php deploy.php
-COPY worker.php worker.php
-COPY index.php index.php
-COPY templates/ templates/
-COPY src/ src/
-COPY assets/ assets/
+
 COPY composer.json composer.json
 
 LABEL maintainer="newsworthy39@github.com"
@@ -25,5 +20,12 @@ RUN apt-get update \
       && rm -rf /var/lib/apt/lists/*
 
 RUN composer install --no-dev
+
+COPY deploy.php deploy.php
+COPY boyle.php boyle.php
+COPY index.php index.php
+COPY templates/ templates/
+COPY src/ src/
+COPY assets/ assets/
 
 CMD ["/usr/sbin/php-fpm7.2", "-F"]
