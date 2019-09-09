@@ -1,0 +1,82 @@
+<?php declare(strict_types = 1);
+
+require __DIR__ . '/vendor/autoload.php';
+
+use League\Container\ReflectionContainer;
+use League\Tactician\Container\ContainerLocator;
+use League\Container\Container;
+use League\Tactician\Handler\CommandHandlerMiddleware;
+use League\Tactician\Handler\CommandNameExtractor\ClassNameExtractor;
+use League\Tactician\Handler\MethodNameInflector\HandleClassNameInflector;
+use League\Tactician\CommandBus;
+use newsworthy39\Worker\Command\BuildWorkerCommand;
+use newsworthy39\Worker\Handler\BuildWorkerHandler;
+use newsworthy39\Worker\Command\PingWorkerCommand;
+use newsworthy39\Worker\Handler\PingWorkerHandler;
+use newsworthy39\Config;
+
+
+// Map your command classes to the container id of your handler. When using
+// League\Container, the container id is typically the class or interface name
+$mapping = [
+    BuildWorkerCommand::class =>  BuildWorkerHandler::class,
+    PingWorkerCommand::class => PingWorkerHandler::class
+];
+
+// Next we create a new Tactician ContainerLocator, passing in both
+// a fully configured container instance and the map.
+$containerLocator = new ContainerLocator(
+    (new Container())->delegate(new ReflectionContainer()),
+    $mapping
+);
+
+$handlerMiddleware = new CommandHandlerMiddleware(
+    new ClassNameExtractor(),
+    $containerLocator,
+    new HandleClassNameInflector()
+);
+$commandBus = new CommandBus([$handlerMiddleware]);
+
+// get container
+$app = new Config();
+
+// Parameters passed using a named array:
+$conn = $app->redis();
+$redis = new Predis\Client($conn + array('read_write_timeout' => 0));
+$pubsub = $redis->pubSubLoop();
+
+// Subscribe to your channels
+$pubsub->subscribe('control_channel', 'workqueue');
+
+// Start processing the pubsup messages. Open a terminal and use redis-cli
+// to push messages to the channels. Examples:
+//   ./redis-cli PUBLISH notifications "this is a test"
+//   ./redis-cli PUBLISH control_channel quit_loop
+foreach ($pubsub as $message) {
+    switch ($message->kind) {
+        case 'subscribe':
+            echo "Subscribed to {$message->channel}", PHP_EOL;
+            break;
+        case 'message':
+            if ($message->channel == 'control_channel') {
+                if ($message->payload == 'quit_loop') {
+                    echo 'Aborting pubsub loop...', PHP_EOL;
+                    $pubsub->unsubscribe();
+                } else {
+                    echo "Received an unrecognized command: {$message->payload}.", PHP_EOL;
+                }
+            } else {
+                echo "Received the following message from {$message->channel}:",
+                                PHP_EOL, "  {$message->payload}", PHP_EOL, PHP_EOL;
+
+                $command = unserialize($message->payload);
+
+                // handle code, via Tactician.
+                $commandBus->handle($command);
+
+                // log via framework?
+                // or via event?
+            }
+        }
+    }
+
