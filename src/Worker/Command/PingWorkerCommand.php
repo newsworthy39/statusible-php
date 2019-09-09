@@ -5,6 +5,7 @@ namespace newsworthy39\Worker\Command;
 class PingWorkerCommand {
     
     public $url;
+    public $user;
 
     public function __construct(String $url) {
         $this->url = $url;
