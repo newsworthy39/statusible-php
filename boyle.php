@@ -2,17 +2,24 @@
 
 require __DIR__ . '/vendor/autoload.php';
 
+// tactician stuff.
+use League\Container\Container;
+use League\Tactician\CommandBus;
 use League\Container\ReflectionContainer;
 use League\Tactician\Container\ContainerLocator;
-use League\Container\Container;
 use League\Tactician\Handler\CommandHandlerMiddleware;
 use League\Tactician\Handler\CommandNameExtractor\ClassNameExtractor;
 use League\Tactician\Handler\MethodNameInflector\HandleClassNameInflector;
-use League\Tactician\CommandBus;
+
+// our own.
 use newsworthy39\Worker\Command\BuildWorkerCommand;
 use newsworthy39\Worker\Handler\BuildWorkerHandler;
 use newsworthy39\Worker\Command\PingWorkerCommand;
 use newsworthy39\Worker\Handler\PingWorkerHandler;
+use newsworthy39\Worker\Command\SignupWorkerCommand;
+use newsworthy39\Worker\Handler\SignupWorkerHandler;
+
+// app config.
 use newsworthy39\Config;
 
 
@@ -20,7 +27,8 @@ use newsworthy39\Config;
 // League\Container, the container id is typically the class or interface name
 $mapping = [
     BuildWorkerCommand::class =>  BuildWorkerHandler::class,
-    PingWorkerCommand::class => PingWorkerHandler::class
+    PingWorkerCommand::class => PingWorkerHandler::class,
+    SignupWorkerCommand::class => SignupWorkerHandler::class,
 ];
 
 // Next we create a new Tactician ContainerLocator, passing in both
@@ -66,6 +74,7 @@ foreach ($pubsub as $message) {
                     echo "Received an unrecognized command: {$message->payload}.", PHP_EOL;
                 }
             } else {
+                
                 echo "Received the following message from {$message->channel}:",
                                 PHP_EOL, "  {$message->payload}", PHP_EOL, PHP_EOL;
 
