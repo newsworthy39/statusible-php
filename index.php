@@ -7,9 +7,12 @@ require __DIR__ . '/vendor/autoload.php';
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
 
+use newsworthy39\Config;
 use newsworthy39\Queue;
+use newsworthy39\User\User;
 use newsworthy39\Worker\Command\PingWorkerCommand;
-use newsworthy39\Worker\Command\SignupWorkerCommand;
+use newsworthy39\Event\UserSignupEvent;
+
 
 $request = Zend\Diactoros\ServerRequestFactory::fromGlobals(
     $_SERVER,
@@ -19,11 +22,7 @@ $request = Zend\Diactoros\ServerRequestFactory::fromGlobals(
     $_FILES
 );
 
-// Add elements to container
-$container = (new League\Container\Container)->defaultToShared();
-$container->add(League\Plates\Engine::class)->addArgument('templates/');
-$container->add(League\Route\Router::class);
-$container->add(newsworthy39\Config::class);
+$container = Config::container();
 
 // Wire different things together.
 $router = $container->get(League\Route\Router::class);
@@ -34,6 +33,8 @@ $templates->registerFunction('variables', function ($string) use ($container) {
 });
 
 $router->map('GET', '/', function (ServerRequestInterface $request) use ($container): ResponseInterface {
+    $params = $request->getQueryParams();
+    
     // Render a template
     $templates = $container->get(League\Plates\Engine::class);
     $response = new Zend\Diactoros\Response;
@@ -45,6 +46,7 @@ $router->map('GET', '/signup', function (ServerRequestInterface $request) use ($
     // Render a template
     $templates = $container->get(League\Plates\Engine::class);
     $response = new Zend\Diactoros\Response;
+    
     $response->getBody()->write($templates->render('signup'));
     return $response;
 });
@@ -56,32 +58,33 @@ $router->map('POST', '/signup', function (ServerRequestInterface $request) use (
 
     // Send to queue.
     $queue = new Queue();
-    $command = new SignupWorkerCommand($_POST['email']);
+    $user = User::create($_POST['email']);
+    $command = new UserSignupEvent($user);
     $queue->publish($command);
 
     return $response;
 });
 
-$router->map('GET', '/resetpassword', function (ServerRequestInterface $request) use ($container): ResponseInterface {
+$router->map('GET', '/user/{id}/resetpassword', function (ServerRequestInterface $request, array $args) use ($container): ResponseInterface {
 
     // verify email and token.
-    $email = $_GET['email'];
-    $token = $_GET['token'];
+    $uuid = $args['id'];
+    $params = $request->getQueryParams();
 
-    // if not, redirect to frontpage
-    if (isset($email) || isset($token)) {
+    $user = User::load($uuid);
+    if ($user && $user->token == $params['token']) {
+        // if ok, assume user is logged in, and show reset-password-form.
+        $templates = $container->get(League\Plates\Engine::class);
+        $response = new Zend\Diactoros\Response;
+        $response->getBody()->write($templates->render('resetpassword'));
+        return $response;
+    } else {
         $response = new Zend\Diactoros\Response\RedirectResponse('/?error=notokenoremail');
         return $response;
-    }
-
-    // if ok, assume user is logged in, and show reset-password-form.
-    $templates = $container->get(League\Plates\Engine::class);
-    $response = new Zend\Diactoros\Response;
-    $response->getBody()->write($templates->render('resetpassword'));
-    return $response;
+    }    
 });
 
-$router->map('POST', '/resetpassword', function (ServerRequestInterface $request) use ($container): ResponseInterface {
+$router->map('POST', '/user/{id}/resetpassword', function (ServerRequestInterface $request, array $args) use ($container): ResponseInterface {
     // if ok, assume user is logged in, and show reset-password-form.
 
     $response = new Zend\Diactoros\Response\RedirectResponse('/dashboard');
