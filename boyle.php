@@ -16,8 +16,9 @@ use newsworthy39\Worker\Command\BuildWorkerCommand;
 use newsworthy39\Worker\Handler\BuildWorkerHandler;
 use newsworthy39\Worker\Command\PingWorkerCommand;
 use newsworthy39\Worker\Handler\PingWorkerHandler;
-use newsworthy39\Worker\Command\SignupWorkerCommand;
-use newsworthy39\Worker\Handler\SignupWorkerHandler;
+
+use newsworthy39\Worker\Handler\SignupUserHandler;
+use newsworthy39\Event\UserSignupEvent;
 
 // app config.
 use newsworthy39\Config;
@@ -28,7 +29,7 @@ use newsworthy39\Config;
 $mapping = [
     BuildWorkerCommand::class =>  BuildWorkerHandler::class,
     PingWorkerCommand::class => PingWorkerHandler::class,
-    SignupWorkerCommand::class => SignupWorkerHandler::class,
+    UserSignupEvent::class => SignupUserHandler::class,
 ];
 
 // Next we create a new Tactician ContainerLocator, passing in both
