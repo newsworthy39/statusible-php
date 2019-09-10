@@ -40,9 +40,10 @@
       background-color: #f5f5f5;
     }
   </style>
-
+  <?= $this->section('scripts') ?>
   <title><?= $this->variables('site_title') ?> | <?= $this->e($title) ?></title>
 </head>
+
 <body>
   <!-- Optional JavaScript -->
   <!-- jQuery first, then Popper.js, then Bootstrap JS -->
@@ -53,5 +54,4 @@
   <?= $this->section('content') ?>
 
 </body>
-
 </html>
