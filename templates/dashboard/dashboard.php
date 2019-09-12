@@ -10,9 +10,7 @@
       <a class="p-2 text-dark" href="#">Pricing</a>
     </nav>
     <a class="btn btn-outline-primary" href="/user/signout">Sign out</a>
-
   </div>
-
 
   <footer class="pt-4 my-md-5 pt-md-5 border-top">
     <div class="row">
