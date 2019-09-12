@@ -9,7 +9,8 @@
       <a class="p-2 text-dark" href="#">Support</a>
       <a class="p-2 text-dark" href="#">Pricing</a>
     </nav>
-    <a class="btn btn-outline-primary" href="/signup">Sign up</a>
+    <a class="btn btn-outline-primary" href="/user/signin">Sign in</a>&nbsp;
+    <a class="btn btn-outline-primary" href="/user/signup">Sign up</a>
   </div>
 
   <div class="pricing-header px-3 py-3 pt-md-5 pb-md-4 mx-auto text-center">
@@ -31,7 +32,7 @@
           <li>5 Service-pages included</li>
           <li>Help center access</li>
         </ul>
-        <a href="/signup"><button type="button" class="btn btn-lg btn-block btn-outline-primary">Sign up for free</button></a>
+        <a href="/user/signup"><button type="button" class="btn btn-lg btn-block btn-outline-primary">Sign up for free</button></a>
       </div>
     </div>
     <div class="card mb-4 shadow-sm">
@@ -68,7 +69,7 @@
           <li>Phone and email support</li>
           <li>Help center access</li>
         </ul>
-        <a href="/signup"><button type="button" class="btn btn-lg btn-block btn-outline-primary">Contact us</button></a>
+        <a href="/user/signup"><button type="button" class="btn btn-lg btn-block btn-outline-primary">Contact us</button></a>
       </div>
     </div>
   </div>

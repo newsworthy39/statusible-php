@@ -1,7 +1,5 @@
 <?php $this->layout('template', ['title' => 'Reset Password']) ?>
 
-
-
 <div class="container">
 
     <div class="px-3 py-3 pt-md-5 pb-md-4 mx-auto text-center">
@@ -11,6 +9,7 @@
             <input type="password" name="password" id="password" class="form-control" placeholder="New password" required autofocus>
             <label for="inputPasswordRepeat" class="sr-only">Repeat password</label>
             <input type="password" id="confirm_password" class="form-control" placeholder="Confirm password" required>
+            <input type="hidden" id="token" class="form-control" value="<?=$this->e($token)?>">
             <br />
             <button class="btn btn-lg btn-primary btn-block" type="submit">Change Password</button>
             <p class="mt-5 mb-3 text-muted">&copy; 2017-2018</p>
