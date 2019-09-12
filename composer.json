@@ -20,8 +20,12 @@
     },
     "autoload": {
         "psr-4": {
-            "newsworthy39\\" : "src/"
-        }
+            "newsworthy39\\" : "src/",
+            "tests\\" : "tests/"
+        },
+        "files": [
+            "config/app.php"
+        ]
     },
     "authors": [
         {
