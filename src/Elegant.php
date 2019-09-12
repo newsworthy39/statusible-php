@@ -1,0 +1,129 @@
+<?php
+
+declare(strict_types=1);
+
+namespace newsworthy39;
+
+use PDO;
+
+class Elegant
+{
+    protected $tablename;
+    protected $fields;
+    protected $values;
+    protected $pkid = 'id';
+
+    public function __construct()
+    {
+        if (is_null($this->tablename)) {
+            $this->tablename = strtolower(Elegant::get_class_name(get_class($this)));
+        }
+    }
+
+    protected static function findModel(Elegant $instance, array $args)
+    {
+        try {
+
+            $pdo = app()->get(\PDO::class);
+
+            $placeholders = array();
+            $keys = array_keys($args);
+            foreach ($keys as $key) {
+                $placeholders[] = sprintf("%s = :%s", $key, $key);
+            }
+            $where = implode(' AND ', $placeholders);
+            $sql = sprintf("SELECT * from %s WHERE %s", $instance->tablename, $where);
+
+            $statement = $pdo->prepare($sql);
+
+            $statement->execute($args);
+
+            $found = false;
+
+            while ($row = $statement->fetch(PDO::FETCH_ASSOC)) {
+                $found = true;
+                $fields = array_keys($row);
+
+                foreach ($fields as $field) {
+                    $instance->$field = $row[$field];
+                }
+            }
+
+            $statement = null;
+        } catch (PDOException $error) {
+            printf("SQL error %s", $error);
+        }
+
+        if ($found) {
+            return $instance;
+        } else {
+            return false;
+        }
+    }
+
+    protected static function createModel(Elegant $instance)
+    {
+        try {
+
+            $pdo = app()->get(\PDO::class);
+
+            $placeholders = array();
+            $keys = array_keys($instance->values);
+            foreach ($keys as $key) {
+                $placeholders[] = sprintf(":%s", $key);
+            }
+
+            $sql = sprintf("INSERT INTO %s (%s) VALUES (%s)", $instance->tablename, implode(',', $keys),  implode(',', $placeholders));
+
+            $statement = $pdo->prepare($sql);
+            $statement->execute($instance->values);
+            $statement = null;
+        } catch (PDOException $error) {
+            printf("%s %s", __METHOD__, $error);
+        }
+
+        return $instance;
+    }
+
+    protected static function saveModel(Elegant $instance)
+    {
+        try {
+
+            $pdo = app()->get(\PDO::class);
+
+            $placeholders = array();
+            $keys = array_values($instance->fields);
+            foreach ($keys as $key) {
+                $placeholders[] = sprintf("%s = :%s", $key, $key);
+            }
+
+            $where = sprintf("%s = :%s", $instance->pkid, $instance->pkid);
+
+            $sql = sprintf("UPDATE %s SET %s WHERE %s", $instance->tablename, implode(',', $placeholders), $where);
+
+            $statement = $pdo->prepare($sql);
+
+            $statement->execute($instance->values);
+
+            $statement = null;
+        } catch (PDOException $error) {
+            printf("%s %s", __METHOD__, $error);
+        }
+    }
+
+    public function get_class_name($classname)
+    {
+        if ($pos = strrpos($classname, '\\')) return substr($classname, $pos + 1);
+        return $pos;
+    }
+
+    public function __get(String $field)
+    {
+        return $this->values[$field];
+    }
+
+    public function __set(String $field, String $value)
+    {
+        $this->values[$field] = $value;
+    }
+}

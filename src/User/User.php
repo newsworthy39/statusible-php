@@ -1,42 +1,54 @@
-<?php declare(strict_types = 1);
+<?php
+
+declare(strict_types=1);
 
 namespace newsworthy39\User;
-use newsworthy39\Config;
 
-class User {
-    
-    public $email;
-    public $token;
-    public $uuid;
+use newsworthy39\Elegant;
 
-    private function __construct(String $mail) {
-        $this->email = $mail;
-        $this->token = rand( 100, 10000);
-        $this->uuid  = sha1($mail);
+class User extends Elegant
+{
+    protected $tablename = 'users';
+
+    protected $fields = [
+        'email',
+        'token',
+        'password'
+    ];
+
+    function generateRandomString($length = 10) {
+        $characters = '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ';
+        $charactersLength = strlen($characters);
+        $randomString = '';
+        for ($i = 0; $i < $length; $i++) {
+            $randomString .= $characters[rand(0, $charactersLength - 1)];
+        }
+        return $randomString;
+    }
+   
+    public static function Find(String $email)
+    {
+        return self::findModel(new User(), array('email' => $email));
     }
 
-    public static function create(String $mail) {
-        $user = self::load($mail);
+    public static function FindUsingToken(String $token)
+    {
+        return self::findModel(new User(), array('token' => $token));
+    }
 
-        if (!$user) {
-            $user = new User($mail);
-        }
-
+    public static function Create(String $email)
+    {
+        $user =  new User();
+        $user->email = $email;
+        $user->token = $user->generateRandomString(64);
         return $user;
     }
 
-    public static function load(String $uuid) {
-        $app = Config::container();
-
-        // getORMlayer, or fail miserably.
-        // $app->get('ORMlayer')
-        // Perform get against the ormlayer.
-
-        return false;
-        
+    public function Store() {
+        self::createModel($this);
     }
 
-    public function store() {
-    
+    public function Update() {
+        self::saveModel($this);
     }
 }
