@@ -20,9 +20,8 @@ use newsworthy39\Worker\Handler\PingWorkerHandler;
 use newsworthy39\Worker\Handler\SignupUserHandler;
 use newsworthy39\Event\UserSignupEvent;
 
-// app config.
-use newsworthy39\Config;
-
+use newsworthy39\Event\UserSigninEvent;
+use newsworthy39\Worker\Handler\SigninUserHandler;
 
 // Map your command classes to the container id of your handler. When using
 // League\Container, the container id is typically the class or interface name
@@ -30,12 +29,13 @@ $mapping = [
     BuildWorkerCommand::class =>  BuildWorkerHandler::class,
     PingWorkerCommand::class => PingWorkerHandler::class,
     UserSignupEvent::class => SignupUserHandler::class,
+    UserSigninEvent::class => SigninUserHandler::class,
 ];
 
 // Next we create a new Tactician ContainerLocator, passing in both
 // a fully configured container instance and the map.
 $containerLocator = new ContainerLocator(
-    (new Container())->delegate(new ReflectionContainer()),
+    (app())->delegate(new ReflectionContainer()),
     $mapping
 );
 
@@ -46,13 +46,7 @@ $handlerMiddleware = new CommandHandlerMiddleware(
 );
 $commandBus = new CommandBus([$handlerMiddleware]);
 
-// get container
-$app = new Config();
-
-// Parameters passed using a named array:
-$conn = $app->redis();
-$redis = new Predis\Client($conn + array('read_write_timeout' => 0));
-$pubsub = $redis->pubSubLoop();
+$pubsub = app()->get(Predis\Client::class)->pubSubLoop();
 
 // Subscribe to your channels
 $pubsub->subscribe('control_channel', 'workqueue');
