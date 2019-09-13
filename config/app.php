@@ -32,12 +32,7 @@ function app() : League\Container\Container
             ->addArgument('secret')
             ->addArgument(array(\PDO::MYSQL_ATTR_INIT_COMMAND => 'SET NAMES utf8', \PDO::ATTR_ERRMODE => \PDO::ERRMODE_EXCEPTION ));
 
-        $container
-            ->add(\PDO::class)
-            ->addArgument('mysql:host=mysql;dbname=test')
-            ->addArgument('test')
-            ->addArgument('secret')
-            ->addArgument(array(\PDO::MYSQL_ATTR_INIT_COMMAND => 'SET NAMES utf8', \PDO::ATTR_ERRMODE => \PDO::ERRMODE_EXCEPTION ));
+        $container->add(newsworthy39\Factory\Tinker::class)->addArgument(\PDO::class);           
 
         // Wire different things together.
         $templates = $container->get(League\Plates\Engine::class);
@@ -83,10 +78,12 @@ class WebApplication
         $this->router = new League\Route\Router();
 
         $container = app();
+
+        // Make sure, we try to lookup classes from the container (app)
         $strategy = new ApplicationStrategy;
         $strategy->setContainer($container);
-
         $this->router->setStrategy($strategy);
+
         $this->router->map('GET', '/', newsworthy39\Controller\FrontController::class) ;
         $this->router->map('GET', '/user/signin', [ newsworthy39\User\Controller\UserController::class, 'signin']);
         $this->router->map('POST', '/user/signin', [ newsworthy39\User\Controller\UserController::class, 'postsignin']);
