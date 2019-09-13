@@ -13,11 +13,20 @@ class Elegant
     protected $values;
     protected $pkid = 'id';
 
-    public function __construct()
-    {
+    protected function primarykey() {
+        return 'id';
+    }
+
+    protected function foreignkey() {
+        return sprintf("%s%s", $this->tablename, primarykey());
+    }
+
+    protected function tablename() {
         if (is_null($this->tablename)) {
-            $this->tablename = strtolower(Elegant::get_class_name(get_class($this)));
+            return strtolower(Elegant::get_class_name(get_class($this)));
         }
+
+        return $this->tablename;
     }
 
     protected static function findModel(Elegant $instance, array $args)
@@ -32,7 +41,7 @@ class Elegant
                 $placeholders[] = sprintf("%s = :%s", $key, $key);
             }
             $where = implode(' AND ', $placeholders);
-            $sql = sprintf("SELECT * from %s WHERE %s", $instance->tablename, $where);
+            $sql = sprintf("SELECT * from %s WHERE %s", $instance->tablename(), $where);
 
             $statement = $pdo->prepare($sql);
 
@@ -73,7 +82,7 @@ class Elegant
                 $placeholders[] = sprintf(":%s", $key);
             }
 
-            $sql = sprintf("INSERT INTO %s (%s) VALUES (%s)", $instance->tablename, implode(',', $keys),  implode(',', $placeholders));
+            $sql = sprintf("INSERT INTO %s (%s) VALUES (%s)", $instance->tablename(), implode(',', $keys),  implode(',', $placeholders));
 
             $statement = $pdo->prepare($sql);
             $statement->execute($instance->values);
@@ -97,13 +106,35 @@ class Elegant
                 $placeholders[] = sprintf("%s = :%s", $key, $key);
             }
 
-            $where = sprintf("%s = :%s", $instance->pkid, $instance->pkid);
+            $where = sprintf("%s = :%s", $instance->primarykey(), $instance->primarykey());
 
-            $sql = sprintf("UPDATE %s SET %s WHERE %s", $instance->tablename, implode(',', $placeholders), $where);
+            $sql = sprintf("UPDATE %s SET %s WHERE %s", $instance->tablename(), implode(',', $placeholders), $where);
 
             $statement = $pdo->prepare($sql);
 
             $statement->execute($instance->values);
+
+            $statement = null;
+        } catch (PDOException $error) {
+            printf("%s %s", __METHOD__, $error);
+        }
+    }
+
+    protected function deleteModel(Elegant $instance) {
+
+        try {
+
+            $pdo = app()->get(\PDO::class);
+
+            // DELETE FROM table WHERE pkid = :pkid, $instance->$pkid
+
+            $where = sprintf("%s = :%s", $instance->primarykey(), $instance->primarykey());
+
+            $sql = sprintf("DELETE FROM `%s` WHERE %s", $instance->tablename(), $where);
+
+            $statement = $pdo->prepare($sql);
+
+            $statement->execute([$instance->primarykey() => $instance->values[$instance->primarykey()]]);
 
             $statement = null;
         } catch (PDOException $error) {
