@@ -1,8 +1,8 @@
 <?php declare(strict_types = 1);
 
-namespace newsworthy39\Worker\Handler;
+namespace newsworthy39\User\Handler;
 
-use newsworthy39\Event\UserSignupEvent;
+use newsworthy39\User\Event\UserSignupEvent;
 
 class SignupUserHandler {
     public function handleUserSignupEvent(UserSignupEvent $event) {

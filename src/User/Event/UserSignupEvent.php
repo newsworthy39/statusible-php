@@ -1,6 +1,6 @@
 <?php declare(strict_types = 1);
 
-namespace newsworthy39\Event;
+namespace newsworthy39\User\Event;
 use newsworthy39\User\User;
 
 class UserSignupEvent {

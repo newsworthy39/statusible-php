@@ -17,11 +17,11 @@ use newsworthy39\Worker\Handler\BuildWorkerHandler;
 use newsworthy39\Worker\Command\PingWorkerCommand;
 use newsworthy39\Worker\Handler\PingWorkerHandler;
 
-use newsworthy39\Worker\Handler\SignupUserHandler;
-use newsworthy39\Event\UserSignupEvent;
+use newsworthy39\User\Handler\SignupUserHandler;
+use newsworthy39\User\Event\UserSignupEvent;
 
-use newsworthy39\Event\UserSigninEvent;
-use newsworthy39\Worker\Handler\SigninUserHandler;
+use newsworthy39\User\Event\UserSigninEvent;
+use newsworthy39\User\Handler\SigninUserHandler;
 
 // Map your command classes to the container id of your handler. When using
 // League\Container, the container id is typically the class or interface name

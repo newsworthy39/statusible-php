@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace newsworthy39\User\Controller;
 
-use newsworthy39\Event\UserSigninEvent;
 use Psr\Http\Message\ServerRequestInterface;
 use Zend\Diactoros\Response\RedirectResponse;
 use newsworthy39\User\User;
@@ -12,7 +11,9 @@ use Psr\Http\Message\ResponseInterface;
 use Zend\Diactoros\Response;;
 
 use newsworthy39\Queue;
-use newsworthy39\Event\UserSignupEvent;
+
+use newsworthy39\User\Event\UserSignupEvent;
+use newsworthy39\User\Event\UserSigninEvent;
 
 class UserController
 {
@@ -133,13 +134,13 @@ class UserController
 
     public function signout(ServerRequestInterface $request): ResponseInterface
     {
-        session_start() ;
+        session_start();
         session_destroy();
 
         $_SESSION = array();
 
-         // Render a response
-         $response = new RedirectResponse('/');
-         return $response;
+        // Render a response
+        $response = new RedirectResponse('/');
+        return $response;
     }
 }
