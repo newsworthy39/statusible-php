@@ -3,7 +3,6 @@ declare(strict_types=1);
 
 namespace tests;
 
-use newsworthy39\Factory\Tinker;
 use PHPUnit\Framework\TestCase;
 
 class SystemTest extends TestCase {
@@ -12,7 +11,8 @@ class SystemTest extends TestCase {
 
     public static function setUpBeforeClass(): void
     {
-        self::$tinker = new Tinker;
+        self::$tinker = app()->get(\newsworthy39\Factory\Tinker::class);
+        
         self::$tinker->up();
     }
 

@@ -51,4 +51,8 @@ class User extends Elegant
     public function Update() {
         self::saveModel($this);
     }
+
+    public function Delete() {
+        self::deleteModel($this);
+    }
 }

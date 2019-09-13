@@ -6,12 +6,11 @@ namespace newsworthy39\Factory;
 
 class Tinker
 {
-
     private $pdo, $classes;
 
-    public function __construct()
+    public function __construct(\PDO $pdo)
     {
-        $this->pdo = app()->get(\PDO::class);
+        $this->pdo = $pdo;
 
         $this->classes = [
             \newsworthy39\Factory\Database\System::class

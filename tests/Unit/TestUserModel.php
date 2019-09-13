@@ -26,4 +26,10 @@ class TestUserModel extends SystemTest {
         $this->assertSame($user->email, 'test@virgin.com');
     }
 
+    public function testUserCanBeDeleted() {
+        $user = User::Find('test@virgin.com');
+        $this->assertSame($user->email, 'test@virgin.com');
+        $user->Delete();
+    }
+
 }
