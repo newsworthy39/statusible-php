@@ -1,33 +1,17 @@
 <?php $this->layout('template', ['title' => 'Dashboard']) ?>
 
 <div class="container">
-  <div class="d-flex flex-column flex-md-row align-items-center p-3 px-md-4 mb-3 bg-white border-bottom shadow-sm">
-    <h5 class="my-0 mr-md-auto font-weight-normal"><a href="/"><?= $this->variables('site_title') ?></a></h5>
-    <nav class="my-2 my-md-0 mr-md-3">
-      <a class="p-2 text-dark" href="#">Features</a>
-      <a class="p-2 text-dark" href="#">Enterprise</a>
-      <a class="p-2 text-dark" href="#">Support</a>
-      <a class="p-2 text-dark" href="#">Pricing</a>
-    </nav>
-    <a class="btn btn-outline-primary" href="/user/signout">Sign out</a>
+  <div class="d-flex flex-column flex-md-row align-items-center p-3 px-md-4 bg-white border-bottom shadow-sm">
+    <h5 class="my-0 mr-md-auto font-weight-normal"><a href="/"><?= $this->variables('site_title') ?></a> / Dashboard</h5>
   </div>
+
+  <?php $this->insert('dashboard/sidebar'); ?>
 
   <footer class="pt-4 my-md-5 pt-md-5 border-top">
     <div class="row">
       <div class="col-12 col-md">
         <img class="mb-2" src="/docs/4.3/assets/brand/bootstrap-solid.svg" alt="" width="24" height="24">
         <small class="d-block mb-3 text-muted">&copy; 2017-2019</small>
-      </div>
-      <div class="col-6 col-md">
-        <h5>Features</h5>
-        <ul class="list-unstyled text-small">
-          <li><a class="text-muted" href="#">Cool stuff</a></li>
-          <li><a class="text-muted" href="#">Random feature</a></li>
-          <li><a class="text-muted" href="#">Team feature</a></li>
-          <li><a class="text-muted" href="#">Stuff for developers</a></li>
-          <li><a class="text-muted" href="#">Another one</a></li>
-          <li><a class="text-muted" href="#">Last time</a></li>
-        </ul>
       </div>
       <div class="col-6 col-md">
         <h5>Resources</h5>
@@ -50,3 +34,9 @@
     </div>
   </footer>
 </div>
+
+<?php $this->push('scripts') ?>
+<script>
+  // Some JavaScript
+</script>
+<?php $this->end() ?>

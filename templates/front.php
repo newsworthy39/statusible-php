@@ -8,6 +8,7 @@
       <a class="p-2 text-dark" href="#">Enterprise</a>
       <a class="p-2 text-dark" href="#">Support</a>
     </nav>
+    
     <a class="btn btn-outline-primary" href="/user/signin">Sign in</a>&nbsp;
     <a class="btn btn-outline-primary" href="/user/signup">Sign up</a>
   </div>
