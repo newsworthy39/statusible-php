@@ -12,7 +12,8 @@ class System {
             "CREATE TABLE `content` (id integer not null primary key auto_increment)",
             "CREATE TABLE `users` (id integer not null primary key auto_increment, email varchar(255) not null, token varchar(64), password varchar(255) default '')",
             "CREATE TABLE `team`  (id integer not null primary key auto_increment, name varchar(255) not null)",
-            "CREATE TABLE `users_team_roles` (id integer not null primary key auto_increment, userid integer not null references users(id), teamid integer not null references team(id))"
+            "CREATE TABLE `users_team_roles` (id integer not null primary key auto_increment, userid integer not null references users(id), teamid integer not null references team(id))",
+            "CREATE TABLE `checks` (id integer not null primary key auto_increment, userid integer not null references users(id))"
         );
 
         $sqls = array(
@@ -27,7 +28,8 @@ class System {
             "DROP TABLE `content`",
             "DROP TABLE `users`",
             "DROP TABLE `team`",
-            "DROP TABLE `users_team_roles`"
+            "DROP TABLE `users_team_roles`",
+            "DROP TABLE `checks`"
         );
             
         return $tables;
