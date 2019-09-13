@@ -3,11 +3,13 @@
 declare(strict_types=1);
 
 use newsworthy39\Config;
+use League\Route\Http\Exception\NotFoundException;
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
 use League\Route\Strategy\ApplicationStrategy;
+use Zend\Diactoros\Response;;
 
-function app() : League\Container\Container
+function app(): League\Container\Container
 {
     static $container;
 
@@ -30,9 +32,9 @@ function app() : League\Container\Container
             ->addArgument('mysql:host=mysql;dbname=test')
             ->addArgument('test')
             ->addArgument('secret')
-            ->addArgument(array(\PDO::MYSQL_ATTR_INIT_COMMAND => 'SET NAMES utf8', \PDO::ATTR_ERRMODE => \PDO::ERRMODE_EXCEPTION ));
+            ->addArgument(array(\PDO::MYSQL_ATTR_INIT_COMMAND => 'SET NAMES utf8', \PDO::ATTR_ERRMODE => \PDO::ERRMODE_EXCEPTION));
 
-        $container->add(newsworthy39\Factory\Tinker::class)->addArgument(\PDO::class);           
+        $container->add(newsworthy39\Factory\Tinker::class)->addArgument(\PDO::class);
 
         // Wire different things together.
         $templates = $container->get(League\Plates\Engine::class);
@@ -59,7 +61,7 @@ function app() : League\Container\Container
         $container->add(newsworthy39\Dashboard\Controller\DashboardController::class)->addArgument(\League\Plates\Engine::class);
         $container->add(newsworthy39\AuthMiddleware::class)->addArgument(\PDO::class);
 
-        
+
         // self::$container->add(pdo...)
         // self::$container->add(MySQLDatabaseStrategy)->withArgument($container->get('pdo'));
         //self::$container->add(ORMlayer)->withArgument(MySQLDatabaseStrategy)->withArgument($container->get('pdo'));
@@ -84,19 +86,19 @@ class WebApplication
         $strategy->setContainer($container);
         $this->router->setStrategy($strategy);
 
-        $this->router->map('GET', '/', newsworthy39\Controller\FrontController::class) ;
-        $this->router->map('GET', '/user/signin', [ newsworthy39\User\Controller\UserController::class, 'signin']);
-        $this->router->map('POST', '/user/signin', [ newsworthy39\User\Controller\UserController::class, 'postsignin']);
+        $this->router->map('GET', '/', newsworthy39\Controller\FrontController::class);
+        $this->router->map('GET', '/user/signin', [newsworthy39\User\Controller\UserController::class, 'signin']);
+        $this->router->map('POST', '/user/signin', [newsworthy39\User\Controller\UserController::class, 'postsignin']);
 
-        $this->router->map('GET', '/user/signup', [ newsworthy39\User\Controller\UserController::class, 'signup']) ;
-        $this->router->map('POST', '/user/signup', [ newsworthy39\User\Controller\UserController::class, 'postsignup']);
-        $this->router->map('GET', '/user/signout', [ newsworthy39\User\Controller\UserController::class, 'signout']) ;
+        $this->router->map('GET', '/user/signup', [newsworthy39\User\Controller\UserController::class, 'signup']);
+        $this->router->map('POST', '/user/signup', [newsworthy39\User\Controller\UserController::class, 'postsignup']);
+        $this->router->map('GET', '/user/signout', [newsworthy39\User\Controller\UserController::class, 'signout']);
 
-        $this->router->map('GET', '/token/{id}/resetpassword', [ newsworthy39\User\Controller\UserController::class, 'resetUsingToken']);
-        $this->router->map('POST', '/token/{id}/resetpassword', [ newsworthy39\User\Controller\UserController::class, 'postResetUsingToken']);
-       
-        $this->router->group('/dashboard', function(\League\Route\RouteGroup $route) {
-            $route->map('GET','/', [newsworthy39\Dashboard\Controller\DashboardController::class, 'index']);
+        $this->router->map('GET', '/token/{id}/resetpassword', [newsworthy39\User\Controller\UserController::class, 'resetUsingToken']);
+        $this->router->map('POST', '/token/{id}/resetpassword', [newsworthy39\User\Controller\UserController::class, 'postResetUsingToken']);
+
+        $this->router->group('/dashboard', function (\League\Route\RouteGroup $route) {
+            $route->map('GET', '/', [newsworthy39\Dashboard\Controller\DashboardController::class, 'index']);
         })->middleware(new \newsworthy39\AuthMiddleware);
     }
 
@@ -107,9 +109,17 @@ class WebApplication
      *
      * @return \Psr\Http\Message\ResponseInterface
      */
-    public function invoke(ServerRequestInterface $request) : ResponseInterface
+    public function invoke(ServerRequestInterface $request): ResponseInterface
     {
-        // And dispatch the request.
-        return $this->router->dispatch($request);
+        try {
+            // And dispatch the request.
+            return $this->router->dispatch($request);
+        } catch (NotFoundException $exception) {
+            // If not found, thow this exception.
+            $templates = app()->get(League\Plates\Engine::class);
+            $response = new Response;
+            $response->getBody()->write($templates->render('notfound'));
+            return $response;
+        }
     }
 }
