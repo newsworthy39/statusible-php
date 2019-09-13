@@ -16,6 +16,10 @@ class User extends Elegant
         'password'
     ];
 
+    private function __construct() {
+
+    }
+
     function generateRandomString($length = 10) {
         $characters = '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ';
         $charactersLength = strlen($characters);
@@ -54,5 +58,13 @@ class User extends Elegant
 
     public function Delete() {
         self::deleteModel($this);
+    }
+
+    public function Checks() {
+        $checks = $this->has($this, Create::Create());
+    }
+
+    public function Teams() {
+
     }
 }
