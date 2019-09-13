@@ -21,7 +21,6 @@ RUN apt-get update \
 
 RUN composer install --no-dev
 
-COPY deploy.php deploy.php
 COPY boyle.php boyle.php
 COPY index.php index.php
 COPY templates/ templates/
