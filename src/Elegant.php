@@ -157,4 +157,10 @@ class Elegant
     {
         $this->values[$field] = $value;
     }
+
+    protected function belongsTo(Elegant $instance) {
+    }
+
+    protected function has(Elegant $right, Elegant $left) {
+    }
 }
