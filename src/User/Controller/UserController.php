@@ -6,12 +6,11 @@ namespace newsworthy39\User\Controller;
 
 use Psr\Http\Message\ServerRequestInterface;
 use Zend\Diactoros\Response\RedirectResponse;
-use newsworthy39\User\User;
 use Psr\Http\Message\ResponseInterface;
 use Zend\Diactoros\Response;;
 
 use newsworthy39\Queue;
-
+use newsworthy39\User\User;
 use newsworthy39\User\Event\UserSignupEvent;
 use newsworthy39\User\Event\UserSigninEvent;
 
@@ -57,10 +56,14 @@ class UserController
             // set password to sha1, rather important.
             $user->password = sha1($user->password);
 
+            // update token
+            $user->generateToken();
+
+            // update user.
             $user->Update();
         }
 
-        $response = new RedirectResponse('/');
+        $response = new RedirectResponse('/user/signin');
         return $response;
     }
 
