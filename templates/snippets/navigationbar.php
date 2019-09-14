@@ -12,17 +12,23 @@
         <a class="nav-link" href="/">Home <span class="sr-only">(current)</span></a>
       </li>
 
-      <?php if (!$signedIn) { ?>
+      <?php if (!$user) { ?>
         <li class="nav-item ">
           <a class="nav-link" href="/user/signin">Signin</a>
         </li>
       <?php } ?>
 
-      <?php if ($signedIn) { ?>
+      <?php if ($user) { ?>
         <li class="nav-item ">
           <a class="nav-link" href="/dashboard">Dashboard</a>
         </li>
       <?php } ?>
+
+      <?php if ($user) { ?>
+      <li class="nav-item ">
+          <a class="nav-link" href="/user/<?=$user->nickname?>">Account settings</a>
+        </li>
+        <?php } ?>
 
       <li class="nav-item dropdown">
         <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
@@ -35,7 +41,7 @@
           <a class="dropdown-item" href="#">Something else here</a>
         </div>
       </li>
-      <?php if ($signedIn) { ?>
+      <?php if ($user) { ?>
         <li class="nav-item ">
           <a class="nav-link" href="/user/signout">Signout</a>
         </li>

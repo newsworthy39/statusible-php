@@ -7,6 +7,9 @@
     <h1 class="display-4">Signup</h1>
     <p class="lead">Signup only requires a working e-mail address. We will send you a confirmation e-mail, with your login-link, shortly after registration.</p>
     <form class="form-signin" METHOD="POST">
+      <label for="inputNickname" class="sr-only">Nickname</label>
+      <input type="text" name="nickname" id="inputNickname" class="form-control" placeholder="Choose a nickname" required autofocus>
+
       <label for="inputEmail" class="sr-only">Email address</label>
       <input type="email" name="email" id="inputEmail" class="form-control" placeholder="Email address" required autofocus>
       <br />

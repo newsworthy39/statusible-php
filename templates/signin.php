@@ -7,6 +7,7 @@
     <h1 class="display-4">Signin</h1>
     <p class="lead">Use the credentials provided, when you <a href="/user/signup">signed up</a>.</p>
     <form class="form-signin" METHOD="POST">
+
       <label for="inputEmail" class="sr-only">Email address</label>
       <input type="email" name="email" id="inputEmail" class="form-control" placeholder="Email address" required autofocus>
       

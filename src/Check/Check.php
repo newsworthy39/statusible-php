@@ -41,7 +41,7 @@ class Check extends Elegant
 
     public function User()
     { 
-        $user = User::Create('');
+        $user = User::Create(array('email' => 'test@virgon.com','nickname' => 'test'));
         return self::findModel($user, array('id' => $this->values[$user->foreignkey()]));
     }
 
