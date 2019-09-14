@@ -13,17 +13,20 @@ use newsworthy39\User\User;
 
 class AuthMiddleware implements MiddlewareInterface
 {
-    private static $user;
-    public static function getUser(): User
+    public static function getUser()
     {
-        if (is_null(self::$user)) {
-            // if user has auth, use the request handler to continue to the next
-            // middleware and ultimately reach your route callable
+        if (session_id() == '' || !isset($_SESSION)) {
+            // session isn't started, so start one.
             session_start();
-            self::$user = $_SESSION['user'];
         }
 
-        return self::$user;
+        // If a user-object exists, 
+        if (isset($_SESSION['user'])) {
+            return $_SESSION['user'];
+        }
+
+
+        return false;
     }
 
     /**
