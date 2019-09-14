@@ -18,6 +18,8 @@ class DashboardController
     public function __construct(\League\Plates\Engine $templates)
     {
         $this->templates = $templates;
+
+        $this->templates->addData(['signedIn' => true]);
     }
 
     public function index(ServerRequestInterface $request): ResponseInterface
@@ -38,8 +40,8 @@ class DashboardController
 
         // Render a template
         $response = new Response;
-        $this->templates->addData( ['checkNotifications' => $notifications] , 'dashboard/sidebar');        
-        $response->getBody()->write($this->templates->render('dashboard/dashboard', [ 'user' => $user]));
+
+        $response->getBody()->write($this->templates->render('dashboard/dashboard', ['user' => $user]));
         return $response;
     }
 }

@@ -13,6 +13,7 @@ use newsworthy39\Queue;
 use newsworthy39\User\User;
 use newsworthy39\User\Event\UserSignupEvent;
 use newsworthy39\User\Event\UserSigninEvent;
+use newsworthy39\AuthMiddleware;
 
 class UserController
 {
@@ -20,6 +21,15 @@ class UserController
     public function __construct(\League\Plates\Engine $templates)
     {
         $this->templates = $templates;
+
+          // This will return a User, if one is logged in.
+          $user = AuthMiddleware::getUser();
+          if ($user) {              
+              $this->templates->addData( ['signedIn' => true] );
+          } else {
+            
+            $this->templates->addData( ['signedIn' => false] );
+          }
     }
 
     public function resetUsingToken(ServerRequestInterface $request, array $args): ResponseInterface
