@@ -6,7 +6,7 @@ $this->layout('template', ['title' => 'sign-in or sign-up']) ?>
 
 <div class="container">
 
-  <?php $this->insert('snippets/navigationbar', ['title' => $this->variables('site_title')]); ?>
+  <?php $this->insert('snippets/navigationbar'); ?>
 
   <div class="jumbotron">
     <h1 class="display-4">Features</h1>
