@@ -1,16 +1,23 @@
-<?php $this->layout('template', ['title' => 'sign-in or sign-up']) ?>
+<?php
+
+use newsworthy39\AuthMiddleware;
+
+$this->layout('template', ['title' => 'sign-in or sign-up']) ?>
 
 <div class="container">
-  <div class="d-flex flex-column flex-md-row align-items-center p-3 px-md-4 mb-3 bg-white border-bottom shadow-sm">
-    <h5 class="my-0 mr-md-auto font-weight-normal"><a href="/"><?= $this->variables('site_title') ?></a></h5>
-    <nav class="my-2 my-md-0 mr-md-3">
-      <a class="p-2 text-dark" href="#">Features</a>
-      <a class="p-2 text-dark" href="#">Enterprise</a>
-      <a class="p-2 text-dark" href="#">Support</a>
-    </nav>
-    
-    <a class="btn btn-outline-primary" href="/user/signin">Sign in</a>&nbsp;
-    <a class="btn btn-outline-primary" href="/user/signup">Sign up</a>
+
+  <?php $this->insert('navigationbar', ['title' => 'Statusible.com']); ?>
+
+  <div class="jumbotron">
+    <h1 class="display-4">Features</h1>
+    <p class="lead">This is a simple hero unit, a simple jumbotron-style component for calling extra attention to featured content or information.</p>
+    <hr class="my-4">
+    <p>It uses utility classes for typography and spacing to space content out within the larger container.</p>
+    <p class="lead ">
+    <div class="text-right">
+      <a class="btn btn-primary btn-lg" href="#" role="button">Learn more</a>
+    </div>
+    </p>
   </div>
 
   <div class="pricing-header px-3 py-3 pt-md-5 pb-md-4 mx-auto text-center">
@@ -51,7 +58,7 @@
           <li>Priority email support</li>
           <li>Help center access</li>
         </ul>
-        <a href="/signup"><button type="button" class="btn btn-lg btn-block btn-outline-primary">Get started</button></a>
+        <a href="/user/signup"><button type="button" class="btn btn-lg btn-block btn-outline-primary">Get started</button></a>
       </div>
     </div>
     <div class="card mb-4 shadow-sm">
@@ -72,6 +79,18 @@
         <a href="/user/signup"><button type="button" class="btn btn-lg btn-block btn-outline-primary">Contact us</button></a>
       </div>
     </div>
+  </div>
+
+  <div class="jumbotron">
+    <h1 class="display-4">Documentation</h1>
+    <p class="lead">This is a simple hero unit, a simple jumbotron-style component for calling extra attention to featured content or information.</p>
+    <hr class="my-4">
+    <p>It uses utility classes for typography and spacing to space content out within the larger container.</p>
+    <p class="lead ">
+      <div class="text-right">
+      <a class="btn btn-primary btn-lg" href="#" role="button">Learn more</a>
+    </div>
+    </p>
   </div>
 
   <footer class="pt-4 my-md-5 pt-md-5 border-top">

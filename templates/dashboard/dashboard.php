@@ -1,11 +1,10 @@
 <?php $this->layout('template', ['title' => 'Dashboard']) ?>
 
 <div class="container">
-  <div class="d-flex flex-column flex-md-row align-items-center p-3 px-md-4 bg-white border-bottom shadow-sm">
-    <h5 class="my-0 mr-md-auto font-weight-normal"><a href="/"><?= $this->variables('site_title') ?></a> / Dashboard</h5>
-  </div>
 
-  <?php $this->insert('dashboard/sidebar'); ?>
+<?php $this->insert('navigationbar', ['title' => 'Dashboard', 'path' => $_REQUEST['uri'], 'signedIn' => true]); ?>
+
+
 
   <footer class="pt-4 my-md-5 pt-md-5 border-top">
     <div class="row">
