@@ -18,7 +18,7 @@ class TestCheckModel extends SystemTest
     public function testCheckCanHaveUsers() {
 
         
-            $user = User::Create('test@virgin.com');
+            $user = User::Create([ 'email' => 'test@virgin.com' , 'nickname' => 'test']);
             $user->Store();
     
             $check = Check::Create();

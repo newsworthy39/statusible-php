@@ -9,12 +9,12 @@ class TestUserModel extends SystemTest {
 
     
     public function testUserCanBeCreated() {
-        $user = User::Create('test@virgin.com');
+        $user = User::Create([ 'email' => 'test@virgin.com' , 'nickname' => 'test']);
         $this->assertSame($user->email, 'test@virgin.com');
     }
 
     public function testUserCanBeStored() {
-        $user = User::Create('test@virgin.com');
+        $user = User::Create([ 'email' => 'test@virgin.com' , 'nickname' => 'test']);
         $user->Store();
 
         $user2 = User::Find($user->email);
@@ -33,7 +33,7 @@ class TestUserModel extends SystemTest {
     }
 
     public function testUserCanFindChecks() {
-        $user = User::Create('test@virgin.com');
+        $user = User::Create([ 'email' => 'test@virgin.com' , 'nickname' => 'test']);
         $user->Store();
 
         $check = Check::Create();

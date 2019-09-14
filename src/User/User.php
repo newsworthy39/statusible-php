@@ -14,11 +14,13 @@ class User extends Elegant
     protected $fields = [
         'email',
         'token',
-        'password'
+        'password',
+        'tfasalt',
+        'nickname'
     ];
 
     private function __construct() {
-
+        $this->generateToken();
     }   
    
     public static function Find(String $email)
@@ -35,11 +37,12 @@ class User extends Elegant
         $this->token = $this->generateRandomString(64);
     }
 
-    public static function Create(String $email) : User
+    public static function Create(Array $arguments) : User
     {
         $user =  new User();
-        $user->email = $email;
-        $user->generateToken();
+        foreach($arguments as $key=>$value) {
+            $user->$key = $value;
+        }
 
         return $user;
     }

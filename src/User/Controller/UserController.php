@@ -22,14 +22,8 @@ class UserController
     {
         $this->templates = $templates;
 
-          // This will return a User, if one is logged in.
-          $user = AuthMiddleware::getUser();
-          if ($user) {              
-              $this->templates->addData( ['signedIn' => true] );
-          } else {
-            
-            $this->templates->addData( ['signedIn' => false] );
-          }
+        $this->templates->addData(['user' => AuthMiddleware::getUser()]);
+          
     }
 
     public function resetUsingToken(ServerRequestInterface $request, array $args): ResponseInterface
@@ -94,7 +88,8 @@ class UserController
         if ($user == false) {
 
             $queue = new Queue();
-            $user = User::create($allPostPutVars['email']);
+            $user = User::create($allPostPutVars);
+
             $user->Store();
 
             // send event.
