@@ -68,6 +68,7 @@
         margin-right: -15px;
       }
     }
+    
 
     footer {
       padding-left: 15px;

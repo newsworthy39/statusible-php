@@ -4,7 +4,7 @@
     <span class="navbar-toggler-icon"></span>
   </button>
 
-  <a class="navbar-brand" href="#">  <img src="/assets/statusible-100x100.png" width="32" height="32" class="d-inline-block align-top" alt=""></a>
+  <a class="navbar-brand" href="#"> <img src="/assets/statusible-100x100.png" width="32" height="32" class="d-inline-block align-top" alt=""></a>
 
   <div class="collapse navbar-collapse justify-content-end" id="navbarSupportedContent">
     <ul class="navbar-nav mr-auto">
@@ -31,10 +31,17 @@
         <li class="nav-item ">
           <a class="nav-link" href="/dashboard">Dashboard</a>
         </li>
+        <li class="nav-item ">
+          <a class="nav-link" href="/notifications">Notifications <span class="badge badge-primary"><?= $notifications ?></span></a>
+        </li>
+
+        <li class="nav-item ">
+          <a class="nav-link " href="/teams">Teams <span class="badge badge-primary">4</span></a>
+        </li>
 
         <li class="nav-item dropdown">
           <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-            Projects
+            Sites
           </a>
           <div class="dropdown-menu" aria-labelledby="navbarDropdown">
             <a class="dropdown-item" href="#">Action</a>
@@ -48,20 +55,14 @@
           <a class="nav-link" href="/user/<?= $user->nickname ?>">Account settings</a>
         </li>
 
-        <li class="nav-item ">
-          <a class="nav-link" href="/teams">Teams</a>
-        </li>
-
-        <li class="nav-item ">
-          <a class="nav-link" href="#"><hr></a>
-        </li>
+        <div class="dropdown-divider"></div>
 
         <li class="nav-item ">
           <a class="nav-link" href="/user/signout">Signout</a>
         </li>
       <?php } ?>
-
     </ul>
+    <div class="dropdown-divider"></div>
     <form class="form-inline my-2 my-lg-0">
       <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search">
       <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
