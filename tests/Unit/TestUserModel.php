@@ -3,7 +3,7 @@ declare(strict_types=1);
 
 use tests\SystemTest;
 use newsworthy39\User\User;
-
+use newsworthy39\Check\Check;
 
 class TestUserModel extends SystemTest {
 
@@ -32,4 +32,17 @@ class TestUserModel extends SystemTest {
         $user->Delete();
     }
 
+    public function testUserCanFindChecks() {
+        $user = User::Create('test@virgin.com');
+        $user->Store();
+
+        $check = Check::Create();
+        $check->assignTo($user);
+        
+        $check->Store();
+        $this->assertSame($check->usersid, $user->id);
+
+        $checks = $user->Checks();
+        $this->assertSame($checks[0]->identifier, $check->identifier);
+    }
 }

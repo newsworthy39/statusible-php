@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace newsworthy39\User;
 
 use newsworthy39\Elegant;
+use newsworthy39\Check\Check;
 
 class User extends Elegant
 {
@@ -18,17 +19,7 @@ class User extends Elegant
 
     private function __construct() {
 
-    }
-
-    function generateRandomString($length = 10) {
-        $characters = '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ';
-        $charactersLength = strlen($characters);
-        $randomString = '';
-        for ($i = 0; $i < $length; $i++) {
-            $randomString .= $characters[rand(0, $charactersLength - 1)];
-        }
-        return $randomString;
-    }
+    }   
    
     public static function Find(String $email)
     {
@@ -40,11 +31,16 @@ class User extends Elegant
         return self::findModel(new User(), array('token' => $token));
     }
 
-    public static function Create(String $email)
+    public function generateToken() {
+        $this->token = $this->generateRandomString(64);
+    }
+
+    public static function Create(String $email) : User
     {
         $user =  new User();
         $user->email = $email;
-        $user->token = $user->generateRandomString(64);
+        $user->generateToken();
+
         return $user;
     }
 
@@ -60,11 +56,21 @@ class User extends Elegant
         self::deleteModel($this);
     }
 
-    public function Checks() {
-        $checks = $this->has($this, Create::Create());
+    public function Checks()  {
+        return $this->has($this, Check::Create());      
     }
 
     public function Teams() {
 
+    }
+
+    private function generateRandomString($length = 10) {
+        $characters = '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ';
+        $charactersLength = strlen($characters);
+        $randomString = '';
+        for ($i = 0; $i < $length; $i++) {
+            $randomString .= $characters[rand(0, $charactersLength - 1)];
+        }
+        return $randomString;
     }
 }

@@ -5,13 +5,12 @@ declare(strict_types=1);
 namespace newsworthy39\Dashboard\Controller;
 
 use Psr\Http\Message\ServerRequestInterface;
-use Zend\Diactoros\Response\RedirectResponse;
-use newsworthy39\User\User;
 use Psr\Http\Message\ResponseInterface;
 use Zend\Diactoros\Response;;
 
-use newsworthy39\Queue;
-use newsworthy39\Event\UserSignupEvent;
+use newsworthy39\Check\Check;
+use newsworthy39\AuthMiddleware;
+
 
 class DashboardController
 {
@@ -23,10 +22,24 @@ class DashboardController
 
     public function index(ServerRequestInterface $request): ResponseInterface
     {
+        // our dashboard are guarded, with the authmiddleware. 
+        $user = AuthMiddleware::getUser();
+
+        //$check = Check::Create();
+        //$check->assignTo($user);
+        //$check->store();
+
+        // get checks.
+        $checks = $user->Checks();
+        $notifications = 0;
+        foreach ($checks as $check) {
+            $notifications += $check->getNotifications();
+        }
 
         // Render a template
         $response = new Response;
-        $response->getBody()->write($this->templates->render('dashboard/dashboard'));
+        $this->templates->addData( ['checkNotifications' => $notifications] , 'dashboard/sidebar');        
+        $response->getBody()->write($this->templates->render('dashboard/dashboard', [ 'user' => $user]));
         return $response;
     }
 }

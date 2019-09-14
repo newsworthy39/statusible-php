@@ -18,7 +18,7 @@ class Elegant
     }
 
     protected function foreignkey() {
-        return sprintf("%s%s", $this->tablename, primarykey());
+        return sprintf("%s%s", $this->tablename, $this->primarykey());
     }
 
     protected function tablename() {
@@ -86,6 +86,8 @@ class Elegant
 
             $statement = $pdo->prepare($sql);
             $statement->execute($instance->values);
+            $instance->{$instance->primarykey()} = $pdo->lastInsertId();
+
             $statement = null;
         } catch (PDOException $error) {
             printf("%s %s", __METHOD__, $error);
@@ -158,9 +160,50 @@ class Elegant
         $this->values[$field] = $value;
     }
 
-    protected function belongsTo(Elegant $instance) {
+    public function assignTo(Elegant $left) {
+        
+        $this->values[$left->foreignkey()] = $left->values[$left->primarykey()];
     }
 
-    protected function has(Elegant $right, Elegant $left) {
+    protected function belongsTo(Elegant $instance) {
+        
+    }
+
+    protected function has(Elegant $left, Elegant $right) {
+
+        // select * from right where right.fkid = left.pkid
+        $result = array();
+        try {
+
+            $pdo = app()->get(\PDO::class);
+            
+            $sql = sprintf("SELECT r.* from %s r, %s l WHERE r.%s=:l%s", $right->tablename(), $left->tablename(), $left->foreignkey(), $left->foreignkey());
+
+            $statement = $pdo->prepare($sql);
+
+            $statement->execute([sprintf("l%s", $left->foreignkey()) => $left->values[$left->primarykey()]]);
+
+            $found = false;
+            while ($row = $statement->fetch(PDO::FETCH_ASSOC)) {
+                $found = true;
+                $fields = array_keys($row);
+
+                $t = $right::Create();
+                foreach ($fields as $field) {
+                    $t->$field = $row[$field];
+                }
+                array_push($result, $t);
+            }
+
+            $statement = null;
+        } catch (PDOException $error) {
+            printf("SQL error %s", $error);
+        }
+
+        if ($found) {
+            return $result; 
+        } else {
+            return false;
+        }
     }
 }
