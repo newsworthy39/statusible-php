@@ -13,7 +13,8 @@ class Tinker
         $this->pdo = $pdo;
 
         $this->classes = [
-            \newsworthy39\Factory\Database\System::class
+            \newsworthy39\Factory\Database\System::class,
+            \newsworthy39\Factory\Database\Migrations\SystemIndexes::class
         ];
     }
 
@@ -25,6 +26,12 @@ class Tinker
                 $statements = $object->up();
                 foreach ($statements as $statement) {
                     $status = $this->pdo->exec($statement);
+
+                    // insert into migrations.
+                    $sql = "INSERT INTO `migrations` (classname) VALUES (:classname)";
+                    $statement = $this->pdo->prepare($sql);
+                    $statement->execute(array('classname' => $class));
+                    $statement = null;
                 }
             }
         } catch (PDOException $e) {
@@ -40,6 +47,12 @@ class Tinker
                 $statements = $object->down();
                 foreach ($statements as $statement) {
                     $this->pdo->exec($statement);
+
+                      // remove from  migrations.
+                      $sql = "DELETE FROM `migrations` WHERE classname = :classname";
+                      $statement = $this->pdo->prepare($sql);
+                      $statement->execute(array('classname' => $class));
+                      $statement = null;
                 }
             }
         } catch (PDOException $e) {
