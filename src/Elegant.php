@@ -83,7 +83,7 @@ class Elegant
             }
 
             $sql = sprintf("INSERT INTO %s (%s) VALUES (%s)", $instance->tablename(), implode(',', $keys),  implode(',', $placeholders));
-
+            
             $statement = $pdo->prepare($sql);
             $statement->execute($instance->values);
             $instance->{$instance->primarykey()} = $pdo->lastInsertId();
