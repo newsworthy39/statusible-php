@@ -4,12 +4,12 @@
     <span class="navbar-toggler-icon"></span>
   </button>
 
-  <a class="navbar-brand" href="<?= $path ?>"><?= $title ?></a>
+  <a class="navbar-brand" href="<?= $path ? $path : $_REQUEST['uri'] ?>"><?= $title ?></a>
 
   <div class="collapse navbar-collapse justify-content-end" id="navbarSupportedContent">
     <ul class="navbar-nav mr-auto">
       <li class="nav-item active">
-        <a class="nav-link" href="#">Home <span class="sr-only">(current)</span></a>
+        <a class="nav-link" href="/">Home <span class="sr-only">(current)</span></a>
       </li>
 
       <li class="nav-item ">

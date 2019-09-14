@@ -32,4 +32,6 @@
         password.onchange = validatePassword;
         confirm_password.onkeyup = validatePassword;
     </script>
+
+    <?php $this->insert('snippets/footer', ['acceptCookies' => false]); ?>    
 </div>
