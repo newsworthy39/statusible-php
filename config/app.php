@@ -17,27 +17,21 @@ function app(): League\Container\Container
 
         $container = (new League\Container\Container)->defaultToShared();
 
-        // default router.
-        $container->add(League\Route\Router::class);
-
-        // Add elements to container
+     
+   // Add elements to container
         $container->add(League\Plates\Engine::class)->addArgument('templates');
-        $container->add(League\Route\Router::class);
         $container->add(Config::class);
-
-        $config = $container->get(Config::class);
-
         $container
             ->add(\PDO::class)
             ->addArgument('mysql:host=mysql;dbname=test')
             ->addArgument('test')
             ->addArgument('secret')
             ->addArgument(array(\PDO::MYSQL_ATTR_INIT_COMMAND => 'SET NAMES utf8', \PDO::ATTR_ERRMODE => \PDO::ERRMODE_EXCEPTION));
-
         $container->add(newsworthy39\Factory\Tinker::class)->addArgument(\PDO::class);
 
         // Wire different things together.
         $templates = $container->get(League\Plates\Engine::class);
+        $config = $container->get(Config::class);
         $templates->registerFunction('variables', function ($string) use ($config) {
             return $config->variables($string);
         });
@@ -56,6 +50,7 @@ function app(): League\Container\Container
             return new Predis\Client($config);
         });
 
+        // Controllers, for route lookup w/ dependency injection.
         $container->add(newsworthy39\User\Controller\UserController::class)->addArgument(\League\Plates\Engine::class);
         $container->add(newsworthy39\Controller\FrontController::class)->addArgument(\League\Plates\Engine::class);
         $container->add(newsworthy39\Dashboard\Controller\DashboardController::class)->addArgument(\League\Plates\Engine::class);
