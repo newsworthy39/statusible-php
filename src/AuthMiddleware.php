@@ -25,7 +25,6 @@ class AuthMiddleware implements MiddlewareInterface
             return $_SESSION['user'];
         }
 
-
         return false;
     }
 
