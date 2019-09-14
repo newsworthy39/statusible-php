@@ -57,8 +57,16 @@
       background-color: #f5f5f5;
     }
 
-    .card-deck .card {
-      min-width: 220px;
+    .card-deck {
+      margin-left: 0px;
+      margin-right: 0px;
+    }
+
+    @media(max-width: 330px) {
+      .card-deck {
+        margin-left: -15px;
+        margin-right: -15px;
+      }
     }
 
     footer {
