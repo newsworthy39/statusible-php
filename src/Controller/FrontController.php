@@ -15,13 +15,7 @@ class FrontController {
     public function __construct( \League\Plates\Engine $templates) {
         $this->templates = $templates;
 
-          // This will return a User, if one is logged in.
-          $user = AuthMiddleware::getUser();
-          if ($user) {
-              $this->templates->addData( ['signedIn' => true] );
-          } else {
-            $this->templates->addData( ['signedIn' => false] );
-          }
+        $this->templates->addData(['user' => AuthMiddleware::getUser()]);
     }
 
     public function __invoke(ServerRequestInterface $request) : ResponseInterface {

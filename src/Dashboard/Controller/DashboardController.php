@@ -19,7 +19,7 @@ class DashboardController
     {
         $this->templates = $templates;
 
-        $this->templates->addData(['signedIn' => true]);
+        $this->templates->addData(['user' => AuthMiddleware::getUser()]);
     }
 
     public function index(ServerRequestInterface $request): ResponseInterface
@@ -40,8 +40,7 @@ class DashboardController
 
         // Render a template
         $response = new Response;
-
-        $response->getBody()->write($this->templates->render('dashboard/dashboard', ['user' => $user]));
+        $response->getBody()->write($this->templates->render('dashboard/dashboard'));        
         return $response;
     }
 }
