@@ -40,6 +40,7 @@ class DashboardController
 
         // Render a template
         $response = new Response;
+        $this->templates->addData(['notifications' => $notifications]);
         $response->getBody()->write($this->templates->render('dashboard/dashboard'));        
         return $response;
     }
