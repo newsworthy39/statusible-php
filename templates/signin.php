@@ -1,7 +1,7 @@
 <?php $this->layout('template', ['title' => 'sign-in']) ?>
 
 <div class="container">
-<?php $this->insert('snippets/navigationbar', ['title' => 'Statusible.com / Signin']); ?>
+<?php $this->insert('snippets/navigationbar', ['title' => sprintf("%s / %s", $this->variables('site_title'), 'signin')]); ?>
 
   <div class="px-3 py-3 pt-md-5 pb-md-4 mx-auto text-center">
     <h1 class="display-4">Signin</h1>

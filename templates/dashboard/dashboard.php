@@ -2,8 +2,8 @@
 
 <div class="container">
 
-  <?php $this->insert('snippets/navigationbar', ['title' => 'Dashboard', 'signedIn' => true]); ?>
+  <?php $this->insert('snippets/navigationbar', ['title' => sprintf("%s / %s", $this->variables('site_title'), 'dashboard')]); ?>
 
-  <?php $this->insert('snippets/footer', ['acceptCookies' => false]); ?>
+  <?php $this->insert('snippets/footer'); ?>
 
 </div>

@@ -4,7 +4,7 @@
     <span class="navbar-toggler-icon"></span>
   </button>
 
-  <a class="navbar-brand" href="<?= $path ? $path : $_REQUEST['uri'] ?>"><?= $title ?></a>
+  <a class="navbar-brand" href="#"><?= $title ?></a>
 
   <div class="collapse navbar-collapse justify-content-end" id="navbarSupportedContent">
     <ul class="navbar-nav mr-auto">
@@ -12,9 +12,17 @@
         <a class="nav-link" href="/">Home <span class="sr-only">(current)</span></a>
       </li>
 
-      <li class="nav-item ">
-        <a class="nav-link <?= $signedIn ? "disabled" : "" ?>" href="/user/signin">Signin</a>
-      </li>
+      <?php if (!$signedIn) { ?>
+        <li class="nav-item ">
+          <a class="nav-link" href="/user/signin">Signin</a>
+        </li>
+      <?php } ?>
+
+      <?php if ($signedIn) { ?>
+        <li class="nav-item ">
+          <a class="nav-link" href="/dashboard">Dashboard</a>
+        </li>
+      <?php } ?>
 
       <li class="nav-item dropdown">
         <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
@@ -27,9 +35,12 @@
           <a class="dropdown-item" href="#">Something else here</a>
         </div>
       </li>
-      <li class="nav-item">
-        <a class="nav-link <?= !$signedIn ? "disabled" : "" ?>" href="/user/signout">Signout</a>
-      </li>
+      <?php if ($signedIn) { ?>
+        <li class="nav-item ">
+          <a class="nav-link" href="/user/signout">Signout</a>
+        </li>
+      <?php } ?>
+
     </ul>
     <form class="form-inline my-2 my-lg-0">
       <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search">

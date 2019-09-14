@@ -2,7 +2,7 @@
 
 <div class="container">
 
-<?php $this->insert('navigationbar', ['title' => 'Dashboard', 'path' => $_REQUEST['uri'], 'signedIn' => true]); ?>
+<?php $this->insert('navigationbar', ['title' => 'Dashboard']); ?>
 
     <div class="px-3 py-3 pt-md-5 pb-md-4 mx-auto text-center">
         <h1 class="display-5">Reset password</h1>

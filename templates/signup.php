@@ -1,7 +1,7 @@
-<?php $this->layout('template', ['title' => 'sign-up']) ?>
+<?php $this->layout('template', ['title' => 'signup']) ?>
 
 <div class="container">
-<?php $this->insert('snippets/navigationbar', ['title' => 'Statusible.com / Signup']); ?>
+<?php $this->insert('snippets/navigationbar', ['title' => sprintf("%s / %s", $this->variables('site_title'), 'signup')]); ?>
 
   <div class="px-3 py-3 pt-md-5 pb-md-4 mx-auto text-center">
     <h1 class="display-4">Signup</h1>
@@ -17,7 +17,7 @@
   <footer class="pt-4 my-md-5 pt-md-5 border-top">
     <div class="row">
       <div class="col-12 col-md">
-        <img class="mb-2" src="/docs/4.3/assets/brand/bootstrap-solid.svg" alt="" width="24" height="24">
+        
         <small class="d-block mb-3 text-muted">&copy; <?php echo date("Y"); ?></small>
       </div>
       <div class="col-6 col-md">
