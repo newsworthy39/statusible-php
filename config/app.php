@@ -114,9 +114,9 @@ class WebApplication
             $templates = app()->get(League\Plates\Engine::class);
             $response = new Response;
 
-             // This will return a User, if one is logged in.
-             // But never create session on 404-pages! (just-imagine!)
-            $templates->addData( ['signedIn' => false] );          
+            // This will return a User, if one is logged in.
+            // But never create session on 404-pages! (just-imagine!)
+            $templates->addData(['user' => false]);     
             $response->getBody()->write($templates->render('notfound'));
             return $response;
         }
