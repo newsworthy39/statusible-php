@@ -6,7 +6,7 @@
         </li>
         <li style="margin-left: 15px" class="list-group-item d-flex justify-content-between align-items-center">
             <a href="/dashboard/checks">Checks</a>
-            <span class="badge badge-primary badge-pill">2</span>
+            <span class="badge badge-primary badge-pill"><?=$checkNotifications?></span>
         </li>
         <li style="margin-left: 15px" class="list-group-item d-flex justify-content-between align-items-center">
             Reports
