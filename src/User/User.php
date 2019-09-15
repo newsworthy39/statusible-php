@@ -19,10 +19,11 @@ class User extends Elegant
         'nickname'
     ];
 
-    private function __construct() {
+    private function __construct()
+    {
         $this->generateToken();
-    }   
-   
+    }
+
     public static function Find(String $email)
     {
         return self::findModel(new User(), array('email' => $email));
@@ -33,41 +34,66 @@ class User extends Elegant
         return self::findModel(new User(), array('token' => $token));
     }
 
-    public function generateToken() {
+    public function generateToken()
+    {
         $this->token = $this->generateRandomString(64);
     }
 
-    public static function Create(Array $arguments) : User
+    public static function Create(array $arguments): User
     {
         $user =  new User();
-        foreach($arguments as $key=>$value) {
+        foreach ($arguments as $key => $value) {
             $user->$key = $value;
         }
 
         return $user;
     }
 
-    public function Store() {
+    public function Store()
+    {
         self::createModel($this);
     }
 
-    public function Update() {
+    public function Update()
+    {
         self::saveModel($this);
     }
 
-    public function Delete() {
+    public function Delete()
+    {
         self::deleteModel($this);
     }
 
-    public function Checks()  {
-        return $this->has($this, Check::Create());      
+    public function Checks()
+    {
+        return $this->has($this, Check::Create());
     }
 
-    public function Teams() {
+    public function Teams()
+    { }
 
+    public function Nickname()
+    {
+        return $this->nickname;
     }
 
-    private function generateRandomString($length = 10) {
+    public function getNotifications()
+    {
+        // get checks.
+        $checks = $this->Checks();
+        if ($checks) {
+            $notifications = 0;
+            foreach ($checks as $check) {
+                $notifications += $check->getNotifications();
+            }
+            return $notifications;
+        }
+
+        return 0;
+    }
+
+    private function generateRandomString($length = 10)
+    {
         $characters = '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ';
         $charactersLength = strlen($characters);
         $randomString = '';

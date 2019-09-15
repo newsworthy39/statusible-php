@@ -27,21 +27,12 @@ class DashboardController
         // our dashboard are guarded, with the authmiddleware. 
         $user = AuthMiddleware::getUser();
 
-        //$check = Check::Create();
-        //$check->assignTo($user);
-        //$check->store();
 
-        // get checks.
-        $checks = $user->Checks();
-        $notifications = 0;
-        foreach ($checks as $check) {
-            $notifications += $check->getNotifications();
-        }
 
+       
         // Render a template
         $response = new Response;
-        $this->templates->addData(['notifications' => $notifications]);
-        $response->getBody()->write($this->templates->render('dashboard/dashboard'));        
+        $response->getBody()->write($this->templates->render('dashboard'));        
         return $response;
     }
 }
