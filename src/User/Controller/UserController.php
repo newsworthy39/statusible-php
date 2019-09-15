@@ -130,7 +130,7 @@ class UserController
             session_write_close();
 
             // Render a response
-            $response = new RedirectResponse('/dashboard');
+            $response = new RedirectResponse(sprintf("/user/%s/dashboard", $user->Nickname()));
             return $response;
         } else {
 
@@ -149,6 +149,22 @@ class UserController
 
         // Render a response
         $response = new RedirectResponse('/');
+        return $response;
+    }
+
+    public function profile(ServerRequestInterface $request, array $args): ResponseInterface
+    {
+        // Render a template
+        $response = new Response;
+        $response->getBody()->write($this->templates->render('profile'));
+        return $response;
+    }
+
+    public function settings(ServerRequestInterface $request, array $args): ResponseInterface
+    {
+        // Render a template
+        $response = new Response;
+        $response->getBody()->write($this->templates->render('signup'));
         return $response;
     }
 }
