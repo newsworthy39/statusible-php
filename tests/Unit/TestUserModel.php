@@ -26,6 +26,17 @@ class TestUserModel extends SystemTest {
         $this->assertSame($user->email, 'test@virgin.com');
     }
 
+    public function testUsersNicknameWorks() {
+        $user = User::Find('test@virgin.com');
+        $this->assertSame($user->nickname, 'test');
+        $this->assertSame($user->Nickname(), 'test');
+    }
+
+    public function testUsersNotificationsWorks() {
+        $user = User::Find('test@virgin.com');
+        $this->assertIsNumeric($user->getNotifications());
+    }
+
     public function testUserCanBeDeleted() {
         $user = User::Find('test@virgin.com');
         $this->assertSame($user->email, 'test@virgin.com');
