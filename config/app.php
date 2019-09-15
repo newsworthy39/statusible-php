@@ -82,6 +82,7 @@ class WebApplication
         $this->router->setStrategy($strategy);
 
         $this->router->map('GET', '/', newsworthy39\Controller\FrontController::class);
+
         $this->router->map('GET', '/user/signin', [newsworthy39\User\Controller\UserController::class, 'signin']);
         $this->router->map('POST', '/user/signin', [newsworthy39\User\Controller\UserController::class, 'postsignin']);
 
@@ -92,9 +93,19 @@ class WebApplication
         $this->router->map('GET', '/token/{id}/resetpassword', [newsworthy39\User\Controller\UserController::class, 'resetUsingToken']);
         $this->router->map('POST', '/token/{id}/resetpassword', [newsworthy39\User\Controller\UserController::class, 'postResetUsingToken']);
 
-        $this->router->group('/dashboard', function (\League\Route\RouteGroup $route) {
-            $route->map('GET', '/', [newsworthy39\Dashboard\Controller\DashboardController::class, 'index']);
-        })->middleware(new \newsworthy39\AuthMiddleware);
+        // Public profile
+        $this->router->map('GET', '/user/{id}', [newsworthy39\User\Controller\UserController::class, 'profile']);
+
+        // login-pages.
+        $this->router->group ('/user', function(\League\Route\RouteGroup $route) {
+            $route->map('GET', '/{id}/dashboard', [newsworthy39\Dashboard\Controller\DashboardController::class, 'index']);
+            $route->map('GET', '/{id}/settings', [newsworthy39\User\Controller\UserController::class, 'profile']);
+        })->middleware(new newsworthy39\AuthMiddleware);
+        
+
+        
+
+        
     }
 
     /**
