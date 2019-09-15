@@ -1,14 +1,16 @@
-<nav class="navbar navbar-expand-lg navbar-light bg-light justify-content-between " aria-label="breadcrumb">
+<nav class="navbar navbar-expand-lg navbar-light bg-light justify-content-between">
 
-  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-    <span class="navbar-toggler-icon"></span>
-  </button>
+  
 
   <?php if ($user) { ?>
   <a class="navbar-brand" href="/user/<?=$user->Nickname()?>"> <img src="/assets/statusible-100x100.png" width="32" height="32" class="d-inline-block align-top" alt=""></a>
   <?php } else { ?>
   <a class="navbar-brand" href="/"> <img src="/assets/statusible-100x100.png" width="32" height="32" class="d-inline-block align-top" alt=""></a>
   <?php } ?>
+
+  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+    <span class="navbar-toggler-icon"></span>
+  </button>
 
   <div class="collapse navbar-collapse justify-content-end" id="navbarSupportedContent">
     <ul class="navbar-nav mr-auto">     
