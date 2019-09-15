@@ -4,15 +4,16 @@
     <span class="navbar-toggler-icon"></span>
   </button>
 
-  <a class="navbar-brand" href="#"> <img src="/assets/statusible-100x100.png" width="32" height="32" class="d-inline-block align-top" alt=""></a>
+  <?php if ($user) { ?>
+  <a class="navbar-brand" href="/user/<?=$user->Nickname()?>"> <img src="/assets/statusible-100x100.png" width="32" height="32" class="d-inline-block align-top" alt=""></a>
+  <?php } else { ?>
+  <a class="navbar-brand" href="/"> <img src="/assets/statusible-100x100.png" width="32" height="32" class="d-inline-block align-top" alt=""></a>
+  <?php } ?>
 
   <div class="collapse navbar-collapse justify-content-end" id="navbarSupportedContent">
-    <ul class="navbar-nav mr-auto">
-      <li class="nav-item active">
-        <a class="nav-link" href="/">Home <span class="sr-only">(current)</span></a>
-      </li>
+    <ul class="navbar-nav mr-auto">     
 
-      <?php if (!$user) { ?>
+      <?php if (!$user) { ?>        
         <li class="nav-item ">
           <a class="nav-link" href="/user/signin">Signin</a>
         </li>
@@ -28,11 +29,12 @@
       <?php } ?>
 
       <?php if ($user) { ?>
+
         <li class="nav-item ">
-          <a class="nav-link" href="/dashboard">Dashboard</a>
+        <a class="nav-link" href="/user/<?= $user->nickname ?>/dashboard">Dashboard <span class="sr-only">(current)</span></a>
         </li>
         <li class="nav-item ">
-          <a class="nav-link" href="/notifications">Notifications <span class="badge badge-primary"><?= $notifications ?></span></a>
+          <a class="nav-link" href="/notifications">Notifications <span class="badge badge-primary"><?= $user->getNotifications() ?></span></a>
         </li>
 
         <li class="nav-item ">
@@ -52,7 +54,7 @@
         </li>
 
         <li class="nav-item ">
-          <a class="nav-link" href="/user/<?= $user->nickname ?>">Account settings</a>
+          <a class="nav-link" href="/user/<?= $user->Nickname() ?>/settings">Account settings</a>
         </li>
 
         <div class="dropdown-divider"></div>
