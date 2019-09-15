@@ -7,7 +7,8 @@ use League\Route\Http\Exception\NotFoundException;
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
 use League\Route\Strategy\ApplicationStrategy;
-use Zend\Diactoros\Response;;
+use Zend\Diactoros\Response;
+use newsworthy39\AuthMiddleware;
 
 function app(): League\Container\Container
 {
@@ -17,8 +18,7 @@ function app(): League\Container\Container
 
         $container = (new League\Container\Container)->defaultToShared();
 
-     
-   // Add elements to container
+        // Add elements to container
         $container->add(League\Plates\Engine::class)->addArgument('templates');
         $container->add(Config::class);
         $container
@@ -96,16 +96,11 @@ class WebApplication
         // Public profile
         $this->router->map('GET', '/user/{id}', [newsworthy39\User\Controller\UserController::class, 'profile']);
 
-        // login-pages.
-        $this->router->group ('/user', function(\League\Route\RouteGroup $route) {
+        // requires AuthMiddleware
+        $this->router->group('/user', function (\League\Route\RouteGroup $route) {
             $route->map('GET', '/{id}/dashboard', [newsworthy39\Dashboard\Controller\DashboardController::class, 'index']);
             $route->map('GET', '/{id}/settings', [newsworthy39\User\Controller\UserController::class, 'profile']);
         })->middleware(new newsworthy39\AuthMiddleware);
-        
-
-        
-
-        
     }
 
     /**
@@ -122,13 +117,13 @@ class WebApplication
             return $this->router->dispatch($request);
         } catch (NotFoundException $exception) {
             // If not found, thow this exception.
-            $templates = app()->get(League\Plates\Engine::class);
             $response = new Response;
+            $templates = app()->get(League\Plates\Engine::class);
 
-            // This will return a User, if one is logged in.
             // But never create session on 404-pages! (just-imagine!)
-            $templates->addData(['user' => false]);     
+            $templates->addData(['user' => false]);
             $response->getBody()->write($templates->render('notfound'));
+
             return $response;
         }
     }
