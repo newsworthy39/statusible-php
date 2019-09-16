@@ -12,11 +12,6 @@ use League\Tactician\Handler\CommandNameExtractor\ClassNameExtractor;
 use League\Tactician\Handler\MethodNameInflector\HandleClassNameInflector;
 
 // our own.
-use newsworthy39\Worker\Command\BuildWorkerCommand;
-use newsworthy39\Worker\Handler\BuildWorkerHandler;
-use newsworthy39\Worker\Command\PingWorkerCommand;
-use newsworthy39\Worker\Handler\PingWorkerHandler;
-
 use newsworthy39\User\Handler\SignupUserHandler;
 use newsworthy39\User\Event\UserSignupEvent;
 
@@ -26,8 +21,7 @@ use newsworthy39\User\Handler\SigninUserHandler;
 // Map your command classes to the container id of your handler. When using
 // League\Container, the container id is typically the class or interface name
 $mapping = [
-    BuildWorkerCommand::class =>  BuildWorkerHandler::class,
-    PingWorkerCommand::class => PingWorkerHandler::class,
+    
     UserSignupEvent::class => SignupUserHandler::class,
     UserSigninEvent::class => SigninUserHandler::class,
 ];

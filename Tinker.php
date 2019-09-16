@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 require __DIR__ . '/vendor/autoload.php';
 
-
 function is_cli()
 {
     return !http_response_code();

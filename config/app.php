@@ -89,24 +89,26 @@ class WebApplication
         $this->router->map('GET', '/user/signup', [newsworthy39\User\Controller\UserController::class, 'signup']);
         $this->router->map('POST', '/user/signup', [newsworthy39\User\Controller\UserController::class, 'postsignup']);
         $this->router->map('GET', '/user/signout', [newsworthy39\User\Controller\UserController::class, 'signout']);
-
         $this->router->map('GET', '/token/{id}/resetpassword', [newsworthy39\User\Controller\UserController::class, 'resetUsingToken']);
         $this->router->map('POST', '/token/{id}/resetpassword', [newsworthy39\User\Controller\UserController::class, 'postResetUsingToken']);
 
+        //$this->router->map('GET', '/sites/{id}', newsworthy39\Sites\Controller\SiteController::class);
+
         // Public profile
-                $this->router->group('/user', function (\League\Route\RouteGroup $route) {
+        $this->router->group('/user', function (\League\Route\RouteGroup $route) {
             $route->map('GET', '/{id}', [newsworthy39\User\Controller\UserController::class, 'profile']);
-            $route->map('GET', '/{id}/pages', [newsworthy39\User\Controller\UserController::class, 'profile']);
+            $route->map('GET', '/{id}/sites', [newsworthy39\User\Controller\UserController::class, 'sites']);
         });
 
         // requires AuthMiddleware
         $this->router->group('/user', function (\League\Route\RouteGroup $route) {
-            $route->map('GET', '/{id}/dashboard', [newsworthy39\Dashboard\Controller\DashboardController::class, 'index']);
+            $route->map('GET', '/{id}/dashboard', [newsworthy39\User\Controller\UserController::class, 'dashboard']);
             $route->map('GET', '/{id}/settings', [newsworthy39\User\Controller\UserController::class, 'settings']);
-            $route->map('GET', '/{id}/sites', [newsworthy39\Sites\Controller\SiteController::class, 'index']);
-            $route->map('GET', '/{id}/sites/{siteid}', [newsworthy39\Sites\Controller\SiteController::class, 'settings']);
-
         })->middleware(new newsworthy39\AuthMiddleware);
+
+        // Public sites
+        $this->router->map('GET', '/sites/{id}/settings', [newsworthy39\Sites\Controller\SiteController::class, 'settings'])
+        ->middleware(new newsworthy39\AuthMiddleware);;
     }
 
     /**

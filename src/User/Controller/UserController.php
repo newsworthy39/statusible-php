@@ -22,6 +22,7 @@ class UserController
     {
         $this->templates = $templates;
 
+        // This aids the navigation
         $this->templates->addData(['user' => AuthMiddleware::getUser()]);
     }
 
@@ -50,7 +51,7 @@ class UserController
         $user = User::FindUsingToken($token);
         if ($user) {
             $allPostPutVars = $request->getParsedBody();
-            
+
             // set password to sha1, rather important.
             $user->SetPassword($allPostPutVars['password']);
 
@@ -159,9 +160,13 @@ class UserController
 
     public function profile(ServerRequestInterface $request, array $args): ResponseInterface
     {
+        $allPostPutVars = $request->getQueryParams();
+        $page = isset($allPostPutVars['page']) ? $allPostPutVars['page'] : 'overview';
+        $visitedUser = User::FindUsingNickname($args['id']);
+
         // Render a template
         $response = new Response;
-        $response->getBody()->write($this->templates->render('profile'));
+        $response->getBody()->write($this->templates->render('profile', ['page' => $page, 'user' => $visitedUser]));
         return $response;
     }
 
@@ -171,5 +176,28 @@ class UserController
         $response = new Response;
         $response->getBody()->write($this->templates->render('settings'));
         return $response;
+    }
+
+    public function sites(ServerRequestInterface $request, array $args): ResponseInterface
+    {
+        $response = new Response;
+        $response->getBody()->write($this->templates->render('sites/overview', ['user' => User::FindUsingNickname($args['id'])]));
+        return $response;
+    }
+
+    public function dashboard(ServerRequestInterface $request, array $args): ResponseInterface
+    {
+        // We're only allowed, to see the dashboard for ourselves.
+        $visitedUser = User::FindUsingNickname($args['id']);
+        $page = $args['page'] ? $args['page'] : 'profile';
+
+        if ($visitedUser == AuthMiddleware::getUser()) {
+            $response = new Response;
+            $response->getBody()->write($this->templates->render('dashboard'));
+            return $response;
+        }
+
+        // Send me, to the user-profile instead.
+        return new RedirectResponse(sprintf("/user/%s", $visitedUser->NickName()));
     }
 }

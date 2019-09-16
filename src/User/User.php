@@ -16,7 +16,8 @@ class User extends Elegant
         'token',
         'password',
         'tfasalt',
-        'nickname'
+        'nickname',
+        'roleid'
     ];
 
     private function __construct()
@@ -34,9 +35,23 @@ class User extends Elegant
         return self::findModel(new User(), array('token' => $token));
     }
 
+
+    public static function FindUsingNickname(String $nickname)
+    {
+        return self::findModel(new User(), array('nickname' => $nickname));
+    }
+
     public function generateToken()
     {
         $this->token = $this->generateRandomString(64);
+    }
+
+    public function setRole(Role $role) {
+        $this->roleid = $role->getRoleId();
+    }
+
+    public function getRole() : Role {
+        return new Role($this->roleid);
     }
 
     public static function Create(array $arguments): User
@@ -51,11 +66,13 @@ class User extends Elegant
 
     public function Store()
     {
+        // TODO: Test, the user has a roleid.
         self::createModel($this);
     }
 
     public function Update()
     {
+        // TODO: Test, the user has a roleid.
         self::saveModel($this);
     }
 

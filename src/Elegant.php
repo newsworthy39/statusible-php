@@ -13,15 +13,18 @@ class Elegant
     protected $values;
     protected $pkid = 'id';
 
-    protected function primarykey() {
+    protected function primarykey()
+    {
         return 'id';
     }
 
-    protected function foreignkey() {
+    protected function foreignkey()
+    {
         return sprintf("%s%s", $this->tablename, $this->primarykey());
     }
 
-    protected function tablename() {
+    protected function tablename()
+    {
         if (is_null($this->tablename)) {
             return strtolower(Elegant::get_class_name(get_class($this)));
         }
@@ -70,6 +73,38 @@ class Elegant
         }
     }
 
+    protected static function findModels(Elegant $model)
+    {
+        try {
+
+            $pdo = app()->get(\PDO::class);
+
+            $sql = sprintf("SELECT * from %s ", $model->tablename());
+
+            $statement = $pdo->prepare($sql);
+
+            $statement->execute();
+
+            $found = false;
+            $result = array();
+            while ($row = $statement->fetch(PDO::FETCH_ASSOC)) {
+
+                $fields = array_keys($row);
+                $instance = new $model();
+                foreach ($fields as $field) {
+                    $instance->$field = $row[$field];
+                }
+                array_push($result, $instance);
+            }
+
+            $statement = null;
+        } catch (PDOException $error) {
+            printf("SQL error %s", $error);
+        }
+
+        return $result;
+    }
+
     protected static function createModel(Elegant $instance)
     {
         try {
@@ -83,7 +118,7 @@ class Elegant
             }
 
             $sql = sprintf("INSERT INTO %s (%s) VALUES (%s)", $instance->tablename(), implode(',', $keys),  implode(',', $placeholders));
-            
+
             $statement = $pdo->prepare($sql);
             $statement->execute($instance->values);
             $instance->{$instance->primarykey()} = $pdo->lastInsertId();
@@ -122,7 +157,8 @@ class Elegant
         }
     }
 
-    protected function deleteModel(Elegant $instance) {
+    protected function deleteModel(Elegant $instance)
+    {
 
         try {
 
@@ -160,29 +196,29 @@ class Elegant
         $this->values[$field] = $value;
     }
 
-    public function assignTo(Elegant $left) {
-        
+    public function assignTo(Elegant $left)
+    {
+
         $this->values[$left->foreignkey()] = $left->values[$left->primarykey()];
     }
 
-    protected function belongsTo(Elegant $instance) {
-        
-    }
+    protected function belongsTo(Elegant $instance)
+    { }
 
-    protected function has(Elegant $left, Elegant $right) {
+    protected function has(Elegant $left, Elegant $right)
+    {
 
         // select * from right where right.fkid = left.pkid
         $result = array();
         try {
 
             $pdo = app()->get(\PDO::class);
-            
-            $sql = sprintf("SELECT r.* from %s r, %s l WHERE r.%s=:l%s", $right->tablename(), $left->tablename(), $left->foreignkey(), $left->foreignkey());
+
+            $sql = sprintf("SELECT r.* from %s r WHERE r.%s=:l%s", $right->tablename(), $left->foreignkey(), $left->foreignkey());
 
             $statement = $pdo->prepare($sql);
 
             $statement->execute([sprintf("l%s", $left->foreignkey()) => $left->values[$left->primarykey()]]);
-
             $found = false;
             while ($row = $statement->fetch(PDO::FETCH_ASSOC)) {
                 $found = true;
@@ -201,7 +237,7 @@ class Elegant
         }
 
         if ($found) {
-            return $result; 
+            return $result;
         } else {
             return false;
         }
