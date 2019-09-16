@@ -23,7 +23,6 @@ class UserController
         $this->templates = $templates;
 
         $this->templates->addData(['user' => AuthMiddleware::getUser()]);
-          
     }
 
     public function resetUsingToken(ServerRequestInterface $request, array $args): ResponseInterface
@@ -36,11 +35,9 @@ class UserController
         if ($user) {
             // if ok, assume user is logged in, and show reset-password-form.
             $response = new Response;
-            $response->getBody()->write($this->templates->render('resetpassword', ['token' => $user->token]));
-            return $response;
+            return $response->getBody()->write($this->templates->render('resetpassword', ['token' => $user->token]));
         } else {
-            $response = new RedirectResponse('/?error=notokenoremail');
-            return $response;
+            return new RedirectResponse('/?error=notokenoremail');
         }
     }
 
@@ -53,12 +50,9 @@ class UserController
         $user = User::FindUsingToken($token);
         if ($user) {
             $allPostPutVars = $request->getParsedBody();
-            foreach ($allPostPutVars as $key => $param) {
-                $user->$key = $param;
-            }
-
+            
             // set password to sha1, rather important.
-            $user->password = sha1($user->password);
+            $user->SetPassword($allPostPutVars['password']);
 
             // update token
             $user->generateToken();
@@ -67,16 +61,26 @@ class UserController
             $user->Update();
         }
 
-        $response = new RedirectResponse('/user/signin');
-        return $response;
+        return new RedirectResponse('/user/signin');
     }
 
+    /**
+     * Signup-function. 
+     * This function, renders the signup 
+     * template, with an optional plan-extraction
+     * from uri/?plan=[]
+     */
     public function signup(ServerRequestInterface $request, array $args): ResponseInterface
     {
-        // Render a template
+        $queryparams    = $request->getQueryParams();
+        $selectedplan = 'starter';
+        if (isset($queryparams['plan'])) {
+            $selectedplan = $queryparams['plan'];
+        }
+
         $response = new Response;
-        $response->getBody()->write($this->templates->render('signup'));
-        return $response;
+        $this->templates->addData(['plan' => $selectedplan]);
+        return $response->getBody()->write($this->templates->render('signup'));
     }
 
     public function postsignup(ServerRequestInterface $request): ResponseInterface
@@ -98,8 +102,7 @@ class UserController
         }
 
         // Render a response
-        $response = new RedirectResponse('/');
-        return $response;
+        return new RedirectResponse('/');
     }
 
 
@@ -122,7 +125,10 @@ class UserController
             $command = new UserSigninEvent($user);
             $queue->publish($command);
 
-            session_start();
+            if (session_id() == '' || !isset($_SESSION)) {
+                // session isn't started, so start one.
+                session_start();
+            }
 
             $_SESSION['user'] = $user;
 
@@ -130,26 +136,25 @@ class UserController
             session_write_close();
 
             // Render a response
-            $response = new RedirectResponse(sprintf("/user/%s/dashboard", $user->Nickname()));
-            return $response;
+            return new RedirectResponse(sprintf("/user/%s/dashboard", $user->Nickname()));
         } else {
-
-            // Render a response
-            $response = new RedirectResponse('/');
-            return $response;
+            // make sure, we kill our session, 
+            return $this->signout($request);
         }
     }
 
     public function signout(ServerRequestInterface $request): ResponseInterface
     {
-        session_start();
+        if (session_id() == '' || !isset($_SESSION)) {
+            // session isn't started, so start one.
+            session_start();
+        }
         session_destroy();
 
         $_SESSION = array();
 
         // Render a response
-        $response = new RedirectResponse('/');
-        return $response;
+        return new RedirectResponse('/');
     }
 
     public function profile(ServerRequestInterface $request, array $args): ResponseInterface
@@ -164,7 +169,7 @@ class UserController
     {
         // Render a template
         $response = new Response;
-        $response->getBody()->write($this->templates->render('signup'));
+        $response->getBody()->write($this->templates->render('settings'));
         return $response;
     }
 }

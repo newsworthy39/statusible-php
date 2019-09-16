@@ -8,7 +8,6 @@ use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
 use League\Route\Strategy\ApplicationStrategy;
 use Zend\Diactoros\Response;
-use newsworthy39\AuthMiddleware;
 
 function app(): League\Container\Container
 {
@@ -27,6 +26,7 @@ function app(): League\Container\Container
             ->addArgument('test')
             ->addArgument('secret')
             ->addArgument(array(\PDO::MYSQL_ATTR_INIT_COMMAND => 'SET NAMES utf8', \PDO::ATTR_ERRMODE => \PDO::ERRMODE_EXCEPTION));
+
         $container->add(newsworthy39\Factory\Tinker::class)->addArgument(\PDO::class);
 
         // Wire different things together.
@@ -54,8 +54,8 @@ function app(): League\Container\Container
         $container->add(newsworthy39\User\Controller\UserController::class)->addArgument(\League\Plates\Engine::class);
         $container->add(newsworthy39\Controller\FrontController::class)->addArgument(\League\Plates\Engine::class);
         $container->add(newsworthy39\Dashboard\Controller\DashboardController::class)->addArgument(\League\Plates\Engine::class);
-        $container->add(newsworthy39\AuthMiddleware::class)->addArgument(\PDO::class);
-
+        $container->add(newsworthy39\Sites\Controller\SiteController::class)->addArgument(\League\Plates\Engine::class);
+        $container->add(newsworthy39\AuthMiddleware::class);
 
         // self::$container->add(pdo...)
         // self::$container->add(MySQLDatabaseStrategy)->withArgument($container->get('pdo'));
@@ -94,12 +94,18 @@ class WebApplication
         $this->router->map('POST', '/token/{id}/resetpassword', [newsworthy39\User\Controller\UserController::class, 'postResetUsingToken']);
 
         // Public profile
-        $this->router->map('GET', '/user/{id}', [newsworthy39\User\Controller\UserController::class, 'profile']);
+                $this->router->group('/user', function (\League\Route\RouteGroup $route) {
+            $route->map('GET', '/{id}', [newsworthy39\User\Controller\UserController::class, 'profile']);
+            $route->map('GET', '/{id}/pages', [newsworthy39\User\Controller\UserController::class, 'profile']);
+        });
 
         // requires AuthMiddleware
         $this->router->group('/user', function (\League\Route\RouteGroup $route) {
             $route->map('GET', '/{id}/dashboard', [newsworthy39\Dashboard\Controller\DashboardController::class, 'index']);
-            $route->map('GET', '/{id}/settings', [newsworthy39\User\Controller\UserController::class, 'profile']);
+            $route->map('GET', '/{id}/settings', [newsworthy39\User\Controller\UserController::class, 'settings']);
+            $route->map('GET', '/{id}/sites', [newsworthy39\Sites\Controller\SiteController::class, 'index']);
+            $route->map('GET', '/{id}/sites/{siteid}', [newsworthy39\Sites\Controller\SiteController::class, 'settings']);
+
         })->middleware(new newsworthy39\AuthMiddleware);
     }
 

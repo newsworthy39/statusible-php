@@ -4,6 +4,7 @@ declare(strict_types=1);
 use tests\SystemTest;
 use newsworthy39\User\User;
 use newsworthy39\Check\Check;
+use newsworthy39\Sites\Site;
 
 class TestUserModel extends SystemTest {
 
@@ -43,17 +44,17 @@ class TestUserModel extends SystemTest {
         $user->Delete();
     }
 
-    public function testUserCanFindChecks() {
+    public function testUserCanFindSites() {
         $user = User::Create([ 'email' => 'test@virgin.com' , 'nickname' => 'test']);
         $user->Store();
 
-        $check = Check::Create();
+        $check = Site::Create();
         $check->assignTo($user);
         
         $check->Store();
         $this->assertSame($check->usersid, $user->id);
 
-        $checks = $user->Checks();
+        $checks = $user->Sites();
         $this->assertSame($checks[0]->identifier, $check->identifier);
     }
 }

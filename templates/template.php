@@ -29,12 +29,19 @@
       }
     }
 
+    @media(max-width: 330px) {
+      .card-deck {
+        margin-left: -15px;
+        margin-right: -15px;
+      }
+    }
+
     html {
       font-size: 14px;
     }
 
     .container {
-      max-width: 100%;
+      max-width: 99%;
       padding: 0 0 0 0;
     }
 
@@ -62,14 +69,6 @@
       margin-right: 0px;
     }
 
-    @media(max-width: 330px) {
-      .card-deck {
-        margin-left: -15px;
-        margin-right: -15px;
-      }
-    }
-    
-
     footer {
       padding-left: 15px;
       padding-right: 15px;
@@ -89,4 +88,5 @@
   <?= $this->section('content') ?>
 
 </body>
+
 </html>

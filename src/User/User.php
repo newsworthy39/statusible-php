@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace newsworthy39\User;
 
 use newsworthy39\Elegant;
-use newsworthy39\Check\Check;
+use newsworthy39\Sites\Site;
 
 class User extends Elegant
 {
@@ -64,9 +64,9 @@ class User extends Elegant
         self::deleteModel($this);
     }
 
-    public function Checks()
+    public function Sites()
     {
-        return $this->has($this, Check::Create());
+        return $this->has($this, Site::Create());
     }
 
     public function Teams()
@@ -80,16 +80,20 @@ class User extends Elegant
     public function getNotifications()
     {
         // get checks.
-        $checks = $this->Checks();
-        if ($checks) {
+        $sites = $this->Sites();
+        if ($sites) {
             $notifications = 0;
-            foreach ($checks as $check) {
-                $notifications += $check->getNotifications();
+            foreach ($sites as $site) {
+                $notifications += $site->getNotifications();
             }
             return $notifications;
         }
 
         return 0;
+    }
+
+    public function SetPassword(String $password) {
+        $this->password = sha1($password);
     }
 
     private function generateRandomString($length = 10)

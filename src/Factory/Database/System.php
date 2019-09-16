@@ -14,12 +14,14 @@ class System {
             "CREATE TABLE IF NOT EXISTS `users` (id integer not null primary key auto_increment, email varchar(255) not null, token varchar(64), password varchar(255) default '', tfasalt varchar(64) default '', nickname varchar(255) not null default '')",
             "CREATE TABLE IF NOT EXISTS `team` (id integer not null primary key auto_increment, name varchar(255) not null)",
             "CREATE TABLE IF NOT EXISTS `users_team_roles`(id integer not null primary key auto_increment, userid integer not null references users(id), teamid integer not null references team(id))",
-            "CREATE TABLE IF NOT EXISTS `checks` (id integer not null primary key auto_increment, usersid integer not null references users(id), identifier char(64) not null default '')"
+            "CREATE TABLE IF NOT EXISTS `sites` (id integer not null primary key auto_increment, usersid integer not null references users(id), identifier char(64) not null default '')"
         );
 
-      
+        $users = array(
+            "INSERT INTO users (email, token, password, nickname) VALUES ('mij@berlingskemedia.dk','1','a94a8fe5ccb19ba61c4c0873d391e987982fbbd3', 'newsworthy39')"
+        );
             
-        return $tables;
+        return array_merge($tables, $users);
     }
 
     public function down() {
@@ -28,7 +30,7 @@ class System {
             "DROP TABLE `users`",
             "DROP TABLE `team`",
             "DROP TABLE `users_team_roles`",
-            "DROP TABLE `checks`",
+            "DROP TABLE `sites`",
             "TRUNCATE TABLE `migrations`"
         );
             
