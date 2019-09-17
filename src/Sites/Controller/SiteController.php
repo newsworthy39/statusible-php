@@ -24,11 +24,15 @@ class SiteController
 
     public function index(ServerRequestInterface $request, array $args): ResponseInterface
     {
+        $allPostPutVars = $request->getQueryParams();
+        $page = isset($allPostPutVars['page']) ? $allPostPutVars['page'] : 'overview';
+
         // Render a template
         $site = Site::FindByIdentifier($args['id']);
+        
         if ($site) {
             $response = new Response;
-            $response->getBody()->write($this->templates->render('sites/site', ['site' => $site]));
+            $response->getBody()->write($this->templates->render('sites/site', ['page' => $page,'site' => $site]));
             return $response;
         } else {
             throw new NotFoundException('Site not found');
@@ -47,13 +51,15 @@ class SiteController
     {
         $allPostPutVars = $request->getParsedBody();
         $user = AuthMiddleware::getUser();
-        $identifier = $allPostPutVars['identifier'];
+        if (!$user) {
+            return new RedirectResponse("/user/signin");
+        }
 
+        $identifier = $allPostPutVars['identifier'];
         $site = Site::FindByIdentifier($identifier);
         if (!$site) {
             $site = Site::Create($identifier, $user);
             $site->Store();
-
             return new RedirectResponse(sprintf("/sites/%s", $site->getIdentifier()));  
         } else {
             return new RedirectResponse("/sites/create/new?error=occupied");

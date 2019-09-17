@@ -1,4 +1,4 @@
-<?php $this->layout('template', ['title' => 'Dashboard']) ?>
+<?php $this->layout('template', ['title' => sprintf("%s (profile)", $visiteduser->getNickname())]); ?>
 
 <div class="container">
 
@@ -13,8 +13,7 @@
     </div>
   </nav>
 
-  <?php $this->insert(sprintf("profile-snippets/%s", $page), ['user' => $user]); ?>
+  <?php $this->insert(sprintf("profile-snippets/%s", $page), ['visiteduser' => $visiteduser, 'user' => $user]); ?>
 
   <?php $this->insert('snippets/footer'); ?>
-
 </div>

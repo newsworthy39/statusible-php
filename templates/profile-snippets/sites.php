@@ -1,9 +1,9 @@
 <div class="row mx-auto ">
-  <div class="col-sm-8 py-2"><a href="/sites/create/new" class="btn btn-primary">Create site</a></div>
-  <div class="col-sm-4 py-2 d-flex justify-content-end">
-    <form class="form-inline my-lg-0">
+<div class="col-sm-8 py-2"><?php if ($user) { ?><a href="/sites/create/new" class="btn btn-primary">Create site</a><?php }?></div>
+  <div class="col-sm-4 py-2 d-flex justify-content-end ">
+    <form class="form-inline my-lg-0 ">
       <input class="form-control mr-sm-2" type="search" placeholder="Filter" aria-label="Search">
-      <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Filter</button>
+      <button class="btn btn-outline-success my-2 my-sm-0 " type="submit">Filter</button>
     </form>
   </div>
 </div>
@@ -15,7 +15,7 @@
 
 <div class="container mt-3 px-3">
   <div class="row">
-    <?php foreach ($user->Sites() as $site) : ?>
+    <?php foreach ($visiteduser->Sites() as $site) : ?>
       <div class="col mb-3">
         <div class="card" style="max-width: 26rem;">
           <img src="/assets/statusible-servicestatus-<?= $site->Status() ?>-100x100.png?version=2" class="card-img-top">

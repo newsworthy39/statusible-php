@@ -96,7 +96,7 @@ class UserController
 
             $queue = new Queue();
             $user = User::CreateEmpty();
-            foreach($allPostPutVars as $var=>$value) {
+            foreach ($allPostPutVars as $var => $value) {
                 $user->$var = $value;
             }
 
@@ -172,7 +172,7 @@ class UserController
         if ($visitedUser) {
             // Render a template
             $response = new Response;
-            $response->getBody()->write($this->templates->render('profile', ['page' => $page, 'user' => $visitedUser]));
+            $response->getBody()->write($this->templates->render('profile', ['page' => $page, 'visiteduser' => $visitedUser]));
             return $response;
         } else {
             throw new NotFoundException("User not found");
