@@ -90,7 +90,7 @@ class Elegant
             while ($row = $statement->fetch(PDO::FETCH_ASSOC)) {
 
                 $fields = array_keys($row);
-                $instance = new $model();
+                $instance = clone ($model);
                 foreach ($fields as $field) {
                     $instance->$field = $row[$field];
                 }
@@ -186,24 +186,15 @@ class Elegant
         return $pos;
     }
 
-    public function __get(String $field)
+    protected function assignTo(Elegant $left)
     {
-        return $this->values[$field];
-    }
-
-    public function __set(String $field, String $value)
-    {
-        $this->values[$field] = $value;
-    }
-
-    public function assignTo(Elegant $left)
-    {
-
         $this->values[$left->foreignkey()] = $left->values[$left->primarykey()];
     }
 
     protected function belongsTo(Elegant $instance)
-    { }
+    {
+        $instance->assignTo($this);
+    }
 
     protected function has(Elegant $left, Elegant $right)
     {
@@ -224,7 +215,7 @@ class Elegant
                 $found = true;
                 $fields = array_keys($row);
 
-                $t = $right::Create();
+                $t = clone ($right);
                 foreach ($fields as $field) {
                     $t->$field = $row[$field];
                 }
@@ -241,5 +232,15 @@ class Elegant
         } else {
             return false;
         }
+    }
+
+    public function __get(String $field)
+    {
+        return $this->values[$field];
+    }
+
+    public function __set(String $field, String $value)
+    {
+        $this->values[$field] = $value;
     }
 }

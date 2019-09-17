@@ -92,23 +92,24 @@ class WebApplication
         $this->router->map('GET', '/token/{id}/resetpassword', [newsworthy39\User\Controller\UserController::class, 'resetUsingToken']);
         $this->router->map('POST', '/token/{id}/resetpassword', [newsworthy39\User\Controller\UserController::class, 'postResetUsingToken']);
 
-        //$this->router->map('GET', '/sites/{id}', newsworthy39\Sites\Controller\SiteController::class);
-
         // Public profile
         $this->router->group('/user', function (\League\Route\RouteGroup $route) {
             $route->map('GET', '/{id}', [newsworthy39\User\Controller\UserController::class, 'profile']);
-            $route->map('GET', '/{id}/sites', [newsworthy39\User\Controller\UserController::class, 'sites']);
         });
 
-        // requires AuthMiddleware
+        // Profile actions requiring authentication.
         $this->router->group('/user', function (\League\Route\RouteGroup $route) {
             $route->map('GET', '/{id}/dashboard', [newsworthy39\User\Controller\UserController::class, 'dashboard']);
             $route->map('GET', '/{id}/settings', [newsworthy39\User\Controller\UserController::class, 'settings']);
         })->middleware(new newsworthy39\AuthMiddleware);
 
         // Public sites
-        $this->router->map('GET', '/sites/{id}/settings', [newsworthy39\Sites\Controller\SiteController::class, 'settings'])
-        ->middleware(new newsworthy39\AuthMiddleware);;
+        $this->router->map('GET', '/sites/{id:number}', [newsworthy39\Sites\Controller\SiteController::class, 'index']);
+
+        // Sites requiring authentication
+        $this->router->group('/sites', function (\League\Route\RouteGroup $route) {
+            $route->map('GET', '/{id}/settings', [newsworthy39\Sites\Controller\SiteController::class, 'settings']);
+        })->middleware(new newsworthy39\AuthMiddleware);;
     }
 
     /**
@@ -130,7 +131,7 @@ class WebApplication
 
             // But never create session on 404-pages! (just-imagine!)
             $templates->addData(['user' => false]);
-            $response->getBody()->write($templates->render('notfound'));
+            $response->getBody()->write($templates->render('notfound', ['exception' => $exception]));
 
             return $response;
         }

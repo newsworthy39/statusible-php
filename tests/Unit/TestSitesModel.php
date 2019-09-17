@@ -9,39 +9,48 @@ use newsworthy39\User\Role;
 
 class TestSitesModel extends SystemTest
 {
-    public function testCheckCanBeCreated()
+    public function testSiteCanBeCreated()
     {
-        $check = Site::Create();
-        $this->assertNotEmpty($check->identifier);
+        $user = User::Create('test@virgin.com','test-virgon');
+        $user->Store();
+
+        $site = Site::Create("Test", $user);
+        $site->Store();
+
+        $this->assertNotEmpty($site->getIdentifier());
     }
 
     public function testSiteBelongsToAUser()
     {
-
-        $role = new Role(Role::OWNER);
-        $user = User::Create(['email' => 'test@virgin.com', 'nickname' => 'test']);
-        $user->assignRole($role);
+        $user = User::Create('test@virgin.com','test-virgon');
         $user->Store();
 
-        $Site = Site::Create();
-        $Site->assignTo($user);
+        $site = Site::Create("Test", $user);
+        $site->Store();
+        $this->assertSame($site->getUser()->getId(), $user->getId());
 
-        $Site->Store();
-        $this->assertSame($Site->usersid, $user->id);
-
-        $founduser = $Site->User();
-        $this->assertSame($user->email, $founduser->email);
+        $founduser = $site->getUser();
+        $this->assertSame($user->getEmail(), $founduser->getEmail());
     }
 
-    public function testCheckCanDeliverNotifications()
+    public function testSiteCanDeliverNotifications()
     {
-        $site = Site::Create();
+        $user = User::Create('test@virgin.com','test-virgon');
+        $user->Store();
+
+        $site = Site::Create("Test", $user);
+        $site->Store();
         $this->assertNotEmpty($site->getNotifications());
+        $site->Delete();
+
     }
 
-    public function testCheckHasStatus()
+    public function testSiteHasStatus()
     {
-        $site = Site::Create();
+        $user = User::Create('test@virgin.com','test-virgon');
+        $user->Store();
+
+        $site = Site::Create("Test", $user);
         $this->assertNotEmpty($site->Status());
     }
 }

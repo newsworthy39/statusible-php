@@ -1,4 +1,4 @@
-<?php $this->layout('template', ['title' => 'Not found']) ?>
+<?php $this->layout('template', ['title' => $exception->getMessage()]) ?>
 
 <div class="container">
   <?php $this->insert('snippets/navigationbar'); ?>

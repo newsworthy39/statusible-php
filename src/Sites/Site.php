@@ -13,16 +13,21 @@ class Site extends Elegant
 
     protected $fields = ['identifier'];
 
-    private function __construct()
-    { }
-
-    public static function Create(): Site
-    {
-        $site =  new Site();
-        $site->generateIdentifier();
-        return $site;
+    private function __construct() { 
     }
 
+    public static function Create(String $name, User $user) {
+        $instance = new Site();
+        $instance->setIdentifier($name);
+        $instance->assignTo($user);
+        return $instance;
+    }
+
+    public static function CreateEmpty() {
+        $instance = new Site();
+        return $instance;
+    }
+    
     public function Store()
     {
         self::createModel($this);
@@ -38,9 +43,9 @@ class Site extends Elegant
         self::deleteModel($this);
     }
 
-    public function User() 
+    public function getUser() : User
     { 
-        $user = User::Create([]);
+        $user = User::CreateEmpty();
         return self::findModel($user, array('id' => $this->values[$user->foreignkey()]));
     }
   
@@ -48,24 +53,16 @@ class Site extends Elegant
         return rand(1,100);
     }
     
-    public function generateIdentifier()
-    {
-        $this->identifier = $this->generateRandomString(64);
-    }
-
-    private function generateRandomString($length = 10)
-    {
-        $characters = '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ';
-        $charactersLength = strlen($characters);
-        $randomString = '';
-        for ($i = 0; $i < $length; $i++) {
-            $randomString .= $characters[rand(0, $charactersLength - 1)];
-        }
-        return $randomString;
-    }
-    
     public function Status() {
         $colors = [ 'red','green','yellow'];
         return $colors[rand(0,2)];
+    }
+
+    public function setIdentifier(String $identifier) {
+        $this->identifier = $identifier;
+    }
+
+    public function getIdentifier() {
+        return $this->identifier;
     }
 }

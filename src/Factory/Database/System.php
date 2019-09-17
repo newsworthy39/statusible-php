@@ -13,7 +13,7 @@ class System
     {
         $tables = array(
             "CREATE TABLE IF NOT EXISTS `migrations` (id integer not null primary key auto_increment, classname varchar(255) not null default '')",
-            "CREATE TABLE IF NOT EXISTS `users` (id integer not null primary key auto_increment, email varchar(255) not null, token varchar(64), password varchar(255) default '', tfasalt varchar(64) default '', nickname varchar(255) not null default '', roleid integer not null )",
+            "CREATE TABLE IF NOT EXISTS `users` (id integer not null primary key auto_increment, email varchar(255) not null, token varchar(64), password varchar(255) default '', tfasalt varchar(64) default '', nickname varchar(255) not null default '')",
             "CREATE TABLE IF NOT EXISTS `team` (id integer not null primary key auto_increment, teamname varchar(255) not null, owerid integer not null references users(id))",
             "CREATE TABLE IF NOT EXISTS `users_teams` (id integer not null primary key auto_increment, userid integer not null references users(id), teamid integer not null references team(id), roleid integer not null references role(id))",
             "CREATE TABLE IF NOT EXISTS `sites` (id integer not null primary key auto_increment, usersid integer not null references users(id), identifier char(64) not null default '')",
@@ -22,7 +22,7 @@ class System
         );
 
         $users = array(
-            "INSERT INTO users (email, token, password, nickname, roleid) VALUES ('mij@berlingskemedia.dk','1','a94a8fe5ccb19ba61c4c0873d391e987982fbbd3', 'newsworthy39', 1)"
+            "INSERT INTO users (email, token, password, nickname) VALUES ('mij@berlingskemedia.dk','1','a94a8fe5ccb19ba61c4c0873d391e987982fbbd3', 'newsworthy39')"
         );
 
         return array_merge($tables, $users);

@@ -17,7 +17,6 @@ class User extends Elegant
         'password',
         'tfasalt',
         'nickname',
-        'roleid'
     ];
 
     private function __construct()
@@ -27,18 +26,18 @@ class User extends Elegant
 
     public static function Find(String $email)
     {
-        return self::findModel(new User(), array('email' => $email));
+        return self::findModel(User::CreateEmpty(), array('email' => $email));
     }
 
     public static function FindUsingToken(String $token)
     {
-        return self::findModel(new User(), array('token' => $token));
+        return self::findModel(User::CreateEmpty(), array('token' => $token));
     }
 
 
     public static function FindUsingNickname(String $nickname)
     {
-        return self::findModel(new User(), array('nickname' => $nickname));
+        return self::findModel(User::CreateEmpty(), array('nickname' => $nickname));
     }
 
     public function generateToken()
@@ -46,22 +45,33 @@ class User extends Elegant
         $this->token = $this->generateRandomString(64);
     }
 
-    public function setRole(Role $role) {
-        $this->roleid = $role->getRoleId();
-    }
-
-    public function getRole() : Role {
-        return new Role($this->roleid);
-    }
-
-    public static function Create(array $arguments): User
+    public static function Create(String $email, String $nickname): User
     {
         $user =  new User();
-        foreach ($arguments as $key => $value) {
-            $user->$key = $value;
-        }
-
+        $user->setEmail($email);
+        $user->setNickname($nickname);
         return $user;
+    }
+
+    public static function CreateEmpty() : User {
+        $user =  new User();
+        return $user;
+    }
+
+    public function setEmail(String $email) {
+        $this->email = $email;
+    }
+
+    public function getEmail() {
+        return $this->email;
+    }
+
+    public function setNickname(String $nickname) {
+        $this->nickname = $nickname;
+    }
+
+    public function getId() {
+        return $this->id;
     }
 
     public function Store()
@@ -83,13 +93,13 @@ class User extends Elegant
 
     public function Sites()
     {
-        return $this->has($this, Site::Create());
+        return $this->has($this, Site::CreateEmpty());
     }
 
     public function Teams()
     { }
 
-    public function Nickname()
+    public function getNickname()
     {
         return $this->nickname;
     }
@@ -109,7 +119,7 @@ class User extends Elegant
         return 0;
     }
 
-    public function SetPassword(String $password) {
+    public function setPassword(String $password) {
         $this->password = sha1($password);
     }
 

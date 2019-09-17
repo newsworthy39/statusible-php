@@ -4,7 +4,7 @@
   </button>
 
   <?php if ($user) { ?>
-    <a class="navbar-brand" href="/user/<?= $user->Nickname() ?>"> <img src="/assets/statusible-100x100.png" width="32" height="32" class="d-inline-block align-top" alt=""></a>
+    <a class="navbar-brand" href="/user/<?= $user->getNickname() ?>"> <img src="/assets/statusible-100x100.png" width="32" height="32" class="d-inline-block align-top" alt=""></a>
   <?php } else { ?>
     <a class="navbar-brand" href="/"> <img src="/assets/statusible-100x100.png" width="32" height="32" class="d-inline-block align-top" alt=""></a>
   <?php } ?>
@@ -34,19 +34,15 @@
         <li class="nav-item ">
           <a class="nav-link" href="/notifications">Notifications <span class="badge badge-primary"><?= $user->getNotifications() ?></span></a>
         </li>
-        <li class="nav-item ">
-          <a class="nav-link " href="/teams">Teams <span class="badge badge-primary">4</span></a>
-        </li>
-        <li class="nav-item ">
-          <a class="nav-link" href="/user/<?= $user->Nickname() ?>/settings">Account settings</a>
-        </li>
         <div class="dropdown-divider"></div>
+        <li class="nav-item ">
+          <a class="nav-link" href="/user/<?= $user->getNickname() ?>/settings">Account settings</a>
+        </li>
         <li class="nav-item ">
           <a class="nav-link" href="/user/signout">Signout</a>
         </li>
       <?php } ?>
     </ul>
-    <div class="dropdown-divider"></div>
     <form class="form-inline my-2 my-lg-0">
       <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search">
       <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>

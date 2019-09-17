@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace newsworthy39\User\Controller;
 
+use League\Route\Http\Exception\NotFoundException;
 use Psr\Http\Message\ServerRequestInterface;
 use Zend\Diactoros\Response\RedirectResponse;
 use Psr\Http\Message\ResponseInterface;
@@ -81,7 +82,8 @@ class UserController
 
         $response = new Response;
         $this->templates->addData(['plan' => $selectedplan]);
-        return $response->getBody()->write($this->templates->render('signup'));
+        $response->getBody()->write($this->templates->render('signup'));
+        return  $response;
     }
 
     public function postsignup(ServerRequestInterface $request): ResponseInterface
@@ -93,7 +95,10 @@ class UserController
         if ($user == false) {
 
             $queue = new Queue();
-            $user = User::create($allPostPutVars);
+            $user = User::CreateEmpty();
+            foreach($allPostPutVars as $var=>$value) {
+                $user->$var = $value;
+            }
 
             $user->Store();
 
@@ -137,7 +142,7 @@ class UserController
             session_write_close();
 
             // Render a response
-            return new RedirectResponse(sprintf("/user/%s/dashboard", $user->Nickname()));
+            return new RedirectResponse(sprintf("/user/%s", $user->getNickname()));
         } else {
             // make sure, we kill our session, 
             return $this->signout($request);
@@ -164,10 +169,14 @@ class UserController
         $page = isset($allPostPutVars['page']) ? $allPostPutVars['page'] : 'overview';
         $visitedUser = User::FindUsingNickname($args['id']);
 
-        // Render a template
-        $response = new Response;
-        $response->getBody()->write($this->templates->render('profile', ['page' => $page, 'user' => $visitedUser]));
-        return $response;
+        if ($visitedUser) {
+            // Render a template
+            $response = new Response;
+            $response->getBody()->write($this->templates->render('profile', ['page' => $page, 'user' => $visitedUser]));
+            return $response;
+        } else {
+            throw new NotFoundException("User not found");
+        }
     }
 
     public function settings(ServerRequestInterface $request, array $args): ResponseInterface
@@ -175,13 +184,6 @@ class UserController
         // Render a template
         $response = new Response;
         $response->getBody()->write($this->templates->render('settings'));
-        return $response;
-    }
-
-    public function sites(ServerRequestInterface $request, array $args): ResponseInterface
-    {
-        $response = new Response;
-        $response->getBody()->write($this->templates->render('sites/overview', ['user' => User::FindUsingNickname($args['id'])]));
         return $response;
     }
 
@@ -198,6 +200,6 @@ class UserController
         }
 
         // Send me, to the user-profile instead.
-        return new RedirectResponse(sprintf("/user/%s", $visitedUser->NickName()));
+        return new RedirectResponse(sprintf("/user/%s", $visitedUser->getNickName()));
     }
 }
