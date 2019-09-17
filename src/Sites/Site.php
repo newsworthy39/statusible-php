@@ -13,12 +13,22 @@ class Site extends Elegant
 
     protected $fields = ['identifier'];
 
+    // Prevent construction.
     private function __construct() { 
+
     }
 
-    public static function Create(String $name, User $user) {
+    public static function Find($id) {
+        return self::findModel(Site::CreateEmpty(), array('id' => $id));
+    }
+
+    public static function FindByIdentifier($identifier) {
+        return self::findModel(Site::CreateEmpty(), array('identifier' => $identifier));
+    }
+
+    public static function Create(String $identifier, User $user) {
         $instance = new Site();
-        $instance->setIdentifier($name);
+        $instance->setIdentifier($identifier);
         $instance->assignTo($user);
         return $instance;
     }
