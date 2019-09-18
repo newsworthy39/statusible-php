@@ -18,7 +18,7 @@
     <?php foreach ($visiteduser->Sites() as $site) : ?>
       <div class="col mb-3">
         <div class="card" style="max-width: 26rem;">
-          <img src="/assets/statusible-servicestatus-<?= $site->StatusHumanReadable() ?>-100x100.png?version=2" class="card-img-top">
+          <img src="/assets/statusible-servicestatus-<?= $site->getServiceStatus() ?>-100x100.png?version=2" class="card-img-top">
           <div class="card-body">
             <h5 class="card-title"><?= $site->identifier ?></h5>
             <p class="card-text">Service last checked ten minutes ago.</p>

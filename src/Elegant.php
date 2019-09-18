@@ -206,7 +206,6 @@ class Elegant
             $pdo = app()->get(\PDO::class);
 
             $sql = sprintf("SELECT r.* from %s r WHERE r.%s=:l%s", $right->tablename(), $left->foreignkey(), $left->foreignkey());
-
             $statement = $pdo->prepare($sql);
 
             $statement->execute([sprintf("l%s", $left->foreignkey()) => $left->values[$left->primarykey()]]);

@@ -3,7 +3,7 @@
 <div class="container">
 <?php $this->insert('snippets/navigationbar'); ?>
 
-  <div class="px-3 py-3 pt-md-5 pb-md-4 mx-auto text-center">
+  <div class="px-3 py-3 pt-md-5 pb-md-4 mx-auto text-center" style="max-width:480px">
     <h1 class="display-4">Signin</h1>
     <p class="lead">Use the credentials provided, when you <a href="/user/signup">signed up</a>.</p>
     <form class="form-signin" METHOD="POST">

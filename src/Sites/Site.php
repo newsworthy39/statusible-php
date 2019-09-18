@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace newsworthy39\Sites;
 
+use newsworthy39\Check\Check;
 use newsworthy39\Elegant;
 use newsworthy39\User\User;
 
@@ -69,12 +70,19 @@ class Site extends Elegant
         return $this->identifier;
     }
 
-    public function StatusHumanReadable() {
-        $colors = ['red','yellow','green'];
-        return $colors[$this->Status()];
+    public function getServiceStatus(){
+        $status = 0;
+        foreach($this->Checks() as $check) {
+            $highestStatus = $check->getStatus();
+            if ($highestStatus > $status) {
+                $status = $highestStatus;
+            }
+        }
+        return $status;
     }
 
-    public function Status(){
-        return rand(0,2);
-    }
+    public function Checks() {
+        $check = Check::CreateEmpty();
+        return $this->has($this, $check);
+    }  
 }

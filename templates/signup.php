@@ -4,7 +4,7 @@
 
   <?php $this->insert('snippets/navigationbar'); ?>
 
-  <div class="px-3 py-3 pt-md-5 pb-md-4 mx-auto text-center">
+  <div class="px-3 py-3 pt-md-5 pb-md-4 mx-auto text-center" style="max-width:480px">
     <h1 class="display-4">Signup</h1>
     <p class="lead">Signup only requires a working e-mail address. We will send you a confirmation e-mail, with your login-link, shortly after registration.</p>
     <form class="form-signin" METHOD="POST">

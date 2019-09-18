@@ -17,7 +17,7 @@ class System
             "CREATE TABLE IF NOT EXISTS `team` (id integer not null primary key auto_increment, teamname varchar(255) not null, owerid integer not null references users(id))",
             "CREATE TABLE IF NOT EXISTS `users_teams` (id integer not null primary key auto_increment, userid integer not null references users(id), teamid integer not null references team(id), roleid integer not null references role(id))",
             "CREATE TABLE IF NOT EXISTS `sites` (id integer not null primary key auto_increment, usersid integer not null references users(id), identifier char(64) not null default '')",
-            "CREATE TABLE IF NOT EXISTS `checks` (id integer not null primary key auto_increment, sitesid integer not null references sites(id), identifier char(64) not null default '', typeofservice integer not null default 0)",
+            "CREATE TABLE IF NOT EXISTS `checks` (id integer not null primary key auto_increment, sitesid integer not null references sites(id), identifier char(64) not null default '', typeofservice integer not null default 0, created timestamp not null default now())",
             "CREATE TABLE IF NOT EXISTS `sites_depends` (id integer not null primary key auto_increment, leftid integer not null references sites(id), rightid integer not null references sites(id), enabled tinyint(1) not null default 0)"
         );
 
@@ -31,6 +31,7 @@ class System
     public function down()
     {
         $tables = array(
+
             "DROP TABLE `users`",
             "DROP TABLE `users_teams`",
             "DROP TABLE `team`",

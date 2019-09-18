@@ -9,11 +9,11 @@
     <?php foreach ($user->Sites() as $site) : ?>
       <div class="col mb-3">
         <div class="card" style="max-width: 26rem;">
-          <img src="/assets/statusible-servicestatus-<?= $site->Status() ?>-100x100.png?version=2" class="card-img-top">
+          <img src="/assets/statusible-servicestatus-<?= $site->getServiceStatus() ?>-100x100.png?version=2" class="card-img-top">
           <div class="card-body">
             <h5 class="card-title"><?= $site->identifier ?></h5>
             <p class="card-text">Service last checked ten minutes ago.</p>
-            <a href="/sites/<?= $site->id ?>" class="btn btn-primary">View service</a>
+            <a href="/sites/<?= $site->getIdentifier() ?>" class="btn btn-primary">View service</a>
           </div>
         </div>
       </div>

@@ -103,12 +103,13 @@ class WebApplication
             $route->map('GET', '/{id}/settings', [newsworthy39\User\Controller\UserController::class, 'settings']);
         })->middleware(new newsworthy39\AuthMiddleware);
 
-
         // Sites requiring authentication
         $this->router->group('/sites', function (\League\Route\RouteGroup $route) {
             $route->map('GET', '/create/new', [newsworthy39\Sites\Controller\SiteController::class, 'create']);
             $route->map('POST', '/create/new', [newsworthy39\Sites\Controller\SiteController::class, 'postcreate']);
-            $route->map('GET', '/{id:word}/settings', [newsworthy39\Sites\Controller\SiteController::class, 'settings']);
+            $route->map('GET', '/{identifier:word}/settings', [newsworthy39\Sites\Controller\SiteController::class, 'settings']);
+            $route->map('GET', '/{identifier:word}/checks/new', [newsworthy39\Sites\Controller\SiteController::class, 'createcheck']);
+            $route->map('POST', '/{identifier:word}/checks/new', [newsworthy39\Sites\Controller\SiteController::class, 'postcreatecheck']);
         })->middleware(new newsworthy39\AuthMiddleware);;
 
         // Public sites
