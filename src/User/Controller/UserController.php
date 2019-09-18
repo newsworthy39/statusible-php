@@ -172,7 +172,7 @@ class UserController
         if ($visitedUser) {
             // Render a template
             $response = new Response;
-            $response->getBody()->write($this->templates->render('profile', ['page' => $page, 'visiteduser' => $visitedUser]));
+            $response->getBody()->write($this->templates->render('profile/profile', ['page' => $page, 'visiteduser' => $visitedUser]));
             return $response;
         } else {
             throw new NotFoundException("User not found");
@@ -183,7 +183,7 @@ class UserController
     {
         // Render a template
         $response = new Response;
-        $response->getBody()->write($this->templates->render('settings'));
+        $response->getBody()->write($this->templates->render('settings/settings'));
         return $response;
     }
 

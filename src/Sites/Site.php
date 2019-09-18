@@ -14,9 +14,7 @@ class Site extends Elegant
     protected $fields = ['identifier'];
 
     // Prevent construction.
-    private function __construct() { 
-
-    }
+    private function __construct() { }
 
     public static function Find($id) {
         return self::findModel(Site::CreateEmpty(), array('id' => $id));
@@ -53,7 +51,7 @@ class Site extends Elegant
         self::deleteModel($this);
     }
 
-    public function getUser() : User
+    public function getOwner() : User
     { 
         $user = User::CreateEmpty();
         return self::findModel($user, array('id' => $this->values[$user->foreignkey()]));
@@ -62,11 +60,6 @@ class Site extends Elegant
     public function getNotifications() {
         return rand(1,100);
     }
-    
-    public function Status() {
-        $colors = [ 'red','green','yellow'];
-        return $colors[rand(0,2)];
-    }
 
     public function setIdentifier(String $identifier) {
         $this->identifier = $identifier;
@@ -74,5 +67,14 @@ class Site extends Elegant
 
     public function getIdentifier() {
         return $this->identifier;
+    }
+
+    public function StatusHumanReadable() {
+        $colors = ['red','yellow','green'];
+        return $colors[$this->Status()];
+    }
+
+    public function Status(){
+        return rand(0,2);
     }
 }

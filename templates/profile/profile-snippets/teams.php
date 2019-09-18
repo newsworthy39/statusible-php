@@ -1,7 +1,7 @@
 
 <div class="pricing-header px-3 py-3 pt-md-5 pb-md-4 mx-auto text-center">
   <h1 class="display-4">Teams</h1>
-  <p class="lead">We have the following checks, registered. Read the documentation <a href="/documentation/sites">about the sites</a> for more information.</p>
+  <p class="lead"><?=$user->getNickname()?> belongs to these teams. Read the documentation <a href="/documentation/teams">about teams</a> for more information.</p>
 </div>
 
 <div class="container mt-3 px-3">
