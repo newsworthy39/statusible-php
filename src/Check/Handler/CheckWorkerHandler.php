@@ -1,15 +1,22 @@
 <?php declare(strict_types = 1);
 
-namespace newsworthy39\Worker\Handler;
+namespace newsworthy39\Check\Handler;
 
-use Predis;
-use newsworthy39\Config;
-use newsworthy39\Worker\Command\PingWorkerCommand;
+use newsworthy39\Check\Command\CheckWorkerCommand;
 
-class PingWorkerHandler {
+class CheckWorkerHandler {
 
-    public function handlePingWorkerCommand(PingWorkerCommand $command) {
+    public function handleCheckWorkerCommand(CheckWorkerCommand $command) {
 
+        $check = $command->getCheck();
+
+        printf("Code is %s\n", 200);
+
+        $date = date('Y-m-d H:i:s');
+        $check->setLastUpdated($date);
+        $check->Update();
+
+        return;
         // initialize curl, set auth tokens, and download zip-ball.	
         $cl = curl_init($command->url);
         

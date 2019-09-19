@@ -18,6 +18,10 @@ class Elegant
         return 'id';
     }
 
+    public function id() {
+        return $this->values[$this->primarykey()];
+    }
+
     protected function foreignkey()
     {
         return sprintf("%s%s", $this->tablename, $this->primarykey());
@@ -47,11 +51,9 @@ class Elegant
             $sql = sprintf("SELECT * from %s WHERE %s", $instance->tablename(), $where);
 
             $statement = $pdo->prepare($sql);
-
             $statement->execute($args);
 
             $found = false;
-
             while ($row = $statement->fetch(PDO::FETCH_ASSOC)) {
                 $found = true;
                 $fields = array_keys($row);
@@ -138,18 +140,22 @@ class Elegant
             $pdo = app()->get(\PDO::class);
 
             $placeholders = array();
+            $arguments = array();
             $keys = array_values($instance->fields);
             foreach ($keys as $key) {
                 $placeholders[] = sprintf("%s = :%s", $key, $key);
+
+                // slice values, to match bound-variables 
+                $arguments[$key] = $instance->values[$key];
             }
 
+            // Add ID.
+            $arguments[$instance->primarykey()] = $instance->id();
+
             $where = sprintf("%s = :%s", $instance->primarykey(), $instance->primarykey());
-
             $sql = sprintf("UPDATE %s SET %s WHERE %s", $instance->tablename(), implode(',', $placeholders), $where);
-
             $statement = $pdo->prepare($sql);
-
-            $statement->execute($instance->values);
+            $statement->execute($arguments);
 
             $statement = null;
         } catch (PDOException $error) {

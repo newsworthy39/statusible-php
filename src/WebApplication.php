@@ -56,6 +56,7 @@ class WebApplication
             $route->map('GET', '/{identifier:word}/settings', [\newsworthy39\Sites\Controller\SiteController::class, 'settings']);
             $route->map('GET', '/{identifier:word}/checks/new', [\newsworthy39\Sites\Controller\SiteController::class, 'createcheck']);
             $route->map('POST', '/{identifier:word}/checks/new', [\newsworthy39\Sites\Controller\SiteController::class, 'postcreatecheck']);
+            $route->map('GET', '/{identifier:word}/checks/{checkid:word}/schedulecheck', [\newsworthy39\Sites\Controller\SiteController::class, 'schedulecheck']);
         })->middleware(new AuthMiddleware);;
 
         // Public sites

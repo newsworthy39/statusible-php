@@ -14,16 +14,19 @@ use League\Tactician\Handler\MethodNameInflector\HandleClassNameInflector;
 // our own.
 use newsworthy39\User\Handler\SignupUserHandler;
 use newsworthy39\User\Event\UserSignupEvent;
+use newsworthy39\Check\Command\CheckWorkerCommand;
 
 use newsworthy39\User\Event\UserSigninEvent;
 use newsworthy39\User\Handler\SigninUserHandler;
+use newsworthy39\Check\Handler\CheckWorkerHandler;
+
 
 // Map your command classes to the container id of your handler. When using
 // League\Container, the container id is typically the class or interface name
 $mapping = [
-    
     UserSignupEvent::class => SignupUserHandler::class,
     UserSigninEvent::class => SigninUserHandler::class,
+    CheckWorkerCommand::class => CheckWorkerHandler::class
 ];
 
 // Next we create a new Tactician ContainerLocator, passing in both

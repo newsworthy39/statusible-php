@@ -9,13 +9,13 @@
             $colors = [ 'success','warning','danger','light'];
 
             foreach ($site->Checks() as $check) {
-            printf('<a href="/sites/%s/checks/%s" class="list-group-item list-group-item-action bg-%s text-white">%s (%s) <i>created %s</i></a>', 
+            printf('<a href="/sites/%s/checks/%s/schedulecheck" class="list-group-item list-group-item-action bg-%s text-white">%s (%s) <i>updated %s</i></a>', 
                     $site->getIdentifier(),
                     $check->getIdentifier(), 
                     $colors[$check->getStatus()],
                     $check->getIdentifier(), 
                     $check->getTypeOfServiceHumanReadable(),
-                    $check->getCreated()
+                    $check->getLastUpdated()
             );
         }
         ?>

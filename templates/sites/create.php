@@ -3,7 +3,7 @@
 <div class="container">
   <?php $this->insert('snippets/navigationbar'); ?>
 
-  <div class="px-3 py-3 pt-md-5 pb-md-4 mx-auto text-center">
+  <div class="px-3 py-3 pt-md-5 pb-md-4 mx-auto text-center" style="max-width: 500px">
     <h1 class="display-4">Create site</h1>
     <p class="lead">A site, is the starting point, for your projects. Create a site, and assign checks later. Read the documentation <a href="/documentation/sites">about the sites</a> for more information.</p>
     <form class="form-createsite" METHOD="POST">

@@ -30,10 +30,10 @@ class SiteController
 
         // Render a template
         $site = Site::FindByIdentifier($args['id']);
-        
+
         if ($site) {
             $response = new Response;
-            $response->getBody()->write($this->templates->render('sites/site', ['page' => $page,'site' => $site]));
+            $response->getBody()->write($this->templates->render('sites/site', ['page' => $page, 'site' => $site]));
             return $response;
         } else {
             throw new NotFoundException('Site not found');
@@ -68,7 +68,7 @@ class SiteController
     }
 
 
-    public function createcheck(ServerRequestInterface $request, Array $args): ResponseInterface
+    public function createcheck(ServerRequestInterface $request, array $args): ResponseInterface
     {
         $siteidentifier = $args['identifier'];
         $site = Site::FindByIdentifier($siteidentifier);
@@ -83,7 +83,7 @@ class SiteController
         }
     }
 
-    public function postcreatecheck(ServerRequestInterface $request, Array $args): ResponseInterface
+    public function postcreatecheck(ServerRequestInterface $request, array $args): ResponseInterface
     {
         $siteidentifier = $args['identifier'];
         $site = Site::FindByIdentifier($siteidentifier);
@@ -91,15 +91,31 @@ class SiteController
             $allPostPutVars = $request->getParsedBody();
             $identifier = $allPostPutVars['identifier'];
             $typeofservice = $allPostPutVars['typeofservice'];
-            
+
             $check = Check::Create($identifier, $site, Check::fromString($typeofservice));
             $check->Store();
-          
+
             // Render a template
             return new RedirectResponse(sprintf("/sites/%s", $site->getIdentifier(), $check->getIdentifier()));
-
         } else {
             throw new NotFoundException('Site not found');
+        }
+    }
+
+    public function schedulecheck(ServerRequestInterface $request, array $args): ResponseInterface
+    {
+
+        $siteidentifier = $args['identifier'];
+        $checkidentifier = $args['checkid'];
+
+        $site = Site::FindByIdentifier($siteidentifier);
+        $check = Check::FindByCompositeIdentifier($site, $checkidentifier);
+
+        if ($check) {
+            $check->schedulecheck();
+            return new RedirectResponse(sprintf("/sites/%s", $site->getIdentifier()));
+        } else {
+            throw new NotFoundException('Check not found');
         }
     }
 }
