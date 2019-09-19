@@ -24,7 +24,7 @@
             "tests\\" : "tests/"
         },
         "files": [
-            "config/app.php"
+            "config/config.php"
         ]
     },
     "authors": [

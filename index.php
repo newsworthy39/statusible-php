@@ -2,8 +2,9 @@
 
 declare(strict_types=1);
 
-require __DIR__ . '/vendor/autoload.php';
+use newsworthy39\WebApplication;
 
+require __DIR__ . '/vendor/autoload.php';
 
 $request = Zend\Diactoros\ServerRequestFactory::fromGlobals(
     $_SERVER,

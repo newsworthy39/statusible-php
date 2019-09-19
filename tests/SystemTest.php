@@ -3,6 +3,7 @@ declare(strict_types=1);
 
 namespace tests;
 
+use newsworthy39\WebApplication;
 use PHPUnit\Framework\TestCase;
 
 class SystemTest extends TestCase {

@@ -96,7 +96,7 @@ class SiteController
             $check->Store();
           
             // Render a template
-            return new RedirectResponse(sprintf("/sites/%s/checks/%s", $site->getIdentifier(), $check->getIdentifier()));
+            return new RedirectResponse(sprintf("/sites/%s", $site->getIdentifier(), $check->getIdentifier()));
 
         } else {
             throw new NotFoundException('Site not found');

@@ -6,7 +6,7 @@
 
 <div class="container mt-3 px-3">
   <div class="row">
-    <?php foreach ($user->Sites() as $site) : ?>
+    <?php foreach ($visiteduser->Sites() as $site) : ?>
       <div class="col mb-3">
         <div class="card" style="max-width: 26rem;">
           <img src="/assets/statusible-servicestatus-<?= $site->getServiceStatus() ?>-100x100.png?version=2" class="card-img-top">
