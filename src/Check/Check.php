@@ -9,8 +9,9 @@ use newsworthy39\Elegant;
 use newsworthy39\Queue;
 use newsworthy39\Sites\Site;
 use newsworthy39\Check\Command\CheckWorkerCommand;
+use newsworthy39\Schedulable;
 
-class Check extends Elegant
+class Check extends Elegant implements Schedulable
 {
     public const TCP = 0;
     public const HTTP = 1;
@@ -131,7 +132,10 @@ class Check extends Elegant
 
     public function scheduleCheck() {
         $queue = new Queue;
+        $queue->publish(new CheckWorkerCommand($this));
+    }
 
+    public function Schedule(Queue $queue) {
         $queue->publish(new CheckWorkerCommand($this));
     }
 }

@@ -1,4 +1,6 @@
-<?php declare(strict_types = 1);
+<?php
+
+declare(strict_types=1);
 
 require __DIR__ . '/vendor/autoload.php';
 
@@ -66,18 +68,18 @@ foreach ($pubsub as $message) {
                     echo "Received an unrecognized command: {$message->payload}.", PHP_EOL;
                 }
             } else {
-                
                 echo "Received the following message from {$message->channel}:",
-                                PHP_EOL, "  {$message->payload}", PHP_EOL, PHP_EOL;
+                    PHP_EOL,
+                    "  {$message->payload}",
+                    PHP_EOL,
+                    PHP_EOL;
 
+                // unserialize
                 $command = unserialize($message->payload);
 
-                // handle code, via Tactician.
+                // handle code, via Tactician and log the event.
                 $commandBus->handle($command);
-
-                // log via framework?
-                // or via event?
             }
-        }
+            break;
     }
-
+}

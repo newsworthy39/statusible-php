@@ -76,12 +76,11 @@ class WebApplication
             // And dispatch the request.
             return $this->router->dispatch($request);
         } catch (NotFoundException $exception) {
+            
             // If not found, thow this exception.
             $response = new Response;
             $templates = app()->get(\League\Plates\Engine::class);
-
-            // But never create session on 404-pages! (just-imagine!)
-            $templates->addData(['user' => false]);
+            $templates->addData(['user' => AuthMiddleware::getUser()]);
             $response->getBody()->write($templates->render('notfound', ['exception' => $exception]));
 
             return $response;
