@@ -61,6 +61,8 @@ class Elegant
                 foreach ($fields as $field) {
                     $instance->$field = $row[$field];
                 }
+                
+                break;
             }
 
             $statement = null;
