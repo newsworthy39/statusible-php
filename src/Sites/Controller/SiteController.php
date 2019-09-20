@@ -108,14 +108,21 @@ class SiteController
         $siteidentifier = $args['identifier'];
         $checkidentifier = $args['checkid'];
 
-        $site = Site::FindByIdentifier($siteidentifier);
-        $check = Check::FindByCompositeIdentifier($site, $checkidentifier);
+        if (AuthMiddleware::getUser()) {
+            $site = Site::FindByIdentifier($siteidentifier);
 
-        if ($check) {
-            $check->schedulecheck();
-            return new RedirectResponse(sprintf("/sites/%s", $site->getIdentifier()));
+            $check = Check::FindByCompositeIdentifier($site, $checkidentifier);
+
+            if ($check) {
+                
+                $check->schedulecheck();
+
+                return new RedirectResponse(sprintf("/sites/%s", $site->getIdentifier()));
+            } else {
+                throw new NotFoundException('Check not found');
+            }
         } else {
-            throw new NotFoundException('Check not found');
+            return new RedirectResponse(sprintf("/sites/%s", $siteidentifier));
         }
     }
 }
