@@ -12,16 +12,13 @@ class Scheduler implements Schedulable
     public function Schedule(Queue $user)
     {
         while (true) {
-            
-            $site = Site::Find(1);
 
-            $checks = $site->Checks();
-            if (is_array($checks)) {
-                foreach ($checks as $check) {
-                    $check->Schedule($user);
+            $sites = Site::FindAll();
+            if (is_array($sites)) {
+                foreach ($sites as $site) {
+                    $site->Schedule($user);
                 }
             }
-
 
             sleep(15);
         }
