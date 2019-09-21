@@ -113,7 +113,7 @@ class Site extends Elegant implements Schedulable
         $checks = $this->Checks();
         if (is_array($checks)) {
             foreach ($checks as $check) {
-                if ($check->getTypeOfCheck() == Check::Active) {
+                if ($check->getTypeOfCheck() == Check::CHECK_ACTIVE) {
                     $check->Schedule($user);
                 }
             }
