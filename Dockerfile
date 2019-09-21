@@ -28,5 +28,6 @@ COPY scheduler.php scheduler.php
 COPY templates/ templates/
 COPY src/ src/
 COPY assets/ assets/
+COPY config/ config/
 
 CMD ["/usr/sbin/php-fpm7.2", "-F"]
