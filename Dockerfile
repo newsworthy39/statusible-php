@@ -21,12 +21,9 @@ RUN apt-get update \
 
 RUN composer install --no-dev
 
-COPY boyle.php boyle.php
 COPY index.php index.php
-COPY tinker.php tinker.php
-COPY scheduler.php scheduler.php
-COPY templates/ templates/
 COPY src/ src/
+COPY bin/ bin/
 COPY assets/ assets/
 COPY config/ config/
 
