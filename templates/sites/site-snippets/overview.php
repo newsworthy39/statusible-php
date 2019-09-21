@@ -3,7 +3,7 @@
     <p class="lead font-italic">by <?= $site->getOwner()->getNickname() ?></p>
 </div>
 
-<div class="container px-3 pb-3" style="max-width:480px">
+<div class="container px-2 pb-2 py-2" style="max-width:480px">
     <div class="list-group">
         <?php 
             $colors = [ 'success','warning','danger','light'];

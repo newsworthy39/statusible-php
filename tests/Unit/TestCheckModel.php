@@ -17,7 +17,7 @@ class TestCheckModel extends SystemTest
         $site = Site::Create("Test", $user);
         $site->Store();
 
-        $check = Check::Create("Test", $site, Check::TCP);
+        $check = Check::Create("Test", $site, Check::TCP, '127.0.0.1');
         $check->Store();
 
         $this->assertNotEmpty($site->getIdentifier());
@@ -31,7 +31,7 @@ class TestCheckModel extends SystemTest
         $site = Site::Create("Test", $user);
         $site->Store();
 
-        $check = Check::Create("Test", $site, Check::TCP);
+        $check = Check::Create("Test", $site, Check::TCP, '127.0.0.1');
         $check->Store();
 
         $this->assertNotEmpty($site->getIdentifier());

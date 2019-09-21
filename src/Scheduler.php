@@ -20,7 +20,7 @@ class Scheduler implements Schedulable
                 }
             }
 
-            sleep(15);
+            sleep(30);
         }
     }
 }

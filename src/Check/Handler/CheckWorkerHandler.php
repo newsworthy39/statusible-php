@@ -9,16 +9,9 @@ class CheckWorkerHandler {
     public function handleCheckWorkerCommand(CheckWorkerCommand $command) {
 
         $check = $command->getCheck();
-
-        printf("Code is %s\n", 200);
-
-        $date = date('Y-m-d H:i:s');
-        $check->setLastUpdated($date);
-        $check->Update();
-
-        return;
+        
         // initialize curl, set auth tokens, and download zip-ball.	
-        $cl = curl_init($command->url);
+        $cl = curl_init($check->getEndpoint());
         
         //curl_setopt($cl, CURLOPT_RETURNTRANSFER , 1);
         curl_setopt($cl, CURLOPT_FOLLOWLOCATION , 1);
@@ -38,19 +31,11 @@ class CheckWorkerHandler {
 
         curl_close($cl);
 
-        // create a workdir, to our build-context.
-        //$downloadfileid = rand(10000,10000000);
-        //$workdir = sprintf("work-%d", $downloadfileid);
+        $date = date('Y-m-d H:i:s');
+        $check->setLastUpdated($date);
+        $check->Update();
 
-        // prepare build-environment.
-        //mkdir($workdir);
-        //chdir($workdir);
-        //file_put_contents("$downloadfileid", $result);
 
-        // This allows you to do stuff..
-        
-        // and nicely, cleanup after ourselves.
-        //rrmdir($workdir);
 
     }
 }

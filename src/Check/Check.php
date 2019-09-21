@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace newsworthy39\Check;
 
-//"CREATE TABLE IF NOT EXISTS `checks` (id integer not null primary key auto_increment, sitesid integer not null references sites(id), identifier char(64) not null default '', typeofservice integer not null default 0)",
 use newsworthy39\Elegant;
 use newsworthy39\Queue;
 use newsworthy39\Sites\Site;
@@ -21,9 +20,13 @@ class Check extends Elegant implements Schedulable
     public const CHECK_WARNING = 1;
     public const CHECK_FAILED = 2;
 
+    public const CHECK_ACTIVE = 0;
+    public const CHECK_PASSIVE = 1;
+
+
     protected $tablename = 'checks';
 
-    protected $fields = ['identifier', 'typeofservice', 'created', 'lastupdated'];
+    protected $fields = ['identifier', 'typeofservice', 'created', 'lastupdated', 'endpoint', 'activecheck', 'enabled'];
 
     private function __construct()
     { }
@@ -45,16 +48,18 @@ class Check extends Elegant implements Schedulable
         return self::findModel(self::CreateEmpty(), array('identifier' => $checkidentifier, $site->foreignkey() => $id));
     }
 
-    public static function Create(String $identifier, Site $site, $typeofservice)
+    public static function Create(String $identifier, Site $site, $typeofservice, String $endpoint)
     {
         $instance = new Check();
         $instance->setIdentifier($identifier);
         $instance->assignTo($site);
         $instance->setTypeOfService($typeofservice);
+        $instance->setEndpoint($endpoint);
         return $instance;
     }
-    
-    public static function CreateEmpty() {
+
+    public static function CreateEmpty()
+    {
         $instance = new Check();
         return $instance;
     }
@@ -75,7 +80,7 @@ class Check extends Elegant implements Schedulable
     }
 
     public function getOwner()
-    { 
+    {
         $user = User::CreateEmpty();
         return self::findModel($user, array('id' => $this->values[$user->foreignkey()]));
     }
@@ -90,9 +95,10 @@ class Check extends Elegant implements Schedulable
         return $this->typeofservice;
     }
 
-    public function getTypeOfServiceHumanReadable() {
-        if ($this->typeofservice == self::TCP ) return "TCP";
-        if ($this->typeofservice == self::HTTP ) return "HTTP";
+    public function getTypeOfServiceHumanReadable()
+    {
+        if ($this->typeofservice == self::TCP) return "TCP";
+        if ($this->typeofservice == self::HTTP) return "HTTP";
     }
 
     public function setIdentifier(String $identifier)
@@ -105,37 +111,73 @@ class Check extends Elegant implements Schedulable
         return $this->identifier;
     }
 
-    public function getSupportedServices() {
-        return ['TCP','HTTP'];
+    public function getSupportedServices()
+    {
+        return ['HTTP', 'HTTPS', 'TCP'];
     }
 
-    public static function fromString(String $typeofservice) {
-        if ($typeofservice == 'TCP' ) return self::TCP;
-        if ($typeofservice == 'HTTP' ) return self::HTTP;
+    public static function fromString(String $typeofservice)
+    {
+        if ($typeofservice == 'TCP') return self::TCP;
+        if ($typeofservice == 'HTTP') return self::HTTP;
     }
 
-    public function getCreated() {
+    public function getCreated()
+    {
         return $this->created;
     }
 
-    public function getStatus(){
+    public function getStatus()
+    {
         return 0;
     }
 
-    public function setLastUpdated($date) {
+    public function setLastUpdated($date)
+    {
         $this->lastupdated = $date;
     }
 
-    public function getLastUpdated() {
+    public function getLastUpdated()
+    {
         return $this->lastupdated;
     }
 
-    public function scheduleCheck() {
+
+    public function getTypeOfCheck()
+    {
+        return $this->activecheck;
+    }
+
+    public function getSupportedTypeOfChecks()
+    {
+        return ['Active', 'Passive'];
+    }
+
+    public function getSupportedCheckInterval()
+    {
+        return ['Adaptive', 'Minute', 'Hourly', 'Daily', 'Monthly'];
+    }
+
+    public function getEndpoint(): String
+    {
+        return $this->endpoint;
+    }
+
+    public function setEndpoint(String $endpoint)
+    {
+        $this->endpoint = $endpoint;
+    }
+
+
+    // functions related, to commands and scheduler.
+    public function scheduleCheck()
+    {
         $queue = new Queue;
         $queue->publish(new CheckWorkerCommand($this));
     }
 
-    public function Schedule(Queue $queue) {
+    public function Schedule(Queue $queue)
+    {
         $queue->publish(new CheckWorkerCommand($this));
     }
 }

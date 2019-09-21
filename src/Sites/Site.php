@@ -88,10 +88,13 @@ class Site extends Elegant implements Schedulable
     public function getServiceStatus()
     {
         $status = 0;
-        foreach ($this->Checks() as $check) {
-            $highestStatus = $check->getStatus();
-            if ($highestStatus > $status) {
-                $status = $highestStatus;
+        $checks = $this->Checks();
+        if (is_array($checks)) {
+            foreach ($checks as $check) {
+                $highestStatus = $check->getStatus();
+                if ($highestStatus > $status) {
+                    $status = $highestStatus;
+                }
             }
         }
         return $status;
@@ -110,7 +113,9 @@ class Site extends Elegant implements Schedulable
         $checks = $this->Checks();
         if (is_array($checks)) {
             foreach ($checks as $check) {
-                $check->Schedule($user);
+                if ($check->getTypeOfCheck() == Check::Active) {
+                    $check->Schedule($user);
+                }
             }
         }
     }

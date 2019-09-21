@@ -52,7 +52,7 @@ class TestUserModel extends SystemTest {
 
         $check = Site::Create('https://www.bt.dk', $user);
         $check->Store();
-        $this->assertSame($check->getUser()->getId(), $user->getId());
+        $this->assertSame($check->getOwner()->getId(), $user->getId());
 
         //$checks = $user->Sites();
         //$this->assertSame($checks[0]->identifier, $check->identifier);

@@ -27,9 +27,9 @@ class TestSitesModel extends SystemTest
 
         $site = Site::Create("Test", $user);
         $site->Store();
-        $this->assertSame($site->getUser()->getId(), $user->getId());
+        $this->assertSame($site->getOwner()->getId(), $user->getId());
 
-        $founduser = $site->getUser();
+        $founduser = $site->getOwner();
         $this->assertSame($user->getEmail(), $founduser->getEmail());
     }
 
@@ -51,6 +51,7 @@ class TestSitesModel extends SystemTest
         $user->Store();
 
         $site = Site::Create("Test", $user);
-        $this->assertNotEmpty($site->Status());
+        $site->Store();
+        $this->assertIsNumeric($site->getServiceStatus());
     }
 }

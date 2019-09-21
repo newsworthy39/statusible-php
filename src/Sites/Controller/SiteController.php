@@ -91,8 +91,9 @@ class SiteController
             $allPostPutVars = $request->getParsedBody();
             $identifier = $allPostPutVars['identifier'];
             $typeofservice = $allPostPutVars['typeofservice'];
+            $endpoint = $allPostPutVars['endpoint'];
 
-            $check = Check::Create($identifier, $site, Check::fromString($typeofservice));
+            $check = Check::Create($identifier, $site, Check::fromString($typeofservice), $endpoint);
             $check->Store();
 
             // Render a template
