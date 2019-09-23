@@ -37,7 +37,8 @@ class UserController
         if ($user) {
             // if ok, assume user is logged in, and show reset-password-form.
             $response = new Response;
-            return $response->getBody()->write($this->templates->render('resetpassword', ['token' => $user->token]));
+            $response->getBody()->write($this->templates->render('resetpassword', ['token' => $user->token]));
+            return $response;
         } else {
             return new RedirectResponse('/?error=notokenoremail');
         }
@@ -99,6 +100,8 @@ class UserController
             foreach ($allPostPutVars as $var => $value) {
                 $user->$var = $value;
             }
+
+            $user->preferredplan = 0;
 
             $user->Store();
 

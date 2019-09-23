@@ -1,7 +1,7 @@
 <nav aria-label="breadcrumb" class="py-2">
   <ol class="breadcrumb">
   <li class="breadcrumb-item"><a href="/">Home</a></li>
-    <li class="breadcrumb-item active" aria-current="page" ><a href="/user/<?=$user->getIdentifier()?>"><?=$user->getIdentifier()?></a></li>
+    <li class="breadcrumb-item active" aria-current="page" ><a href="/user/<?=$visiteduser->getIdentifier()?>"><?=$visiteduser->getIdentifier()?></a></li>
   </ol>
 </nav>
 

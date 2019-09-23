@@ -27,11 +27,12 @@ class WebApplication
         $strategy->setContainer($container);
         $this->router->setStrategy($strategy);
 
+        // front-page.
         $this->router->map('GET', '/', \newsworthy39\Controller\FrontController::class);
 
+        // user-stuff.
         $this->router->map('GET', '/user/signin', [\newsworthy39\User\Controller\UserController::class, 'signin']);
         $this->router->map('POST', '/user/signin', [\newsworthy39\User\Controller\UserController::class, 'postsignin']);
-
         $this->router->map('GET', '/user/signup', [\newsworthy39\User\Controller\UserController::class, 'signup']);
         $this->router->map('POST', '/user/signup', [\newsworthy39\User\Controller\UserController::class, 'postsignup']);
         $this->router->map('GET', '/user/signout', [\newsworthy39\User\Controller\UserController::class, 'signout']);
@@ -41,6 +42,7 @@ class WebApplication
         // Public stuff
         $this->router->map('GET', '/user/{id}', [\newsworthy39\User\Controller\UserController::class, 'profile']);
         $this->router->map('GET', '/sites/{id:word}', [\newsworthy39\Sites\Controller\SiteController::class, 'index']);
+        $this->router->map('GET', '/search', [\newsworthy39\Search\Controller\SearchController::class, 'index']);
 
         // Profile actions requiring authentication.
         $this->router->group('/user', function (\League\Route\RouteGroup $route) {

@@ -27,7 +27,7 @@ class Site extends Elegant implements Schedulable
 
     public static function FindAll()
     {
-        return self::findModels(Site::CreateEmpty());
+        return self::findAllModels(Site::CreateEmpty());
     }
 
     public static function FindByIdentifier($identifier)

@@ -18,7 +18,8 @@ class Elegant
         return 'id';
     }
 
-    public function id() {
+    public function id()
+    {
         return $this->values[$this->primarykey()];
     }
 
@@ -61,7 +62,7 @@ class Elegant
                 foreach ($fields as $field) {
                     $instance->$field = $row[$field];
                 }
-                
+
                 break;
             }
 
@@ -77,7 +78,43 @@ class Elegant
         }
     }
 
-    protected static function findModels(Elegant $model)
+    protected static function findModels(Elegant $model, array $args)
+    {
+        try {
+
+            $pdo = app()->get(\PDO::class);
+
+            $placeholders = array();
+            $keys = array_keys($args);
+            foreach ($keys as $key) {
+                $placeholders[] = sprintf("%s LIKE CONCAT(:%s, '%%')", $key, $key);
+            }
+            $where = implode(' AND ', $placeholders);
+            $sql = sprintf("SELECT * from %s WHERE %s", $model->tablename(), $where);
+
+            //printf("SQL i4 %s, %s", $sql, print_r($args, true));
+            $statement = $pdo->prepare($sql);
+            $statement->execute($args);
+
+            $result = array();
+            while ($row = $statement->fetch(PDO::FETCH_ASSOC)) {
+                $fields = array_keys($row);
+                $instance = clone ($model);
+                foreach ($fields as $field) {
+                    $instance->$field = $row[$field];
+                }
+                array_push($result, $instance);
+            }
+
+            $statement = null;
+        } catch (PDOException $error) {
+            printf("SQL error %s", $error);
+        }
+
+        return $result;
+    }
+
+    protected static function findAllModels(Elegant $model)
     {
         try {
 

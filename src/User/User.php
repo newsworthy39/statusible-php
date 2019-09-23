@@ -133,4 +133,10 @@ class User extends Elegant
         }
         return $randomString;
     }
+
+    public function getCreated() {
+        $datetime = new \DateTime( $this->created );
+        return $datetime->format("Y-m-d"); // Updated ISO8601
+
+    }
 }

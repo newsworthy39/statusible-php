@@ -74,6 +74,7 @@ function app(): Container
         $container->add(\newsworthy39\Controller\FrontController::class)->addArgument(\League\Plates\Engine::class);
         $container->add(\newsworthy39\Dashboard\Controller\DashboardController::class)->addArgument(\League\Plates\Engine::class);
         $container->add(\newsworthy39\Sites\Controller\SiteController::class)->addArgument(\League\Plates\Engine::class);
+        $container->add(\newsworthy39\Search\Controller\SearchController::class)->addArgument(\League\Plates\Engine::class);
         $container->add(\newsworthy39\AuthMiddleware::class);
 
         // self::$container->add(pdo...)

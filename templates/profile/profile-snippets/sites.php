@@ -1,8 +1,8 @@
 <nav aria-label="breadcrumb" class="my-2">
   <ol class="breadcrumb">
     <li class="breadcrumb-item"><a href="/">Home</a></li>
-    <li class="breadcrumb-item"><a href="/user/<?=$user->getIdentifier() ?>"><?= $user->getIdentifier() ?></a></li>
-    <li class="breadcrumb-item active" aria-current="page"><a href="/user/<?= $user->getIdentifier() ?>?page=sites">Sites</a></li>
+    <li class="breadcrumb-item"><a href="/user/<?=$visiteduser->getIdentifier() ?>"><?= $visiteduser->getIdentifier() ?></a></li>
+    <li class="breadcrumb-item active" aria-current="page"><a href="/user/<?= $visiteduser->getIdentifier() ?>?page=sites">Sites</a></li>
   </ol>
 </nav>
 
