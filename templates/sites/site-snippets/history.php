@@ -1,8 +1,10 @@
 <nav aria-label="breadcrumb" class="py-2">
   <ol class="breadcrumb">
     <li class="breadcrumb-item"><a href="/">Home</a></li>
-    <li class="breadcrumb-item active" aria-current="page" ><a href="/site/<?=$site->getIdentifier()?>"><?=$site->getIdentifier()?></a></li>
+    <li class="breadcrumb-item"><a href="/site/<?=$site->getIdentifier()?>"><?=$site->getIdentifier()?></a></li>
+    <li class="breadcrumb-item active" aria-current="page" ><a href="/site/<?=$site->getIdentifier()?>?page=history">History</a></li>
   </ol>
+  filter
 </nav>
 
 <div class="pricing-header px-3 py-3 pt-md-5 pb-md-4 mx-auto text-center">

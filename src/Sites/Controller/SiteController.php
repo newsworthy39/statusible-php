@@ -48,6 +48,14 @@ class SiteController
         return $response;
     }
 
+    public function settings(ServerRequestInterface $request): ResponseInterface
+    {
+        // Render a template
+        $response = new Response;
+        $response->getBody()->write($this->templates->render('sites/create'));
+        return $response;
+    }
+
     public function postcreate(ServerRequestInterface $request): ResponseInterface
     {
         $allPostPutVars = $request->getParsedBody();

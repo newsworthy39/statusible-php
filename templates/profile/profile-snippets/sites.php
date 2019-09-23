@@ -2,16 +2,9 @@
   <ol class="breadcrumb">
     <li class="breadcrumb-item"><a href="/">Home</a></li>
     <li class="breadcrumb-item"><a href="/user/<?=$user->getIdentifier() ?>"><?= $user->getIdentifier() ?></a></li>
-    <li class="breadcrumb-item active" aria-current="page"><a href="/user/<?= $user->getIdentifier() ?>/sites">Sites</a></li>
+    <li class="breadcrumb-item active" aria-current="page"><a href="/user/<?= $user->getIdentifier() ?>?page=sites">Sites</a></li>
   </ol>
 </nav>
-
-<div class="text-right">
-  <form class="form-inline my-lg-0 ">
-    <input class="form-control mr-sm-2" type="search" placeholder="Filter" aria-label="Search">
-    <button class="btn btn-outline-success my-2 my-sm-0 " type="submit">Filter</button>
-  </form>
-</div>
 
 <div class="pricing-header px-3 py-3 pt-md-5 pb-md-4 mx-auto text-center">
   <h1 class="display-4">Site</h1>
@@ -36,10 +29,4 @@
 
   <div class="row mx-auto ">
     <div class="col-sm-8 py-2"><?php if ($user) { ?><a href="/sites/create/new" class="btn btn-primary">Create site</a><?php } ?></div>
-    <div class="col-sm-4 py-2 d-flex justify-content-end ">
-      <form class="form-inline my-lg-0 ">
-        <input class="form-control mr-sm-2" type="search" placeholder="Filter" aria-label="Search">
-        <button class="btn btn-outline-success my-2 my-sm-0 " type="submit">Filter</button>
-      </form>
-    </div>
   </div>

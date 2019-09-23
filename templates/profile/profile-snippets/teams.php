@@ -2,7 +2,7 @@
   <ol class="breadcrumb">
     <li class="breadcrumb-item"><a href="/">Home</a></li>
     <li class="breadcrumb-item"><a href="/user/<?=$user->getIdentifier() ?>"><?= $user->getIdentifier() ?></a></li>
-    <li class="breadcrumb-item active" aria-current="page"><a href="/user/<?= $user->getIdentifier() ?>/teams">Teams</a></li>
+    <li class="breadcrumb-item active" aria-current="page"><a href="/user/<?= $user->getIdentifier() ?>?page=teams">Teams</a></li>
   </ol>
 </nav>
 

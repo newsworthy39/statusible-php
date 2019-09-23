@@ -38,11 +38,9 @@ class WebApplication
         $this->router->map('GET', '/token/{id}/resetpassword', [\newsworthy39\User\Controller\UserController::class, 'resetUsingToken']);
         $this->router->map('POST', '/token/{id}/resetpassword', [\newsworthy39\User\Controller\UserController::class, 'postResetUsingToken']);
 
-        // Public profile
-        $this->router->group('/user', function (\League\Route\RouteGroup $route) {
-            $route->map('GET', '/{id}', [\newsworthy39\User\Controller\UserController::class, 'profile']);
-            $route->map('GET', '/{id}/{page}', [\newsworthy39\User\Controller\UserController::class, 'profile']);
-        });
+        // Public stuff
+        $this->router->map('GET', '/user/{id}', [\newsworthy39\User\Controller\UserController::class, 'profile']);
+        $this->router->map('GET', '/sites/{id:word}', [\newsworthy39\Sites\Controller\SiteController::class, 'index']);
 
         // Profile actions requiring authentication.
         $this->router->group('/user', function (\League\Route\RouteGroup $route) {
@@ -55,13 +53,11 @@ class WebApplication
             $route->map('GET', '/create/new', [\newsworthy39\Sites\Controller\SiteController::class, 'create']);
             $route->map('POST', '/create/new', [\newsworthy39\Sites\Controller\SiteController::class, 'postcreate']);
             $route->map('GET', '/{identifier:word}/settings', [\newsworthy39\Sites\Controller\SiteController::class, 'settings']);
+            $route->map('GET', '/{identifier:word}/checks', [\newsworthy39\Sites\Controller\SiteController::class, 'index']);
             $route->map('GET', '/{identifier:word}/checks/new', [\newsworthy39\Sites\Controller\SiteController::class, 'createcheck']);
             $route->map('POST', '/{identifier:word}/checks/new', [\newsworthy39\Sites\Controller\SiteController::class, 'postcreatecheck']);
             $route->map('GET', '/{identifier:word}/checks/{checkid:word}/schedulecheck', [\newsworthy39\Sites\Controller\SiteController::class, 'schedulecheck']);
         })->middleware(new AuthMiddleware);;
-
-        // Public sites
-        $this->router->map('GET', '/sites/{id:word}', [\newsworthy39\Sites\Controller\SiteController::class, 'index']);
     }
 
     /**
@@ -77,7 +73,7 @@ class WebApplication
             // And dispatch the request.
             return $this->router->dispatch($request);
         } catch (NotFoundException $exception) {
-            
+
             // If not found, thow this exception.
             $response = new Response;
             $templates = app()->get(\League\Plates\Engine::class);

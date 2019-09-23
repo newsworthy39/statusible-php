@@ -166,7 +166,7 @@ class UserController
     public function profile(ServerRequestInterface $request, array $args): ResponseInterface
     {
         $allPostPutVars = $request->getQueryParams();
-        $page = isset($args['page']) ? $args['page'] : 'overview';
+        $page = isset($allPostPutVars['page']) ? $allPostPutVars['page'] : 'overview';
         $visitedUser = User::FindUsingNickname($args['id']);
 
         if ($visitedUser) {
