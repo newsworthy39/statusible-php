@@ -1,6 +1,14 @@
+<nav aria-label="breadcrumb" class="py-2">
+  <ol class="breadcrumb">
+    <li class="breadcrumb-item"><a href="/">Home</a></li>
+    <li class="breadcrumb-item"><a href="/sites">Sites</a></li>
+    <li class="breadcrumb-item active" aria-current="page" ><a href="/site/<?=$site->getIdentifier()?>"><?=$site->getIdentifier()?></a></li>
+  </ol>
+</nav>
+
 <div class="pricing-header px-3 py-3 pt-md-5 pb-md-4 mx-auto text-center">
     <h1 class="display-4"><?= $site->getIdentifier() ?></h1>
-    <p class="lead font-italic">by <?= $site->getOwner()->getNickname() ?></p>
+    <p class="lead font-italic">by <?= $site->getOwner()->getIdentifier() ?></p>
 </div>
 
 <div class="container px-2 pb-2 py-2" style="max-width:480px">

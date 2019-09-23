@@ -1,5 +1,11 @@
+<nav aria-label="breadcrumb" class="py-2">
+  <ol class="breadcrumb">
+  <li class="breadcrumb-item"><a href="/">Home</a></li>
+    <li class="breadcrumb-item active" aria-current="page" ><a href="/user/<?=$user->getIdentifier()?>"><?=$user->getIdentifier()?></a></li>
+  </ol>
+</nav>
 
-<div class="pricing-header px-3 py-3 pt-md-5 pb-md-4 mx-auto text-center">
+<div class="pricing-header px-2 py-2 pt-md-5 pb-md-4 mx-auto text-center">
   <h1 class="display-4">Overview</h1>
   <p class="lead">We have the following checks, registered. Read the documentation <a href="/documentation/sites">about the sites</a> for more information.</p>
 </div>

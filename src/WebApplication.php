@@ -41,6 +41,7 @@ class WebApplication
         // Public profile
         $this->router->group('/user', function (\League\Route\RouteGroup $route) {
             $route->map('GET', '/{id}', [\newsworthy39\User\Controller\UserController::class, 'profile']);
+            $route->map('GET', '/{id}/{page}', [\newsworthy39\User\Controller\UserController::class, 'profile']);
         });
 
         // Profile actions requiring authentication.

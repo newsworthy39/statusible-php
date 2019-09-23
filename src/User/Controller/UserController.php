@@ -142,7 +142,7 @@ class UserController
             session_write_close();
 
             // Render a response
-            return new RedirectResponse(sprintf("/user/%s", $user->getNickname()));
+            return new RedirectResponse(sprintf("/user/%s", $user->getIdentifier()));
         } else {
             // make sure, we kill our session, 
             return $this->signout($request);
@@ -166,7 +166,7 @@ class UserController
     public function profile(ServerRequestInterface $request, array $args): ResponseInterface
     {
         $allPostPutVars = $request->getQueryParams();
-        $page = isset($allPostPutVars['page']) ? $allPostPutVars['page'] : 'overview';
+        $page = isset($args['page']) ? $args['page'] : 'overview';
         $visitedUser = User::FindUsingNickname($args['id']);
 
         if ($visitedUser) {
@@ -200,6 +200,6 @@ class UserController
         }
 
         // Send me, to the user-profile instead.
-        return new RedirectResponse(sprintf("/user/%s", $visitedUser->getNickName()));
+        return new RedirectResponse(sprintf("/user/%s", $visitedUser->getIdentifier()));
     }
 }

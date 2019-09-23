@@ -32,7 +32,7 @@ class TestUserModel extends SystemTest {
 
     public function testUsersNicknameWorks() {
         $user = User::Find('test@virgin.com');
-        $this->assertSame($user->getNickname(), 'test-virgon');
+        $this->assertSame($user->getIdentifier(), 'test-virgon');
     }
 
     public function testUsersNotificationsWorks() {

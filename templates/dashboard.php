@@ -1,4 +1,4 @@
-<?php $this->layout('template', ['title' => sprintf("%s (dashboard)", $user->getNickname())]); ?>
+<?php $this->layout('template', ['title' => sprintf("%s (dashboard)", $user->getIdentifier())]); ?>
 
 <div class="container">
 

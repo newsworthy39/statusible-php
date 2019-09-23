@@ -99,7 +99,7 @@ class User extends Elegant
     public function Teams()
     { }
 
-    public function getNickname()
+    public function getIdentifier()
     {
         return $this->nickname;
     }
