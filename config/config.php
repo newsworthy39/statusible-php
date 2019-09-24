@@ -45,7 +45,7 @@ function app(): Container
             ->addArgument('mysql:host=mysql;dbname=test')
             ->addArgument('test')
             ->addArgument('secret')
-            ->addArgument(array(\PDO::MYSQL_ATTR_INIT_COMMAND => 'SET NAMES utf8', \PDO::ATTR_ERRMODE => \PDO::ERRMODE_EXCEPTION));
+            ->addArgument(array(\PDO::MYSQL_ATTR_INIT_COMMAND => 'SET NAMES utf8mb4', \PDO::ATTR_ERRMODE => \PDO::ERRMODE_EXCEPTION));
 
         $container->add(\newsworthy39\Factory\Tinker::class)->addArgument(\PDO::class);
 

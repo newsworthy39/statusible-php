@@ -13,7 +13,7 @@
     </div>
   </nav>
 
-  <?php $this->insert(sprintf("profile/profile-snippets/%s", $page), ['visiteduser' => $visiteduser, 'user' => $user]); ?>
+  <?php $this->insert(sprintf("user/user-snippets/%s", $page), ['visiteduser' => $visiteduser, 'user' => $user]); ?>
 
   <?php $this->insert('snippets/footer'); ?>
 </div>

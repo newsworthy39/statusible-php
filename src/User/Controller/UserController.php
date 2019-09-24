@@ -175,7 +175,7 @@ class UserController
         if ($visitedUser) {
             // Render a template
             $response = new Response;
-            $response->getBody()->write($this->templates->render('profile/profile', ['page' => $page, 'visiteduser' => $visitedUser]));
+            $response->getBody()->write($this->templates->render('user/user', ['page' => $page, 'visiteduser' => $visitedUser]));
             return $response;
         } else {
             throw new NotFoundException("User not found");

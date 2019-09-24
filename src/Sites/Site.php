@@ -103,7 +103,16 @@ class Site extends Elegant implements Schedulable
     public function Checks()
     {
         $check = Check::CreateEmpty();
-        return $this->has($this, $check);
+        $result = $this->has($this, $check);
+        if ($result) {
+            return $result;
+        }
+
+        return array();
+    }
+
+    public function getScreenShot() {
+        return $this->screenshot;
     }
 
     public function Schedule(Queue $user)

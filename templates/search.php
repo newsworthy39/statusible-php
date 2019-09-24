@@ -18,7 +18,7 @@ $this->layout('template', ['title' => 'search results']) ?>
       <?php foreach ($siteResults as $site) : ?>
         <div class="col mb-3">
           <div class="card" style="max-width: 26rem;">
-            <img src="/assets/statusible-servicestatus-<?= $site->getServiceStatus() ?>-100x100.png?version=2" class="card-img-top">
+            <img src="<?=$site->getScreenShot()?>" class="card-img-top">
             <div class="card-body">
               <h5 class="card-title"><?= $site->identifier ?></h5>
               <p class="card-text">Service last checked ten minutes ago.</p>
@@ -34,7 +34,7 @@ $this->layout('template', ['title' => 'search results']) ?>
         <div class="col mb-3">
           <div class="card" style="max-width: 26rem;">
             <div class="card-body">
-              <img src="https://avatarmaker.com/svgavatars/temp-avatars/svgA6669258480285285.png" class="card-img-top">
+              <img src="<?=$user->getAvatar(240)?>"" class="card-img-top">
               <h5 class="card-title"><?= $user->getIdentifier() ?></h5>
               <p class="card-text">User since <?= $user->getCreated() ?></p>
               <a href="/user/<?= $user->getIdentifier() ?>" class="btn btn-primary">Visit user</a>

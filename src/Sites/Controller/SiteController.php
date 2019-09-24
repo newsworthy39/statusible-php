@@ -48,11 +48,15 @@ class SiteController
         return $response;
     }
 
-    public function settings(ServerRequestInterface $request): ResponseInterface
+    public function settings(ServerRequestInterface $request, array $args): ResponseInterface
     {
+        $allPostPutVars = $request->getQueryParams();
+        $page = isset($allPostPutVars['page']) ? $allPostPutVars['page'] : 'overview';
+        $site = Site::FindByIdentifier($args['identifier']);
+
         // Render a template
         $response = new Response;
-        $response->getBody()->write($this->templates->render('sites/create'));
+        $response->getBody()->write($this->templates->render('sites/settings', ['site' => $site]));
         return $response;
     }
 
@@ -123,7 +127,7 @@ class SiteController
             $check = Check::FindByCompositeIdentifier($site, $checkidentifier);
 
             if ($check) {
-                
+
                 $check->schedulecheck();
 
                 return new RedirectResponse(sprintf("/sites/%s", $site->getIdentifier()));

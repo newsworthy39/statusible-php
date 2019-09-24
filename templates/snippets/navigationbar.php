@@ -4,7 +4,7 @@
   </button>
 
   <?php if ($user) { ?>
-    <a class="navbar-brand" href="/user/<?= $user->getIdentifier() ?>"> <img src="/assets/statusible-100x100.png" width="32" height="32" class="d-inline-block align-top" alt=""></a>
+    <a class="navbar-brand" href="/user/<?= $user->getIdentifier() ?>"> <img src="<?=$user->getAvatar(32)?>" width="32" height="32" class="d-inline-block align-top" alt=""></a>
   <?php } else { ?>
     <a class="navbar-brand" href="/"> <img src="/assets/statusible-100x100.png" width="32" height="32" class="d-inline-block align-top" alt=""></a>
   <?php } ?>

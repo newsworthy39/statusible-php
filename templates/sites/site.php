@@ -9,6 +9,9 @@
       <a href="?page=checks" class="list-group-item list-group-item-action <?php if ($page == 'checks') echo 'active'?>"">Checks</a>
       <a href="?page=history" class="list-group-item list-group-item-action <?php if ($page == 'history') echo 'active'?>"">history</a>
       <a href="?page=followers" class="list-group-item list-group-item-action <?php if ($page == 'followers') echo 'active'?>"">Followers</a>
+      <?php if ($user):  ?>
+      <a href="/sites/berlingskedk/settings" class="list-group-item list-group-item-action <?php if ($page == 'settings') echo 'active'?>"">Settings</a>
+      <?php endif; ?>
     </div>
   </nav>
 

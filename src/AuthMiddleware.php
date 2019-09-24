@@ -4,11 +4,12 @@ declare(strict_types=1);
 
 namespace newsworthy39;
 
+use League\Route\Http\Exception\ForbiddenException;
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
 use Psr\Http\Server\MiddlewareInterface;
 use Psr\Http\Server\RequestHandlerInterface;
-use Zend\Diactoros\Response\RedirectResponse;
+use League\Route\Http\Exception\UnauthorizedException;
 
 class AuthMiddleware implements MiddlewareInterface
 {
@@ -44,6 +45,8 @@ class AuthMiddleware implements MiddlewareInterface
         // if user does not have auth, possibly return a redirect response,
         // this will not continue to any further middleware and will never
         // reach your route callable
-        return new RedirectResponse('/');
+        
+        throw new ForbiddenException('Not authorized');
+        
     }
 }

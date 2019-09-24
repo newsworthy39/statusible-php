@@ -53,24 +53,29 @@ class User extends Elegant
         return $user;
     }
 
-    public static function CreateEmpty() : User {
+    public static function CreateEmpty(): User
+    {
         $user =  new User();
         return $user;
     }
 
-    public function setEmail(String $email) {
+    public function setEmail(String $email)
+    {
         $this->email = $email;
     }
 
-    public function getEmail() {
+    public function getEmail()
+    {
         return $this->email;
     }
 
-    public function setNickname(String $nickname) {
+    public function setNickname(String $nickname)
+    {
         $this->nickname = $nickname;
     }
 
-    public function getId() {
+    public function getId()
+    {
         return $this->id;
     }
 
@@ -119,7 +124,8 @@ class User extends Elegant
         return 0;
     }
 
-    public function setPassword(String $password) {
+    public function setPassword(String $password)
+    {
         $this->password = sha1($password);
     }
 
@@ -134,9 +140,41 @@ class User extends Elegant
         return $randomString;
     }
 
-    public function getCreated() {
-        $datetime = new \DateTime( $this->created );
+    public function getCreated()
+    {
+        $datetime = new \DateTime($this->created);
         return $datetime->format("Y-m-d"); // Updated ISO8601
 
+    }
+
+    public function getAvatar($size=80)
+    {
+        return $this->get_gravatar($this->getEmail(), $size);
+    }
+
+    /**
+     * Get either a Gravatar URL or complete image tag for a specified email address.
+     *
+     * @param string $email The email address
+     * @param string $s Size in pixels, defaults to 80px [ 1 - 2048 ]
+     * @param string $d Default imageset to use [ 404 | mp | identicon | monsterid | wavatar ]
+     * @param string $r Maximum rating (inclusive) [ g | pg | r | x ]
+     * @param boole $img True to return a complete IMG tag False for just the URL
+     * @param array $atts Optional, additional key/value attributes to include in the IMG tag
+     * @return String containing either just a URL or a complete image tag
+     * @source https://gravatar.com/site/implement/images/php/
+     */
+    private function get_gravatar($email, $s = 80, $d = 'mp', $r = 'g', $img = false, $atts = array())
+    {
+        $url = 'https://www.gravatar.com/avatar/';
+        $url .= md5(strtolower(trim($email)));
+        $url .= "?s=$s&d=$d&r=$r";
+        if ($img) {
+            $url = '<img src="' . $url . '"';
+            foreach ($atts as $key => $val)
+                $url .= ' ' . $key . '="' . $val . '"';
+            $url .= ' />';
+        }
+        return $url;
     }
 }

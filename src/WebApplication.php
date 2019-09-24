@@ -6,10 +6,12 @@ namespace newsworthy39;
 
 use newsworthy39\AuthMiddleware;
 use League\Route\Http\Exception\NotFoundException;
+use League\Route\Http\Exception\ForbiddenException;
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
 use League\Route\Strategy\ApplicationStrategy;
 use Zend\Diactoros\Response;
+
 use League\Route\Router;
 
 class WebApplication
@@ -80,9 +82,17 @@ class WebApplication
             $response = new Response;
             $templates = app()->get(\League\Plates\Engine::class);
             $templates->addData(['user' => AuthMiddleware::getUser()]);
-            $response->getBody()->write($templates->render('notfound', ['exception' => $exception]));
+            $response->getBody()->write($templates->render('exception', ['exception' => $exception]));
 
             return $response;
+        } catch (ForbiddenException $exception) {
+
+              // If not found, thow this exception.
+              $response = new Response;
+              $templates = app()->get(\League\Plates\Engine::class);
+              $templates->addData(['user' => AuthMiddleware::getUser()]);
+              $response->getBody()->write($templates->render('exception', ['exception' => $exception]));
+              return $response;
         }
     }
 }

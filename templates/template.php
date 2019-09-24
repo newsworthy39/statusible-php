@@ -19,6 +19,11 @@
       user-select: none;
     }
 
+    .site-media {
+      height: auto;
+      max-width: 240px
+    }
+
     @media (min-width: 768px) {
       html {
         font-size: 16px;
@@ -33,6 +38,11 @@
       .card-deck {
         margin-left: -15px;
         margin-right: -15px;
+      }
+
+      .site-media {
+        height: auto;
+        max-width: 120px
       }
     }
 
