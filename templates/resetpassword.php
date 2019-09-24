@@ -2,7 +2,7 @@
 
 <div class="container">
 
-<?php $this->insert('snippets/navigationbar'); ?>
+<?php $this->insert('template-snippets/navigationbar'); ?>
 
     <div class="px-3 py-3 pt-md-5 pb-md-4 mx-auto text-center">
         <h1 class="display-5">Reset password</h1>
@@ -33,5 +33,5 @@
         confirm_password.onkeyup = validatePassword;
     </script>
 
-    <?php $this->insert('snippets/footer', ['acceptCookies' => false]); ?>    
+    <?php $this->insert('template-snippets/footer', ['acceptCookies' => false]); ?>    
 </div>

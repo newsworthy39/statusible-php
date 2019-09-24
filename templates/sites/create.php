@@ -1,7 +1,7 @@
 <?php $this->layout('template', ['title' => $site->identifier]) ?>
 
 <div class="container">
-  <?php $this->insert('snippets/navigationbar'); ?>
+  <?php $this->insert('template-snippets/navigationbar'); ?>
 
   <div class="px-3 py-3 pt-md-5 pb-md-4 mx-auto text-center" style="max-width: 500px">
     <h1 class="display-4">Create site</h1>
@@ -18,5 +18,5 @@
       </form>
   </div>
 
-  <?php $this->insert('snippets/footer'); ?>
+  <?php $this->insert('template-snippets/footer'); ?>
 </div>

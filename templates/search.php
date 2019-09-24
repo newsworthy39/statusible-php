@@ -6,7 +6,7 @@ $this->layout('template', ['title' => 'search results']) ?>
 
 <div class="container">
 
-  <?php $this->insert('snippets/navigationbar'); ?>
+  <?php $this->insert('template-snippets/navigationbar'); ?>
 
   <div class="pricing-header px-3 py-3 pt-md-5 pb-md-4 mx-auto text-center">
     <h1 class="display-4">Results found</h1>
@@ -46,6 +46,6 @@ $this->layout('template', ['title' => 'search results']) ?>
   </div>
 
 
-  <?php $this->insert('snippets/footer', ['acceptCookies' => false]); ?>
+  <?php $this->insert('template-snippets/footer', ['acceptCookies' => false]); ?>
 
 </div>

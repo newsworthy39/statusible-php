@@ -2,7 +2,7 @@
 
 <div class="container">
 
-  <?php $this->insert('snippets/navigationbar'); ?>
+  <?php $this->insert('template-snippets/navigationbar'); ?>
 
   <div class="px-3 py-3 pt-md-5 pb-md-4 mx-auto text-center" style="max-width:480px">
     <h1 class="display-4">Signup</h1>
@@ -23,7 +23,7 @@
       </form>
   </div>
 
-  <?php $this->insert('snippets/pricing', ['selectedEnabled' => true]) ?>
+  <?php $this->insert('template-snippets/pricing', ['selectedEnabled' => true]) ?>
 
   <footer class="pt-4 my-md-5 pt-md-5 border-top">
     <div class="row">

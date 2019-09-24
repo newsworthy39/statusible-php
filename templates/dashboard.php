@@ -2,7 +2,7 @@
 
 <div class="container">
 
-  <?php $this->insert('snippets/navigationbar'); ?>
+  <?php $this->insert('template-template-template-template-snippets/navigationbar'); ?>
 
   * Service overview
 
@@ -10,6 +10,6 @@
 
   * Number of notifications  
 
-  <?php $this->insert('snippets/footer'); ?>
+  <?php $this->insert('template-template-snippets/footer'); ?>
 
 </div>

@@ -1,7 +1,7 @@
 <?php $this->layout('template', ['title' => $site->identifier]) ?>
 
 <div class="container">
-  <?php $this->insert('snippets/navigationbar'); ?>
+  <?php $this->insert('template-snippets/navigationbar'); ?>
 
   <nav class="navbar navbar-expand-lg navbar-light bg-light justify-content-between">
     <div class="list-group list-group-horizontal-sm flex-fill">
@@ -17,5 +17,5 @@
 
   <?php $this->insert(sprintf("sites/site-snippets/%s", $page), ['user' => $user, 'site' => $site]); ?> 
 
-  <?php $this->insert('snippets/footer'); ?>
+  <?php $this->insert('template-snippets/footer'); ?>
 </div>

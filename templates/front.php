@@ -6,7 +6,7 @@ $this->layout('template', ['title' => 'sign-in or sign-up']) ?>
 
 <div class="container">
 
-  <?php $this->insert('snippets/navigationbar'); ?>
+  <?php $this->insert('template-snippets/navigationbar'); ?>
 
   <div class="jumbotron">
     <h1 class="display-4">Features</h1>
@@ -18,7 +18,7 @@ $this->layout('template', ['title' => 'sign-in or sign-up']) ?>
     </p>
   </div>
 
-  <?php $this->insert('snippets/pricing', ['selectedEnabled' => false, 'plan' => false]); ?>
+  <?php $this->insert('template-snippets/pricing', ['selectedEnabled' => false, 'plan' => false]); ?>
 
   <div class="jumbotron">
     <h1 class="display-4">Documentation</h1>
@@ -41,6 +41,6 @@ $this->layout('template', ['title' => 'sign-in or sign-up']) ?>
     </p>
   </div>
 
-  <?php $this->insert('snippets/footer', ['acceptCookies' => false]); ?>
+  <?php $this->insert('template-snippets/footer', ['acceptCookies' => false]); ?>
  
 </div>

@@ -1,7 +1,7 @@
 <?php $this->layout('template', ['title' => 'sign-in']) ?>
 
 <div class="container">
-<?php $this->insert('snippets/navigationbar'); ?>
+<?php $this->insert('template-snippets/navigationbar'); ?>
 
   <div class="px-3 py-3 pt-md-5 pb-md-4 mx-auto text-center" style="max-width:480px">
     <h1 class="display-4">Signin</h1>
@@ -18,5 +18,5 @@
       <p class="mt-5 mb-3 text-muted">&copy; <?php echo date("Y"); ?></p>
     </form>
   </div>
-  <?php $this->insert('snippets/footer', ['acceptCookies' => false]); ?>
+  <?php $this->insert('template-snippets/footer', ['acceptCookies' => false]); ?>
 </div>
