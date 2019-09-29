@@ -184,9 +184,12 @@ class UserController
 
     public function settings(ServerRequestInterface $request, array $args): ResponseInterface
     {
+        $allPostPutVars = $request->getQueryParams();
+        $page = isset($allPostPutVars['page']) ? $allPostPutVars['page'] : 'overview';
+        
         // Render a template
         $response = new Response;
-        $response->getBody()->write($this->templates->render('settings/settings'));
+        $response->getBody()->write($this->templates->render('settings/settings', ['page' => $page]));
         return $response;
     }
 

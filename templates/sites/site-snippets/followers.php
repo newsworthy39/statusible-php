@@ -1,10 +1,9 @@
-<nav aria-label="breadcrumb" class="py-2">
-  <ol class="breadcrumb">
-    <li class="breadcrumb-item"><a href="/">Home</a></li>
-    <li class="breadcrumb-item"><a href="/sites/<?=$site->getIdentifier()?>"><?=$site->getIdentifier()?></a></li>
-    <li class="breadcrumb-item active" aria-current="page" ><a href="/site/<?=$site->getIdentifier()?>?page=followers">Followers</a></li>
-  </ol>
-</nav>
+<ol class="breadcrumb bg-light">
+  <li class="breadcrumb-item"><a href="/">Home</a></li>
+  <li class="breadcrumb-item"><a href="/sites/<?= $site->getIdentifier() ?>"><?= $site->getIdentifier() ?></a></li>
+  <li class="breadcrumb-item active" aria-current="page"><a href="/site/<?= $site->getIdentifier() ?>?page=followers">Followers</a></li>
+</ol>
+
 
 <div class="row mx-auto ">
   <div class="col-sm-8 py-2"></div>

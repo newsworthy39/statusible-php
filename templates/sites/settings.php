@@ -1,81 +1,113 @@
 <?php $this->layout('template', ['title' => $site->identifier]) ?>
 
-<div class="container">
-  <?php $this->insert('template-snippets/navigationbar'); ?>
+<?php $this->insert('template-snippets/navigationbar'); ?>
 
-  <nav class="navbar navbar-expand-lg navbar-light bg-light justify-content-between">
-    <div class="list-group list-group-horizontal-sm flex-fill">
-      <a href="?page=overview" class="list-group-item list-group-item-action <?php if ($page == 'overview') echo 'active' ?>">Overview</a>
-      <a href="?page=checks" class="list-group-item list-group-item-action <?php if ($page == 'checks') echo 'active' ?>"">Checks</a>
-      <a href=" ?page=history" class="list-group-item list-group-item-action <?php if ($page == 'history') echo 'active' ?>"">history</a>
-      <a href=" ?page=followers" class="list-group-item list-group-item-action <?php if ($page == 'followers') echo 'active' ?>"">Followers</a>
-      <?php if ($user) :  ?>
-      <a href="/sites/berlingskedk/settings" class="list-group-item list-group-item-action active">Settings</a>
-    <?php endif; ?>
-    </div>
-  </nav>
-
-  <nav aria-label="breadcrumb" class="py-2">
-    <ol class="breadcrumb">
-      <li class="breadcrumb-item"><a href="/">Home</a></li>
-      <li class="breadcrumb-item"><a href="/sites/<?= $site->getIdentifier() ?>"><?= $site->getIdentifier() ?></a></li>
-      <li class="breadcrumb-item active" aria-current="page"><a href="/site/<?= $site->getIdentifier() ?>?page=settings">Settings</a></li>
-    </ol>
-  </nav>
-
-  <div class="px-3 py-3 pt-md-5 pb-md-4 mx-auto text-center" style="max-width:500px">
-    <h1 class="display-4">Settings</h1>
-    <p class="lead">A check is the active or passive components, that your site is made up out of. Read the documentation <a href="/documentation/sites/checks">about the checks</a> for more information.</p>
-    <form class="form-createsite" METHOD="POST">
-      <label for="inputNickname" class="sr-only">check identifier</label>
-      <div class="input-group mb-3">
-        <div class="input-group-prepend">
-          <span class="input-group-text" id="basic-addon3">https://<?= $this->variables('site_title') ?>/sites/<?= $site->getIdentifier() ?>/</span>
-        </div>
-        <input type="text" name="identifier" id="identifier" class="form-control" placeholder="Choose a check identifier" required autofocus>
-      </div>
-      <div class="form-group">
-        <label for="FormControlSelect1">What kind of check is this? An active check is performed, by our platform, whereas a passive check is populated via the API.</label>
-        <select class="form-control" name="typeofcheck" id="exampleFormControlSelect1">
-          <?php
-          foreach (\newsworthy39\Check\Check::getSupportedTypeOfChecks() as $checktype) {
-            echo printf("<option value='%s'>%s</option>", $checktype, $checktype);
-          }
-          ?>
-        </select>
-      </div>
-      <div class="form-group">
-        <label for="FormControlSelect2">What type of service, should the check examine?</label>
-        <select class="form-control" name="typeofservice" id="exampleFormControlSelect2">
-          <?php
-          foreach (\newsworthy39\Check\Check::getSupportedServices() as $service) {
-            echo printf("<option value='%s'>%s</option>", $service, $service);
-          }
-          ?>
-        </select>
-      </div>
-      <div class="form-group">
-        <label for="endpoint">Endpoint?</label>
-        <div class="input-group mb-3">
-          <div class="input-group-prepend">
-            <span class="input-group-text" id="basic-addon3">://</span>
-          </div>
-          <input type="text" name="endpoint" id="endpoint" class="form-control" placeholder="Enter check endpoint" required autofocus>
-        </div>
-      </div>
-      <div class="form-group">
-        <label for="checkIntervalSelect">How often?</label>
-        <select class="form-control" name="checkinterval" id="checkIntervalSelect">
-          <?php
-          foreach (\newsworthy39\Check\Check::getSupportedCheckInterval() as $interval) {
-            echo printf("<option value='%s'>%s</option>", $interval, $interval);
-          }
-          ?>
-        </select>
-      </div>
-      <button class="btn btn-lg btn-primary btn-block" type="submit">Save settings</button>
-    </form>
+<nav class="navbar navbar-expand-lg navbar-light bg-light justify-content-between">
+  <div class="list-group list-group-horizontal-sm flex-fill">
+    <a href="?page=overview" class="list-group-item list-group-item-action <?php if ($page == 'overview') echo 'active' ?>">Overview</a>
+    <a href="?page=checks" class="list-group-item list-group-item-action <?php if ($page == 'checks') echo 'active' ?>">Checks</a>
+    <a href="?page=history" class="list-group-item list-group-item-action <?php if ($page == 'history') echo 'active' ?>">history</a>
+    <a href="?page=followers" class="list-group-item list-group-item-action <?php if ($page == 'followers') echo 'active' ?>">Followers</a>
   </div>
+</nav>
 
-  <?php $this->insert('template-snippets/footer'); ?>
+<ol class=" breadcrumb bg-light">
+  <li class="breadcrumb-item"><a href="/">Home</a></li>
+  <li class="breadcrumb-item"><a href="/sites/<?= $site->getIdentifier() ?>"><?= $site->getIdentifier() ?></a></li>
+  <li class="breadcrumb-item active" aria-current="page"><a href="/site/<?= $site->getIdentifier() ?>?page=settings">Settings</a></li>
+</ol>
+
+<div class="container">
+  <div class="py-5 text-center">
+    <img class="d-block mx-auto mb-4" src="<?= $site->getScreenshot() ?>" alt="" width="72" height="72">
+    <h2>Settings</h2>
+    <p class="lead">https://<?= $this->variables('site_title') ?>/sites/<?= $site->getIdentifier() ?>/</span></p>
+  </div>
+  <form class="form-editsite" METHOD="POST">
+    <div class="row">
+      <div class="col-md-8 order-md-1">
+        <h4 class="mb-3">General settings</h4>
+        <form class="needs-validation" novalidate>
+
+          <div class="mb-3">
+            <label for="screenshot">Choose screenshot</label>
+            <div class="input-group">
+              <input type="text" class="form-control" id="username" placeholder="Username" required>
+              <div class="invalid-feedback" style="width: 100%;">
+                Your username is required.
+              </div>
+            </div>
+          </div>
+
+          <div class="mb-3">
+            <label for="username">Username</label>
+            <div class="input-group">
+              <div class="input-group-prepend">
+                <span class="input-group-text">@</span>
+              </div>
+              <input type="text" class="form-control" id="username" placeholder="Username" required>
+              <div class="invalid-feedback" style="width: 100%;">
+                Your username is required.
+              </div>
+            </div>
+          </div>
+
+          <div class="mb-3">
+            <label for="email">Email <span class="text-muted">(Optional)</span></label>
+            <input type="email" class="form-control" id="email" placeholder="you@example.com">
+            <div class="invalid-feedback">
+              Please enter a valid email address for shipping updates.
+            </div>
+          </div>
+
+          <div class="mb-3">
+            <label for="address">Address</label>
+            <input type="text" class="form-control" id="address" placeholder="1234 Main St" required>
+            <div class="invalid-feedback">
+              Please enter your shipping address.
+            </div>
+          </div>
+
+          <div class="mb-3">
+            <label for="address2">Address 2 <span class="text-muted">(Optional)</span></label>
+            <input type="text" class="form-control" id="address2" placeholder="Apartment or suite">
+          </div>
+
+          <div class="row">
+            <div class="col-md-5 mb-3">
+              <label for="country">Country</label>
+              <select class="custom-select d-block w-100" id="country" required>
+                <option value="">Choose...</option>
+                <option>United States</option>
+              </select>
+              <div class="invalid-feedback">
+                Please select a valid country.
+              </div>
+            </div>
+            <div class="col-md-4 mb-3">
+              <label for="state">State</label>
+              <select class="custom-select d-block w-100" id="state" required>
+                <option value="">Choose...</option>
+                <option>California</option>
+              </select>
+              <div class="invalid-feedback">
+                Please provide a valid state.
+              </div>
+            </div>
+            <div class="col-md-3 mb-3">
+              <label for="zip">Zip</label>
+              <input type="text" class="form-control" id="zip" placeholder="" required>
+              <div class="invalid-feedback">
+                Zip code required.
+              </div>
+            </div>
+          </div>
+
+
+
+          <hr class="mb-4">
+          <button class="btn btn-primary btn-lg btn-block" type="submit">Continue to checkout</button>
+        </form>
+      </div>
+    </div>
 </div>

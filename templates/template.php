@@ -4,12 +4,16 @@
 <head>
   <!-- Required meta tags -->
   <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no; min-width:330px">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no, min-width:330px">
 
   <!-- Bootstrap CSS -->
-  <link rel="stylesheet" href="/assets/bootstrap.min.css" >
+  <link rel="stylesheet" href="/assets/bootstrap.min.css">
 
   <style>
+    html {
+      font-size: 14px;
+    }
+
     .bd-placeholder-img {
       font-size: 1.125rem;
       text-anchor: middle;
@@ -46,32 +50,8 @@
       }
     }
 
-    html {
-      font-size: 14px;
-    }
-
-    .container {
-      max-width: 99%;
-      padding: 0 0 0 0;
-    }
-
     .pricing-header {
       max-width: 700px;
-    }
-
-    body {
-      display: -ms-flexbox;
-      display: -webkit-box;
-      display: flex;
-      -ms-flex-align: center;
-      -ms-flex-pack: center;
-      -webkit-box-align: center;
-      align-items: center;
-      -webkit-box-pack: center;
-      justify-content: center;
-      padding-top: 0px;
-      padding-bottom: 40px;
-      background-color: #f5f5f5;
     }
 
     .card-deck {
@@ -79,12 +59,25 @@
       margin-right: 0px;
     }
 
+    .container-fluid {
+      padding: 0px;
+    }
+
     footer {
+      padding-top: 15px;
       padding-left: 15px;
       padding-right: 15px;
+      bottom: 0;
+      width: 100%;
+      /* Set the fixed height of the footer here */
+      min-height: 400px;
+      background-color: #f5f5f5;
+    }
+
+    .body {
+      min-height: 40rem;
     }
   </style>
-  <?= $this->section('scripts') ?>
   <title><?= $this->variables('site_title') ?> | <?= $this->e($title) ?></title>
 </head>
 
@@ -95,7 +88,47 @@
   <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
   <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
 
-  <?= $this->section('content') ?>
+  <div class="container-fluid">
+    <div class="body">
+    <?= $this->section('content') ?>
+    </div>
+    <footer>
+      <div class="row">
+        <div class="col-12 col-md">
+          <small class="d-block mb-3 text-muted">&copy; <?php echo date("Y"); ?></small>
+        </div>
+        <div class="col-6 col-md">
+          <h5>Features</h5>
+          <ul class="list-unstyled text-small">
+            <li><a class="text-muted" href="#">Cool stuff</a></li>
+            <li><a class="text-muted" href="#">Random feature</a></li>
+            <li><a class="text-muted" href="#">Team feature</a></li>
+            <li><a class="text-muted" href="#">Stuff for developers</a></li>
+            <li><a class="text-muted" href="#">Another one</a></li>
+            <li><a class="text-muted" href="#">Last time</a></li>
+          </ul>
+        </div>
+        <div class="col-6 col-md">
+          <h5>Resources</h5>
+          <ul class="list-unstyled text-small">
+            <li><a class="text-muted" href="#">Resource</a></li>
+            <li><a class="text-muted" href="#">Resource name</a></li>
+            <li><a class="text-muted" href="#">Another resource</a></li>
+            <li><a class="text-muted" href="#">Final resource</a></li>
+          </ul>
+        </div>
+        <div class="col-6 col-md">
+          <h5>About</h5>
+          <ul class="list-unstyled text-small">
+            <li><a class="text-muted" href="#">Team</a></li>
+            <li><a class="text-muted" href="#">Locations</a></li>
+            <li><a class="text-muted" href="#">Privacy</a></li>
+            <li><a class="text-muted" href="#">Terms</a></li>
+          </ul>
+        </div>
+      </div>
+    </footer>
+  </div>
 
 </body>
 

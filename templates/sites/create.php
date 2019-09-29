@@ -17,6 +17,4 @@
       <button class="btn btn-lg btn-primary btn-block" type="submit">Create site</button>
       </form>
   </div>
-
-  <?php $this->insert('template-snippets/footer'); ?>
 </div>

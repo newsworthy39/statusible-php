@@ -1,23 +1,29 @@
-<?php $this->layout('template', ['title' => 'Dashboard']) ?>
+<?php $this->layout('template', ['title' => 'Account settings']) ?>
 
-<div class="container">
+<?php $this->insert('template-snippets/navigationbar'); ?>
 
-  <?php $this->insert('template-snippets/navigationbar'); ?>
+<nav class="navbar navbar-expand-lg navbar-light bg-light justify-content-between">
+  <div class="list-group list-group-horizontal-sm flex-fill">
+    <a href="?page=details" class="list-group-item list-group-item-action active">Account details</a>
+    <a href="?page=privacy" class="list-group-item list-group-item-action">Account privacy</a>
+    <a href="?page=api" class="list-group-item list-group-item-action">API identification</a>
+    <a href="?page=apps" class="list-group-item list-group-item-action">Authorized Apps</a>
+    <a href="?page=billing" class="list-group-item list-group-item-action">Billing</a>
+  </div>
+</nav>
 
-  <nav class="navbar navbar-expand-lg navbar-light bg-light justify-content-between">
-    <div class="list-group list-group-horizontal-sm flex-fill">
-      <a href="?page=details" class="list-group-item list-group-item-action active">Account details</a>
-      <a href="?page=privacy" class="list-group-item list-group-item-action">Account privacy</a>
-      <a href="?page=api" class="list-group-item list-group-item-action">API identification</a>
-      <a href="?page=apps" class="list-group-item list-group-item-action">Authorized Apps</a>
-      <a href="?page=billing" class="list-group-item list-group-item-action">Billing</a>
-    </div>
-  </nav>
+<ol class="breadcrumb bg-light">
+  <li class="breadcrumb-item"><a href="/">Home</a></li>
+  <li class="breadcrumb-item"><a href="/user/<?= $user->getIdentifier() ?>"><?= $user->getIdentifier() ?></a></li>
+  <li class="breadcrumb-item active" aria-current="page"><a href="/user/<?= $user->getIdentifier() ?>/settings">Account settings</a></li>
+  <li class="breadcrumb-item active" aria-current="page"><a href="<?= $_SERVER['URL'] ?>"><?= $page ?></a></li>
+</ol>
 
-  <div class="container mx-n1 mt-3 px-3">
+<div class="container" style="max-width: 80rem" >
+  <div>
     <div class="row">
       <div class="col mb-3">
-      <div class="card" style="min-width: 14rem">
+        <div class="card" style="min-width: 14rem">
           <div class="card-body">
             <h5 class="card-title">Personal information</h5>
             <div class="form-group">
@@ -29,7 +35,7 @@
         </div>
       </div>
       <div class="col mb-3">
-      <div class="card" style="min-width: 14rem">
+        <div class="card" style="min-width: 14rem">
           <div class="card-body">
             <h5 class="card-title">Change password</h5>
             <form method="POST" action="/token/<?= $user->token ?>/resetpassword">
@@ -64,7 +70,4 @@
     password.onchange = validatePassword;
     confirm_password.onkeyup = validatePassword;
   </script>
-
-  <?php $this->insert('template-snippets/footer'); ?>
-
 </div>

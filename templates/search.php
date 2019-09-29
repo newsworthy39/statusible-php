@@ -44,8 +44,4 @@ $this->layout('template', ['title' => 'search results']) ?>
       <?php endforeach; ?>
     </div>
   </div>
-
-
-  <?php $this->insert('template-snippets/footer', ['acceptCookies' => false]); ?>
-
 </div>

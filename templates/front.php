@@ -1,12 +1,8 @@
-<?php
+<?php $this->layout('template', ['title' => 'sign-in or sign-up']) ?>
 
-use newsworthy39\AuthMiddleware;
+<?php $this->insert('template-snippets/navigationbar'); ?>
 
-$this->layout('template', ['title' => 'sign-in or sign-up']) ?>
-
-<div class="container">
-
-  <?php $this->insert('template-snippets/navigationbar'); ?>
+<div class="container pt-3">
 
   <div class="jumbotron">
     <h1 class="display-4">Features</h1>
@@ -30,7 +26,6 @@ $this->layout('template', ['title' => 'sign-in or sign-up']) ?>
     </p>
   </div>
 
-
   <div class="jumbotron">
     <h1 class="display-4">Cookies!</h1>
     <p class="lead">We use cookies, to operate our website. When you create and account and log-in, you accept the use of cookies, to delivery the necessary functionality.</p>
@@ -40,7 +35,4 @@ $this->layout('template', ['title' => 'sign-in or sign-up']) ?>
       <a class="btn btn-primary btn-lg" href="/cookies" role="button">Learn more about cookies here</a>
     </p>
   </div>
-
-  <?php $this->insert('template-snippets/footer', ['acceptCookies' => false]); ?>
- 
 </div>

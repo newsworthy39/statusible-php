@@ -10,7 +10,7 @@
   <?php } ?>
 
   <div class="collapse navbar-collapse justify-content-end" id="navbarSupportedContent">
-    <ul class="navbar-nav mr-auto">
+    <ul class="navbar-nav mr-auto ">
 
       <?php if (!$user) { ?>
         <li class="nav-item ">

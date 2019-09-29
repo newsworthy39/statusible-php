@@ -33,5 +33,4 @@
         confirm_password.onkeyup = validatePassword;
     </script>
 
-    <?php $this->insert('template-snippets/footer', ['acceptCookies' => false]); ?>    
 </div>

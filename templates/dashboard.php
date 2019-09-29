@@ -10,6 +10,4 @@
 
   * Number of notifications  
 
-  <?php $this->insert('template-template-snippets/footer'); ?>
-
 </div>

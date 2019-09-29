@@ -111,8 +111,13 @@ class Site extends Elegant implements Schedulable
         return array();
     }
 
-    public function getScreenShot() {
-        return $this->screenshot;
+    public function getScreenShot()
+    {
+        if (!empty($this->screenshot)) {
+            return $this->screenshot;
+        } 
+
+        return '/assets/statusible-100x100.png';
     }
 
     public function Schedule(Queue $user)
@@ -127,5 +132,11 @@ class Site extends Elegant implements Schedulable
                 }
             }
         }
+    }
+
+    public function getCreated()
+    {
+        $datetime = new \DateTime($this->created);
+        return $datetime->format("Y-m-d"); // Updated ISO8601
     }
 }

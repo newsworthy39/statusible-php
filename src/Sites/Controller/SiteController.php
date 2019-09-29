@@ -56,7 +56,7 @@ class SiteController
 
         // Render a template
         $response = new Response;
-        $response->getBody()->write($this->templates->render('sites/settings', ['site' => $site]));
+        $response->getBody()->write($this->templates->render('sites/settings', ['site' => $site, 'page' => $page]));
         return $response;
     }
 
@@ -109,7 +109,7 @@ class SiteController
             $check->Store();
 
             // Render a template
-            return new RedirectResponse(sprintf("/sites/%s", $site->getIdentifier(), $check->getIdentifier()));
+            return new RedirectResponse(sprintf("/sites/%s/check/%s", $site->getIdentifier(), $check->getIdentifier()));
         } else {
             throw new NotFoundException('Site not found');
         }
