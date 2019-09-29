@@ -33,7 +33,7 @@ class SearchController
 
         // Render a template
         $response = new Response;
-        $response->getBody()->write($this->templates->render('search', ['siteResults' => $siteResults, 'userResults' => $userResults]));
+        $response->getBody()->write($this->templates->render('search', ['siteResults' => $siteResults, 'userResults' => $userResults, 'q' => $q]));
         return $response;
     }
 }
