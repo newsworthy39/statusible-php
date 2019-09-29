@@ -26,5 +26,6 @@ COPY src/ src/
 COPY bin/ bin/
 COPY assets/ assets/
 COPY config/ config/
+COPY templates/ templates/
 
 CMD ["/usr/sbin/php-fpm7.2", "-F"]
