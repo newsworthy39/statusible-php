@@ -48,7 +48,6 @@ class WebApplication
 
         // Profile actions requiring authentication.
         $this->router->group('/user', function (\League\Route\RouteGroup $route) {
-            $route->map('GET', '/{id}/dashboard', [\newsworthy39\User\Controller\UserController::class, 'dashboard']);
             $route->map('GET', '/{id}/settings', [\newsworthy39\User\Controller\UserController::class, 'settings']);
         })->middleware(new AuthMiddleware);
 
