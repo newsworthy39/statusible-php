@@ -62,6 +62,11 @@ class WebApplication
             $route->map('POST', '/{identifier:word}/checks/new', [\newsworthy39\Sites\Controller\SiteController::class, 'postcreatecheck']);
             $route->map('GET', '/{identifier:word}/checks/{checkid:word}/schedulecheck', [\newsworthy39\Sites\Controller\SiteController::class, 'schedulecheck']);
         })->middleware(new AuthMiddleware);;
+
+        // Media library
+        $this->router->group('/media', function (\League\Route\RouteGroup $route) { 
+            $route->map('GET', '/',  [\newsworthy39\Media\Controller\MediaController::class, 'index']);
+        })->middleware(new AuthMiddleware);
     }
 
     /**
