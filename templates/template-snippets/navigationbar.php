@@ -29,9 +29,6 @@
 
       <?php if ($user) { ?>
         <li class="nav-item ">
-          <a class="nav-link" href="/user/<?= $user->nickname ?>/dashboard">Dashboard <span class="sr-only">(current)</span></a>
-        </li>
-        <li class="nav-item ">
           <a class="nav-link" href="/notifications">Notifications <span class="badge badge-primary"><?= $user->getNotifications() ?></span></a>
         </li>
         <div class="dropdown-divider"></div>

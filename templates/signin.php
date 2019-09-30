@@ -2,7 +2,13 @@
 
 
 <?php $this->insert('template-snippets/navigationbar'); ?>
-<div class="container py-3">
+
+<ol class="breadcrumb bg-light">
+  <li class="breadcrumb-item"><a href="/">Home</a></li>
+  <li class="breadcrumb-item"><a href="<?=$_REQUEST['URI']?>">Signin</a></li>
+</ol>
+
+<div class="container py-3" style="max-width: 540px">
   <div class="px-3 py-3 pt-md-5 pb-md-4 mx-auto text-center" style="max-width:480px">
     <h1 class="display-4">Signin</h1>
     <p class="lead">Use the credentials provided, when you <a href="/user/signup">signed up</a>.</p>
