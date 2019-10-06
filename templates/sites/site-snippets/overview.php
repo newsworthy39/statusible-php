@@ -7,12 +7,13 @@
   <div class="card">
     <div class="card-header">
       <ul class="nav nav-pills card-header-pills">
+        <?php $websiteurl = $site->getSetting('websiteurl')->get(); ?>
+
+        <?php if($websiteurl): ?>
         <li class="nav-item">
-          <a class="nav-link active" href="#">Active</a>
+          <a class="nav-link" href="<?=$websiteurl?>">Visit website</a>
         </li>
-        <li class="nav-item">
-          <a class="nav-link" href="#">Link</a>
-        </li>
+        <?php endif ?>
         <?php if ($user) : ?>
           <li class="nav-item">
             <a href="/sites/<?= $site->getIdentifier() ?>/settings" class="nav-link"><img src="/assets/svg/gear.svg" width=24></a>

@@ -1,6 +1,7 @@
 <?php declare(strict_types=1);
 
 namespace newsworthy39;
+use newsworthy39\User\User;
 
 class Queue
 {
@@ -19,4 +20,8 @@ class Queue
         if (is_object($data))
             $this->redis->publish('workqueue', serialize($data));
     }
+
+    public function notify(User $user, $data) {
+        $this->redis->publish(sprintf('notifications-%d', $user->getId(), $data));
+    }   
 }

@@ -12,6 +12,7 @@ use Zend\Diactoros\Response;
 use newsworthy39\AuthMiddleware;
 use newsworthy39\Sites\Site;
 use newsworthy39\Check\Check;
+use newsworthy39\Sites\SiteSettings;
 
 class SiteController
 {
@@ -73,6 +74,7 @@ class SiteController
         if (!$site) {
             $site = Site::Create($identifier, $user);
             $site->Store();
+
             return new RedirectResponse(sprintf("/sites/%s", $site->getIdentifier()));
         } else {
             return new RedirectResponse("/sites/create/new?error=occupied");

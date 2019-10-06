@@ -89,29 +89,35 @@ class UserController
 
     public function postsignup(ServerRequestInterface $request): ResponseInterface
     {
-        // verify email and token.
-        $allPostPutVars = $request->getParsedBody();
-        $user = User::Find($allPostPutVars['email']);
+        $settings = Settings::Load();
 
-        if ($user == false) {
+        if ($settings->signupEnabled) {
+            // verify email and token.
+            $allPostPutVars = $request->getParsedBody();
+            $user = User::Find($allPostPutVars['email']);
 
-            $queue = new Queue();
-            $user = User::CreateEmpty();
-            foreach ($allPostPutVars as $var => $value) {
-                $user->$var = $value;
+            if ($user == false) {
+
+                $queue = new Queue();
+                $user = User::CreateEmpty();
+                foreach ($allPostPutVars as $var => $value) {
+                    $user->$var = $value;
+                }
+
+                $user->preferredplan = 0;
+
+                $user->Store();
+
+                // send event.
+                $command = new UserSignupEvent($user);
+                $queue->publish($command);
             }
 
-            $user->preferredplan = 0;
-
-            $user->Store();
-
-            // send event.
-            $command = new UserSignupEvent($user);
-            $queue->publish($command);
+            // Render a response
+            return new RedirectResponse('/');
+        } else {
+            return new RedirectResponse('/?signupDisabled=true');
         }
-
-        // Render a response
-        return new RedirectResponse('/');
     }
 
 

@@ -5,6 +5,7 @@ declare(strict_types=1);
 use tests\SystemTest;
 use newsworthy39\User\User;
 use newsworthy39\Sites\Site;
+use newsworthy39\Sites\SiteSettings;
 use newsworthy39\User\Role;
 
 class TestSitesModel extends SystemTest
@@ -53,5 +54,21 @@ class TestSitesModel extends SystemTest
         $site = Site::Create("Test", $user);
         $site->Store();
         $this->assertIsNumeric($site->getServiceStatus());
+    }
+
+    public function testSiteHasSettings() {
+        $user = User::Create('test@virgin.com','test-virgon');
+        $user->Store();
+
+        $site = Site::Create("Test", $user);
+        $site->Store();
+
+        $setting = SiteSettings::Create($site, 'testvar');
+        $setting->setArray(array('var' => 'test'));
+        $setting->Store();
+        
+        $settings = $site->settings();
+        $this->assertIsArray($settings);
+
     }
 }

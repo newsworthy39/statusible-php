@@ -168,6 +168,11 @@ class Check extends Elegant implements Schedulable
         $this->endpoint = $endpoint;
     }
 
+    public function notify() {
+        $user = $this->getOwner();
+        $queue = new Queue();
+        $queue->notify($user, 'check completed');
+    }
 
     // functions related, to commands and scheduler.
     public function scheduleCheck()

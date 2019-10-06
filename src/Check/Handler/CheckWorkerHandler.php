@@ -35,6 +35,9 @@ class CheckWorkerHandler {
         $check->setLastUpdated($date);
         $check->Update();
 
+        
+        $check->notifyUser();
+
 
 
     }

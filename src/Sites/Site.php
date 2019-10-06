@@ -9,6 +9,7 @@ use newsworthy39\Elegant;
 use newsworthy39\User\User;
 use newsworthy39\Schedulable;
 use newsworthy39\Queue;
+use newsworthy39\Sites\SiteSettings;
 
 class Site extends Elegant implements Schedulable
 {
@@ -115,7 +116,7 @@ class Site extends Elegant implements Schedulable
     {
         if (!empty($this->screenshot)) {
             return $this->screenshot;
-        } 
+        }
 
         return '/assets/statusible-100x100.png';
     }
@@ -138,5 +139,24 @@ class Site extends Elegant implements Schedulable
     {
         $datetime = new \DateTime($this->created);
         return $datetime->format("Y-m-d"); // Updated ISO8601
+    }
+
+    public function Settings()
+    {
+        $settings = SiteSettings::CreateEmpty();
+        return $this->has($this, $settings);
+    }
+
+    public function getSetting(String $setting): SiteSettings
+    {
+        $settings = $this->Settings();
+        if (is_array($settings)) {
+            foreach ($settings as $entry) {
+                if ($entry->variable == $setting) {
+                    return $entry;
+                }
+            }
+        }
+        return SiteSettings::CreateEmpty();
     }
 }

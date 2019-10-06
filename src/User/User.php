@@ -76,7 +76,7 @@ class User extends Elegant
 
     public function getId()
     {
-        return $this->id;
+        return $this->id();
     }
 
     public function Store()
