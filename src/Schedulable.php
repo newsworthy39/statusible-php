@@ -7,5 +7,6 @@ use newsworthy39\Queue;
 interface Schedulable {
 
     public function Schedule(Queue $queue);
+    public function PerformCheck();
 
 }

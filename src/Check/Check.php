@@ -168,7 +168,8 @@ class Check extends Elegant implements Schedulable
         $this->endpoint = $endpoint;
     }
 
-    public function notify() {
+    public function notify()
+    {
         $user = $this->getOwner();
         $queue = new Queue();
         $queue->notify($user, 'check completed');
@@ -184,5 +185,36 @@ class Check extends Elegant implements Schedulable
     public function Schedule(Queue $queue)
     {
         $queue->publish(new CheckWorkerCommand($this));
+    }
+
+    public function PerformCheck()
+    {
+        // initialize curl, set auth tokens, and download zip-ball.	
+        $cl = curl_init(sprintf("%s://%s", strtolower($this->getTypeOfServiceHumanReadable()), $this->getEndpoint()));
+
+        //curl_setopt($cl, CURLOPT_RETURNTRANSFER , 1);
+        curl_setopt($cl, CURLOPT_FOLLOWLOCATION, 1);
+        curl_setopt($cl, CURLOPT_NOBODY, true);    // we don't need body.. yet
+        curl_setopt($cl, CURLOPT_CONNECTTIMEOUT, 2);
+        curl_setopt($cl, CURLOPT_TIMEOUT, 5); //timeout in seconds
+
+        // Set HTTP Header for POST request
+        curl_setopt($cl, CURLOPT_HTTPHEADER, array(
+            //"Authorization: token $token",
+            "User-Agent: statusible.com/1.0.0"
+        ));
+        $result = curl_exec($cl);
+        $httpcode = curl_getinfo($cl, CURLINFO_HTTP_CODE);
+
+        printf("Code is %s\n", $httpcode);
+
+        curl_close($cl);
+
+        $date = date('Y-m-d H:i:s');
+        $this->setLastUpdated($date);
+        $this->Update();
+
+        // notify (use event-stuff instead)
+        $this->notify();
     }
 }
