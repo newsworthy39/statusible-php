@@ -135,6 +135,11 @@ class Site extends Elegant implements Schedulable
         }
     }
 
+    public function PerformCheck()
+    {
+        
+    }
+
     public function getCreated()
     {
         $datetime = new \DateTime($this->created);
