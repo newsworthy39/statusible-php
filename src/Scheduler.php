@@ -20,7 +20,12 @@ class Scheduler implements Schedulable
                 }
             }
 
-            sleep(30);
+            sleep(60);
         }
+    }
+
+    public function PerformCheck()
+    {
+        
     }
 }
