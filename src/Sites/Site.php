@@ -36,6 +36,7 @@ class Site extends Elegant implements Schedulable
         return self::findModel(Site::CreateEmpty(), array('identifier' => $identifier));
     }
 
+
     public static function Create(String $identifier, User $user)
     {
         $instance = new Site();

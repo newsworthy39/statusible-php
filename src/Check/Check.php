@@ -80,10 +80,10 @@ class Check extends Elegant implements Schedulable
         self::deleteModel($this);
     }
 
-    public function getOwner()
+    public function getSite()
     {
-        $user = User::CreateEmpty();
-        return self::findModel($user, array('id' => $this->values[$user->foreignkey()]));
+        $site = Site::CreateEmpty();        
+        return Site::Find($this->{$site->foreignkey()});
     }
 
     public function setTypeOfService($integer)
@@ -171,7 +171,7 @@ class Check extends Elegant implements Schedulable
 
     public function notify()
     {
-        $user = $this->getOwner();
+        $user = $this->getSite()->getOwner();
         $queue = new Queue();
         $queue->notify($user, 'check completed');
     }
