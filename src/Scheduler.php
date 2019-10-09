@@ -20,7 +20,12 @@ class Scheduler implements Schedulable
                 }
             }
 
-            sleep(60);
+            $timer = getenv(TIMER);
+            if (!$timer) {
+                sleep($timer);
+            } else {
+                sleep(60);
+            }
         }
     }
 
