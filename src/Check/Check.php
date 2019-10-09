@@ -9,6 +9,7 @@ use newsworthy39\Queue;
 use newsworthy39\Sites\Site;
 use newsworthy39\Check\Command\CheckWorkerCommand;
 use newsworthy39\Schedulable;
+use newsworthy39\User\User;
 
 class Check extends Elegant implements Schedulable
 {
