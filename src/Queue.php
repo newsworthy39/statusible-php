@@ -22,6 +22,6 @@ class Queue
     }
 
     public function notify(User $user, $data) {
-        $this->redis->publish(sprintf('notifications-%d', $user->getId(), $data));
+        $this->redis->publish(sprintf('notifications-%d', $user->getId()), $data);
     }   
 }
