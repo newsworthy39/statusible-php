@@ -4,7 +4,7 @@
 
 <div class="container pt-3">
   
-  <?php if (is_array($message)): ?>
+  <?php if (isset($message) && is_array($message)): ?>
   <div class="jumbotron">
     <h1 class="display-4">Information</h1>
     <p class="lead"><?=$message['title']?></p>
