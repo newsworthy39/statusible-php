@@ -202,8 +202,7 @@ class Check extends Elegant implements Schedulable
         curl_setopt($cl, CURLOPT_NOBODY, true);    // we don't need body.. yet
         curl_setopt($cl, CURLOPT_CONNECTTIMEOUT, 2);
         curl_setopt($cl, CURLOPT_TIMEOUT, 5); //timeout in seconds
-        curl_setopt($cl, CURLOPT_, 5); //timeout in seconds
-
+        
         // Set HTTP Header for POST request
         curl_setopt($cl, CURLOPT_HTTPHEADER, array(
             //"Authorization: token $token",
