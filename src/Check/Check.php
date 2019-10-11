@@ -203,12 +203,12 @@ class Check extends Elegant implements Schedulable
         curl_setopt($cl, CURLOPT_CONNECTTIMEOUT, 2);
         curl_setopt($cl, CURLOPT_TIMEOUT, 5); //timeout in seconds
         curl_setopt($cl, CURLOPT_, 5); //timeout in seconds
-        curl_setopt($cl, CURL_HTTP_VERSION, CURL_HTTP_VERSION_1_0);
 
         // Set HTTP Header for POST request
         curl_setopt($cl, CURLOPT_HTTPHEADER, array(
             //"Authorization: token $token",
-            "User-Agent: statusible.com/1.0.0"
+            "User-Agent: statusible.com/1.0.0",
+            "Connection: close"
         ));
         $result = curl_exec($cl);
         $httpcode = curl_getinfo($cl, CURLINFO_HTTP_CODE);
