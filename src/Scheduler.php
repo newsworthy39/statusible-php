@@ -14,13 +14,13 @@ class Scheduler implements Schedulable
 
         $tmp = getenv('TIMER');
         $timer = rand(30, 60);
-        if ($tmp != false) {
-            $timer = intval($timer);
+        if (is_string($tmp)) {
+            $timer = intval($tmp);
         }
 
         printf("Scheduler starting, interval %d\n", $timer);
+        
         while (true) {
-
             $sites = Site::FindAll();
             if (is_array($sites)) {
                 foreach ($sites as $site) {
