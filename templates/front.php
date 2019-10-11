@@ -1,4 +1,4 @@
-<?php $this->layout('template', ['title' => 'sign-in or sign-up']) ?>
+<?php $this->layout('template', ['title' => 'Monitor websites and services']) ?>
 
 <?php $this->insert('template-snippets/navigationbar'); ?>
 
@@ -6,23 +6,21 @@
 
   <div class="jumbotron">
     <h1 class="display-4">Features</h1>
-    <p class="lead">This is a simple hero unit, a simple jumbotron-style component for calling extra attention to featured content or information.</p>
+    <p class="lead">Monitor services across the net, and engage customers when incidents happen.</p>
     <hr class="my-4">
-    <p>It uses utility classes for typography and spacing to space content out within the larger container.</p>
+    <p>Organize services into pages and sites, to monitor services and track performance over time.</p>
     <p class="lead ">
-      <a class="btn btn-primary btn-lg" href="#" role="button">Learn more</a>
+      <a class="btn btn-primary btn-lg" href="/features/overview" role="button">Learn more about the features</a>
     </p>
   </div>
 
-  <?php $this->insert('template-snippets/pricing', ['selectedEnabled' => false, 'plan' => false]); ?>
-
   <div class="jumbotron">
     <h1 class="display-4">Documentation</h1>
-    <p class="lead">This is a simple hero unit, a simple jumbotron-style component for calling extra attention to featured content or information.</p>
+    <p class="lead">Collaboration and integration is critical for service overiew.</p>
     <hr class="my-4">
-    <p>It uses utility classes for typography and spacing to space content out within the larger container.</p>
+    <p>Documentation is key to integrate our services into your service-platform.</p>
     <p class="lead ">
-      <a class="btn btn-primary btn-lg" href="#" role="button">Learn more</a>
+      <a class="btn btn-primary btn-lg" href="/documentation/overview" role="button">Learn more about documentation</a>
     </p>
   </div>
 
@@ -32,7 +30,7 @@
     <hr class="my-4">
     <p>Cookies are necessary, to identify you to deliver our services.</p>
     <p class="lead ">
-      <a class="btn btn-primary btn-lg" href="/cookies" role="button">Learn more about cookies here</a>
+      <a class="btn btn-primary btn-lg" href="/cookies/overview" role="button">Learn more about cookies </a>
     </p>
   </div>
 </div>
