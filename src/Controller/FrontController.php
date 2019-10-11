@@ -25,7 +25,7 @@ class FrontController
         $params = $request->getQueryParams();
 
         if (array_key_exists('signupDisabled', $params) && $params['signupDisabled'] == "true") {
-            $this->templates->addData(['message' => ['title' => 'Signup is disabled', 'message' => 'This website is currently in beta, and does not accept public signup']]);
+            $this->templates->addData(['message' => ['title' => 'Signup is disabled', 'message' => 'This website is currently in alpha, and does not accept public signup']]);
         }
 
         // Render a template
