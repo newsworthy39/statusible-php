@@ -15,9 +15,7 @@ class Settings extends Elegant
     ];
 
     private function __construct()
-    {
-        
-    }
+    { }
 
     public static function Load(): Settings
     {
@@ -31,7 +29,7 @@ class Settings extends Elegant
         return $settings;
     }
 
-  
+
     public function Store()
     {
         // TODO: Test, the user has a roleid.
@@ -54,4 +52,7 @@ class Settings extends Elegant
         return $this->id();
     }
 
+    public function getSignupEnabled() {
+        return $this->signupEnabled;
+    }
 }

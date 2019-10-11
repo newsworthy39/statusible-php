@@ -22,15 +22,17 @@ class System
             "CREATE TABLE IF NOT EXISTS `checks` (id integer not null primary key auto_increment, sitesid integer not null references sites(id), identifier char(64) not null default '', typeofservice integer not null default 0, created timestamp not null default now(), lastupdated timestamp not null default '2000-01-01 00:00:00',  endpoint varchar(255) not null, activecheck integer not null default 0, enabled integer not null default 0)",
             "CREATE TABLE IF NOT EXISTS `sites_depends` (id integer not null primary key auto_increment, leftid integer not null references sites(id), rightid integer not null references sites(id), enabled tinyint(1) not null default 0)",
             "CREATE TABLE IF NOT EXISTS `media` (id integer not null primary key auto_increment, sitesid integer not null references sites(id), identifier char(64) not null default '', url varchar(255) not null default '', created timestamp not null default now())",
-            "CREATE INDEX idx_users_nickname on users(nickname)",
-            "CREATE INDEX idx_sites_identifiers on sites(identifier)"
         );
 
         $users = array(
             "INSERT INTO users (email, token, password, nickname) VALUES ('michaeljensendk@hotmail.com','1','a94a8fe5ccb19ba61c4c0873d391e987982fbbd3', 'newsworthy39')"
         );
 
-        return array_merge($tables, $users);
+        $settings = array(
+            "INSERT INTO settings (signupEnabled) values (0)"
+        );
+
+        return array_merge($tables, $users, $settings);
     }
 
     public function down()

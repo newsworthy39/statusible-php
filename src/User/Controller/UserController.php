@@ -91,7 +91,7 @@ class UserController
     {
         $settings = Settings::Load();
 
-        if ($settings->signupEnabled) {
+        if ($settings->getSignupEnabled()) {
             // verify email and token.
             $allPostPutVars = $request->getParsedBody();
             $user = User::Find($allPostPutVars['email']);
