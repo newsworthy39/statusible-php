@@ -11,6 +11,14 @@ class Scheduler implements Schedulable
 {
     public function Schedule(Queue $user)
     {
+
+        $tmp = getenv('TIMER');
+        $timer = rand(30, 60);
+        if ($tmp != false) {
+            $timer = intval($timer);
+        }
+
+        printf("Scheduler starting, interval %d\n", $timer);
         while (true) {
 
             $sites = Site::FindAll();
@@ -20,13 +28,10 @@ class Scheduler implements Schedulable
                 }
             }
 
-            $timer = getenv('TIMER');
-            if (!$timer) {
-                sleep($timer);
-            } else {
-                sleep(60);
-            }
+            sleep($timer);
         }
+
+        print("Scheduler stopping");
     }
 
     public function PerformCheck()
