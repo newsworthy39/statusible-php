@@ -10,6 +10,7 @@ use newsworthy39\Sites\Site;
 use newsworthy39\Check\Command\CheckWorkerCommand;
 use newsworthy39\Schedulable;
 use newsworthy39\User\User;
+use newsworthy39\Log\Log;
 
 class Check extends Elegant implements Schedulable
 {
@@ -24,13 +25,16 @@ class Check extends Elegant implements Schedulable
     public const CHECK_ACTIVE = 0;
     public const CHECK_PASSIVE = 1;
 
-
     protected $tablename = 'checks';
 
     protected $fields = ['identifier', 'typeofservice', 'created', 'lastupdated', 'endpoint', 'activecheck', 'enabled'];
 
+    private $logger ;
+
     private function __construct()
-    { }
+    { 
+        $this->logger = new Log();
+    }
 
     public static function Find($id)
     {
@@ -207,7 +211,8 @@ class Check extends Elegant implements Schedulable
         $result = curl_exec($cl);
         $httpcode = curl_getinfo($cl, CURLINFO_HTTP_CODE);
 
-        printf("Code is %s\n", $httpcode);
+        
+        $this->logger->debug("Code is %s\n", $httpcode);
 
         curl_close($cl);
 

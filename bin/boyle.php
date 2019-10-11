@@ -22,6 +22,7 @@ use newsworthy39\User\Event\UserSigninEvent;
 use newsworthy39\User\Handler\SigninUserHandler;
 use newsworthy39\Check\Handler\CheckWorkerHandler;
 
+use newsworthy39\Log\Log;
 
 // Map your command classes to the container id of your handler. When using
 // League\Container, the container id is typically the class or interface name
@@ -50,6 +51,9 @@ $pubsub = app()->get(Predis\Client::class)->pubSubLoop();
 // Subscribe to your channels
 $pubsub->subscribe('control_channel', 'workqueue');
 
+// Get a logger.
+$logger = new Log();
+
 // Start processing the pubsup messages. Open a terminal and use redis-cli
 // to push messages to the channels. Examples:
 //   ./redis-cli PUBLISH notifications "this is a test"
@@ -57,7 +61,7 @@ $pubsub->subscribe('control_channel', 'workqueue');
 foreach ($pubsub as $message) {
     switch ($message->kind) {
         case 'subscribe':
-            echo "Subscribed to {$message->channel}", PHP_EOL;
+            $logger->info ("Subscribed to {%s}\n", $message->channel );
             break;
         case 'message':
             if ($message->channel == 'control_channel') {
@@ -68,11 +72,8 @@ foreach ($pubsub as $message) {
                     echo "Received an unrecognized command: {$message->payload}.", PHP_EOL;
                 }
             } else {
-                echo "Received the following message from {$message->channel}:",
-                    PHP_EOL,
-                    "  {$message->payload}",
-                    PHP_EOL,
-                    PHP_EOL;
+
+                $logger->debug("Received the following message from {%s} : {%s}\n", $message->channel, $message->payload);
 
                 // unserialize
                 $command = unserialize($message->payload);
