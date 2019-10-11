@@ -11,7 +11,7 @@
     <hr class="my-4">
     <p><?=$message['message']?></p>
     <p class="lead ">
-      <a class="btn btn-primary btn-lg" href="/user/registerforbeta" role="button">Learn more about the features</a>
+      <a class="btn btn-primary btn-lg" href="/user/registerforbeta" role="button">Click here to signup for the beta</a>
     </p>
   </div>
   <?php endif; ?>
