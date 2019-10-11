@@ -216,6 +216,6 @@ class Check extends Elegant implements Schedulable
         $this->Update();
 
         // notify (use event-stuff instead)
-        $this->notify();
+        // $this->notify();
     }
 }
