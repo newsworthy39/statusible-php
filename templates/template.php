@@ -5,6 +5,14 @@
   <!-- Required meta tags -->
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no, min-width:330px">
+  
+  <meta name="description" content="Statusible.com, is used to monitor services across the internet. Share your built services, and let other subscribe as part of their service-integration portfolio, to aid in debugging and operating their own services" />
+  <meta property="og:title" content="<?= $this->variables('site_title') ?> | <?= $this->e($title) ?>" />
+  <meta property="og:type" content="website" />
+  <meta property="lp:type" content="frontpage" />
+  <meta property="og:description" content="Læs med på berlingske.dk og bliv opdateret på de seneste nyheder. Berlingske leverer nyheder med afsæt i fire styrkeområder; Nyheder, Opinion, Business og AOK." />
+  <meta property="og:url" content="http://<?= $this->variables('site_title') ?>" />
+  <meta property="og:image" content="/assets/statusible-100x100.png" />
 
   <!-- Bootstrap CSS -->
   <link rel="stylesheet" href="/assets/bootstrap.min.css">
@@ -79,6 +87,7 @@
     }
   </style>
   <title><?= $this->variables('site_title') ?> | <?= $this->e($title) ?></title>
+
 </head>
 
 <body>
@@ -90,7 +99,7 @@
 
   <div class="container-fluid">
     <div class="body">
-    <?= $this->section('content') ?>
+      <?= $this->section('content') ?>
     </div>
     <footer>
       <div class="row">
