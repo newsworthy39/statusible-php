@@ -29,7 +29,6 @@ class System
         );
 
         $settings = array(
-            "INSERT INTO settings (signupEnabled) values (0)"
         );
 
         return array_merge($tables, $users, $settings);

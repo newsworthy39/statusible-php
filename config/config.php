@@ -24,7 +24,8 @@ function configurations(): array
 function variables($key)
 {
 	$config = [
-		'site_title' => $_SERVER['HTTP_HOST']
+        'site_title' => $_SERVER['HTTP_HOST'],
+        'signupDisabled' => true,
 	];
 
 	return $config[$key];

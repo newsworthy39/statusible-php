@@ -3,7 +3,20 @@
 <?php $this->insert('template-snippets/navigationbar'); ?>
 
 <div class="container pt-3">
+  
+  <?php if (is_array($message)): ?>
+  <div class="jumbotron">
+    <h1 class="display-4">Information</h1>
+    <p class="lead"><?=$message['title']?></p>
+    <hr class="my-4">
+    <p><?=$message['message']?></p>
+    <p class="lead ">
+      <a class="btn btn-primary btn-lg" href="/user/registerforbeta" role="button">Learn more about the features</a>
+    </p>
+  </div>
+  <?php endif; ?>
 
+  
   <div class="jumbotron">
     <h1 class="display-4">Features</h1>
     <p class="lead">Monitor services across the net, and engage customers when incidents happen.</p>

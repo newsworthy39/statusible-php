@@ -89,7 +89,6 @@
   <title><?= $this->variables('site_title') ?> | <?= $this->e($title) ?></title>
 
 </head>
-
 <body>
   <!-- Optional JavaScript -->
   <!-- jQuery first, then Popper.js, then Bootstrap JS -->

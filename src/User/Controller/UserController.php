@@ -76,8 +76,8 @@ class UserController
      */
     public function signup(ServerRequestInterface $request, array $args): ResponseInterface
     {
-        $settings = Settings::Load();
-        if ($settings->getSignupEnabled()) {
+        
+        if (variables('signupDisabled') == false) {
             $queryparams    = $request->getQueryParams();
             $selectedplan = 'starter';
             if (isset($queryparams['plan'])) {
@@ -97,7 +97,7 @@ class UserController
     {
         $settings = Settings::Load();
 
-        if ($settings->getSignupEnabled()) {
+        if (variables('signupDisabled') == false) {
             // verify email and token.
             $allPostPutVars = $request->getParsedBody();
             $user = User::Find($allPostPutVars['email']);
