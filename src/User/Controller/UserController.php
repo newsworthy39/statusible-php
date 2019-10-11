@@ -15,6 +15,7 @@ use newsworthy39\User\User;
 use newsworthy39\User\Event\UserSignupEvent;
 use newsworthy39\User\Event\UserSigninEvent;
 use newsworthy39\AuthMiddleware;
+use newsworthy39\Settings;
 
 class UserController
 {
@@ -75,16 +76,21 @@ class UserController
      */
     public function signup(ServerRequestInterface $request, array $args): ResponseInterface
     {
-        $queryparams    = $request->getQueryParams();
-        $selectedplan = 'starter';
-        if (isset($queryparams['plan'])) {
-            $selectedplan = $queryparams['plan'];
-        }
+        $settings = Settings::Load();
+        if ($settings->getSignupEnabled()) {
+            $queryparams    = $request->getQueryParams();
+            $selectedplan = 'starter';
+            if (isset($queryparams['plan'])) {
+                $selectedplan = $queryparams['plan'];
+            }
 
-        $response = new Response;
-        $this->templates->addData(['plan' => $selectedplan]);
-        $response->getBody()->write($this->templates->render('signup'));
-        return  $response;
+            $response = new Response;
+            $this->templates->addData(['plan' => $selectedplan]);
+            $response->getBody()->write($this->templates->render('signup'));
+            return  $response;
+        } else {
+            return new RedirectResponse('/?signupDisabled=true');
+        }
     }
 
     public function postsignup(ServerRequestInterface $request): ResponseInterface
@@ -192,7 +198,7 @@ class UserController
     {
         $allPostPutVars = $request->getQueryParams();
         $page = isset($allPostPutVars['page']) ? $allPostPutVars['page'] : 'overview';
-        
+
         // Render a template
         $response = new Response;
         $response->getBody()->write($this->templates->render('settings/settings', ['page' => $page]));
