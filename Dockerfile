@@ -27,5 +27,6 @@ COPY bin/ bin/
 COPY assets/ assets/
 COPY config/ config/
 COPY templates/ templates/
+COPY favicon.ico favicon.ico
 
 CMD ["/usr/sbin/php-fpm7.2", "-F"]
