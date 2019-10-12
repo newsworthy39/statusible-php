@@ -211,7 +211,6 @@ class Check extends Elegant implements Schedulable
         ));
         $result = curl_exec($cl);
         $httpcode = curl_getinfo($cl, CURLINFO_HTTP_CODE);
-
         
         $this->logger->debug("Code is %s\n", $httpcode);
 
