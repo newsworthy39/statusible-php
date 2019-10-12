@@ -24,7 +24,7 @@ $this->layout('template', ['title' => 'search results']) ?>
           <img src="<?= $site->getScreenShot() ?>" class="card-img-top">
           <div class="card-body">
             <h5 class="card-title"><?= $site->identifier ?></h5>
-            <p class="card-text">Service last checked ten minutes ago.</p>
+            <p class="card-text">Since <?= $site->getCreated()?>.</p>
             <a href="/sites/<?= $site->getIdentifier() ?>" class="btn btn-primary">Visit site</a>
           </div>
         </div>
