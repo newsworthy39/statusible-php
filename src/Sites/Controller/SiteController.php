@@ -117,27 +117,20 @@ class SiteController
         }
     }
 
-    public function schedulecheck(ServerRequestInterface $request, array $args): ResponseInterface
-    {
-
+    public function delete(ServerRequestInterface $request, array $args) {
         $siteidentifier = $args['identifier'];
-        $checkidentifier = $args['checkid'];
+        $site = Site::FindByIdentifier($siteidentifier);
+        $user = AuthMiddleware::getUser();
 
-        if (AuthMiddleware::getUser()) {
-            $site = Site::FindByIdentifier($siteidentifier);
+        if ($site && $user != false) {
 
-            $check = Check::FindByCompositeIdentifier($site, $checkidentifier);
-
-            if ($check) {
-
-                $check->schedulecheck();
-
-                return new RedirectResponse(sprintf("/sites/%s", $site->getIdentifier()));
-            } else {
-                throw new NotFoundException('Check not found');
+            // TODO: This is not correct. But i does provide against failure.
+            // Todo: Make a "canDelete($user")-guard.
+            if ($site->getOwner()->getId() == $user->getId()) {
+                $site->Delete();                
             }
-        } else {
-            return new RedirectResponse(sprintf("/sites/%s", $siteidentifier));
         }
+
+        return new RedirectResponse(sprintf("user/%s?page=sites", $user->getIdentifier()));
     }
 }

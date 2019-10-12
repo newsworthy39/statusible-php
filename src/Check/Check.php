@@ -180,13 +180,7 @@ class Check extends Elegant implements Schedulable
         $queue->notify($user, 'check completed');
     }
 
-    // functions related, to commands and scheduler.
-    public function scheduleCheck()
-    {
-        $queue = new Queue;
-        $queue->publish(new CheckWorkerCommand($this));
-    }
-
+  
     public function Schedule(Queue $queue)
     {
         $queue->publish(new CheckWorkerCommand($this));

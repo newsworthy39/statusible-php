@@ -59,7 +59,7 @@ class WebApplication
             $route->map('GET', '/{identifier}/checks', [\newsworthy39\Sites\Controller\SiteController::class, 'index']);
             $route->map('GET', '/{identifier}/checks/new', [\newsworthy39\Sites\Controller\SiteController::class, 'createcheck']);
             $route->map('POST', '/{identifier}/checks/new', [\newsworthy39\Sites\Controller\SiteController::class, 'postcreatecheck']);
-            $route->map('GET', '/{identifier}/checks/{checkid:word}/schedulecheck', [\newsworthy39\Sites\Controller\SiteController::class, 'schedulecheck']);
+            $route->map('DELETE', '/{identifier}', [\newsworthy39\Sites\Controller\SiteController::class, 'delete']);
         })->middleware(new AuthMiddleware);;
 
         // Media library

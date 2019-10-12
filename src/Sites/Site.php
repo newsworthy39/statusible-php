@@ -63,6 +63,16 @@ class Site extends Elegant implements Schedulable
 
     public function Delete()
     {
+
+        // However. We, must destroy the checks as well. 
+        // and probably 
+
+        $checks = $this->Checks();
+        if (is_array($checks)) {
+            foreach($checks as $check) {
+                $check->Delete();
+            }
+        }
         self::deleteModel($this);
     }
 
