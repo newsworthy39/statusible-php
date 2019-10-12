@@ -43,7 +43,7 @@ class WebApplication
 
         // Public stuff
         $this->router->map('GET', '/user/{id}', [\newsworthy39\User\Controller\UserController::class, 'profile']);
-        $this->router->map('GET', '/sites/{id:word}', [\newsworthy39\Sites\Controller\SiteController::class, 'index']);
+        $this->router->map('GET', '/sites/{identifier}', [\newsworthy39\Sites\Controller\SiteController::class, 'index']);
         $this->router->map('GET', '/search', [\newsworthy39\Search\Controller\SearchController::class, 'index']);
 
         // Profile actions requiring authentication.
@@ -55,11 +55,11 @@ class WebApplication
         $this->router->group('/sites', function (\League\Route\RouteGroup $route) {
             $route->map('GET', '/create/new', [\newsworthy39\Sites\Controller\SiteController::class, 'create']);
             $route->map('POST', '/create/new', [\newsworthy39\Sites\Controller\SiteController::class, 'postcreate']);
-            $route->map('GET', '/{identifier:word}/settings', [\newsworthy39\Sites\Controller\SiteController::class, 'settings']);
-            $route->map('GET', '/{identifier:word}/checks', [\newsworthy39\Sites\Controller\SiteController::class, 'index']);
-            $route->map('GET', '/{identifier:word}/checks/new', [\newsworthy39\Sites\Controller\SiteController::class, 'createcheck']);
-            $route->map('POST', '/{identifier:word}/checks/new', [\newsworthy39\Sites\Controller\SiteController::class, 'postcreatecheck']);
-            $route->map('GET', '/{identifier:word}/checks/{checkid:word}/schedulecheck', [\newsworthy39\Sites\Controller\SiteController::class, 'schedulecheck']);
+            $route->map('GET', '/{identifier}/settings', [\newsworthy39\Sites\Controller\SiteController::class, 'settings']);
+            $route->map('GET', '/{identifier}/checks', [\newsworthy39\Sites\Controller\SiteController::class, 'index']);
+            $route->map('GET', '/{identifier}/checks/new', [\newsworthy39\Sites\Controller\SiteController::class, 'createcheck']);
+            $route->map('POST', '/{identifier}/checks/new', [\newsworthy39\Sites\Controller\SiteController::class, 'postcreatecheck']);
+            $route->map('GET', '/{identifier}/checks/{checkid:word}/schedulecheck', [\newsworthy39\Sites\Controller\SiteController::class, 'schedulecheck']);
         })->middleware(new AuthMiddleware);;
 
         // Media library

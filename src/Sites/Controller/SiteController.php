@@ -30,7 +30,7 @@ class SiteController
         $page = isset($allPostPutVars['page']) ? $allPostPutVars['page'] : 'overview';
 
         // Render a template
-        $site = Site::FindByIdentifier($args['id']);
+        $site = Site::FindByIdentifier($args['identifier']);
 
         if ($site) {
             $response = new Response;
